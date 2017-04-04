@@ -1,0 +1,315 @@
+ul {
+  padding-left: 0;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.hide {
+  display: none;
+}
+
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  font-family: sans-serif;
+  color: #555;
+}
+
+.logout {
+  position: absolute;
+  top: 10px;
+  right: 55px;
+  background: white;
+  color: rgb(22, 139, 249);
+  border: 1px rgb(22, 139, 249) solid;
+  outline: none;
+  padding: 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.chat-list, .chat {
+  display: inline-block;
+}
+
+.chat-list {
+  padding: 20px;
+  width: 25%;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  height: 90vh;
+  overflow: scroll;
+}
+
+.chat-list input[name=search] {
+  margin: 0 auto;
+  margin-top: 40px;
+  height: 20px;
+  width: 94%;
+  font-size: 14px;
+  border-radius: 3px;
+  padding: 10px;
+  display: block;
+  outline: none;
+  border: 1px #ccc solid;
+}
+
+.chat-list .search-header {
+  position: fixed;
+  width: 25%;
+  background: #fff;
+  height: 90px;
+  padding-bottom: 10px;
+  top: 0;
+  z-index: 2;
+}
+
+.chat-list ul {
+  padding-top: 50px;
+}
+
+.chat-list::-webkit-scrollbar {
+  width: 1px;
+}
+
+.chat-list li {
+  list-style: none;
+  padding: 15px;
+  border-bottom: 1px #efefef solid;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.chat-list li:hover, .chat-list li.active {
+  background: #efefef;
+}
+
+.chat-list li .username {
+  vertical-align: top;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.chat-list li.notification:after {
+  content: '1';
+  position: absolute;
+  right: 30px;
+  width: 15px;
+  height: 15px;
+  padding: 3px;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 50%;
+  background: rgb(22, 139, 249);
+  color: #fff;
+}
+
+.chat-list div {
+  display: inline-block;
+}
+
+.chat {
+  padding: 15px;
+  width: 65%;
+  margin-left: 30%;
+}
+
+.chat-title {
+  padding: 10px;
+  min-height: 15px;
+}
+
+.messages {
+  height: 75vh;
+  overflow: scroll;
+  background: #efefef;
+  padding: 20px 20px 0px 20px;
+  border: 1px #efefef solid;
+}
+
+.messages .cover img {
+  margin: 50px auto;
+  opacity: 0.5;
+}
+
+.chat .message {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.chat .message .content {
+  display: block;
+  padding: 15px 15px 2px 15px;
+  max-width: 200px;
+  border-radius: 8px;
+  text-align: left;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.chat .message .content img {
+  max-width: 100%;
+}
+
+.chat .message .content .post-caption, .chat .message .content a {
+  font-size: 12px;
+  color: #666;
+}
+
+.message.outward .content {
+  margin-left: 75%;
+  background: rgb(22, 139, 249);
+  color: #efefef;
+  font-weight: 200;
+}
+
+.message.outward .content:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: auto;
+  right: -10px;
+  top: 0px;
+  bottom: auto;
+  border: 10px solid;
+  border-color: rgb(22, 139, 249) transparent transparent rgb(22, 139, 249);
+}
+
+.message.outward .content.ig-post:after{
+  border-color: #fff transparent transparent #fff;
+}
+
+.message.inward .content{
+  margin-right: 70%;
+}
+
+.message.inward .content:after{
+  position: absolute;
+  content: ' ';
+  width: 0;
+  height: 0;
+  left: -10px;
+  right: auto;
+  top: 0px;
+  bottom: auto;
+  border: 10px solid;
+  border-color: #fff transparent transparent transparent;
+}
+
+.message.inward .content, .message.inward .content.ig-post, .message.outward .content.ig-post {
+  background: #fff;
+  color: #666;
+}
+
+.message-time {
+  font-size: 10px;
+  text-align: right;
+}
+
+.new-message {
+  position: absolute;
+  bottom: 30px;
+  width: 63%;
+}
+
+.new-message input, .new-message input:focus {
+  outline: none;
+  font-size: 17px;
+  color: #555;
+  padding: 10px;
+  width: 100%;
+  height: 35px;
+  border: 1px #aaa solid;
+}
+
+
+/**********************************
+EMOJIS
+***********************************/
+
+@keyframes slideUp {
+  from {
+    transform: translateY(200px);
+  }
+
+  to {
+    transform: translateY(0px);
+  }
+}
+
+.open-emoji, .open-emoji:focus {
+  background: none;
+  outline: none;
+  border: none;
+  position: absolute;
+  left: 93%;
+  font-size: 25px;
+  bottom: 40px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.emojis {
+  width: 500px;
+  position: absolute;
+  bottom: 100px;
+  right: 60px;
+  background: white;
+  border: 1px #efefef solid;
+}
+
+.emojis:not(.hide) {
+  // animation: slideUp 0.4s easein 0 1 forwards continue;
+  animation-name: slideUp;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out; 
+}
+
+.emojis-header {
+  width: 100%;
+  padding: 3px;
+  border-bottom: 1px #efefef solid;
+  overflow-x: scroll;
+}
+
+.emojis-header div {
+  display: inline-block;
+  font-size: 25px;
+  padding: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+.emojis-body {
+  height: 300px;
+  overflow-y: scroll;
+  word-wrap: break-word;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+}
+
+.emojis-body .emoji {
+  font-size: 20px;
+  margin: 3px 3px;
+  cursor: pointer;
+}

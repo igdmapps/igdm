@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>IGDM Desktop</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <button class="logout">Logout</button>
+
+      <div class="chat-list">
+        <div class="search-header">
+          <input type="text" name="search" placeholder="search IG users">
+        </div>
+        <ul></ul>
+      </div>
+      <div class="chat">
+        <div class="chat-title"></div>
+        <div class="messages">
+          <div class="center cover">
+            <img src="img/icon.png" width="300px">
+            <p class="italic">Search and select a chat to start.</p>
+          </div>
+        </div>
+
+        <div class="new-message">
+          <form>
+            <input placeholder="type message here">
+          </form>
+        </div>
+        <button class="open-emoji"><img src="img/smiley.png" width="25px"></button>
+        <div class="emojis hide">
+          <div class="emojis-header"></div>
+          <div class="emojis-body"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  
+  <script type="text/javascript" src="js/emoji.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+</html>

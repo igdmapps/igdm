@@ -1,0 +1,64 @@
+body {
+  font-family: sans-serif;
+  color: #666;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+form {
+  display: block;
+  margin: 0 auto;
+  margin-top: 10%;
+  text-align: center;
+}
+
+.heading {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: 200;
+  font-size: 60px;
+  margin-top: 0px;
+  color: #aaa;
+}
+
+img {
+  opacity: 0.5;
+}
+
+.faint-text {
+  font-style: italic;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+input, input:focus {
+  display: block;
+  font-size: 14px;
+  padding: 20px;
+  width: 300px;
+  margin: 30px auto;
+  border: none;
+  border-bottom: 1px #ddd solid;
+  outline: none;
+}
+
+input:focus {
+  border-bottom: 1px rgb(22, 139, 249) solid;
+}
+
+button {
+  background: rgb(22, 139, 249);
+  color: white;
+  border: none;
+  outline: none;
+  padding: 20px;
+  border-radius: 3px;
+  font-size: 15px;
+  min-width: 300px;
+}
+
+button.wait {
+  background: rgb(52, 169, 249);
+}
