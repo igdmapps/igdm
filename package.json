@@ -1,12 +1,24 @@
 {
   "name": "igdm",
   "version": "1.0.0",
-  "description": "",
+  "description": "Desktop application for Instagram DMs",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pack": "build --dir",
+    "dist": "build -mwl --x64"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ifedapoolarewaju/igdm.git"
+  },
+  "keywords": [
+    "Instagram",
+    "messaging",
+    "Chat",
+    "DM",
+    "Social Media"
+  ],
   "author": "ifedapo olarewaju",
   "license": "MIT",
   "dependencies": {
@@ -17,5 +29,18 @@
   "devDependencies": {
     "electron-prebuilt": "^1.2.0",
     "electron-builder": "^7.15.2"
+  },
+  "build": {
+    "appId": "com.ifedapoolarewaju.desktop.igdm",
+    "copyright": "ifedapo Olarewaju 2017",
+    "asar": false,
+    "mac": {
+      "category": "public.app-category.social-networking"
+    },
+    "win": {
+      "target": "nsis",
+      "publisherName": "ifedapoolarewaju",
+      "iconUrl": "https://github.com/ifedapoolarewaju/igdm/build/icon.ico"
+    }
   }
 }

@@ -38,4 +38,5 @@ jspm_packages
 
 cookies/*
 !cookies/.keep
+dist
 .DS_Store
