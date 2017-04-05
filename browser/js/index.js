@@ -126,7 +126,7 @@ function renderChatList (chatList) {
   ul.innerHTML = "";
   chatList.forEach((chat_) => {
     var msgPreview = chat_.items[0]._params.text || 'IG Post'
-    msgPreview = msgPreview.length > 30 ? `${msgPreview.substr(0, 30)} ...` : msgPreview 
+    msgPreview = msgPreview.length > 25 ? `${msgPreview.substr(0, 25)} ...` : msgPreview
     var usernames = getUsernames(chat_);
     usernames = usernames.length <= 20 ? usernames : (usernames.substr(0, 20) + ' ...')
 
