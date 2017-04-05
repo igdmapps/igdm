@@ -1,9 +1,8 @@
-# IG:dm
-Multi-platform Desktop application for Instagram DMs.
+# IG:dm Messenger
+Multi-platform Desktop application for INSTAGRAM DMs, built with electron
 
-Built with electron
-
-View docs [here](http://ifedapoolarewaju.github.io/igdm/)
+### View Website 
+[here](http://ifedapoolarewaju.github.io/igdm/)
 
 
 ### Preview
@@ -11,3 +10,8 @@ View docs [here](http://ifedapoolarewaju.github.io/igdm/)
 ![Login screen](docs/img/screenshot.png)
 
 ![Desktop screen](docs/img/screenshot2.png)
+
+
+## License
+
+[The MIT License](LICENSE).
