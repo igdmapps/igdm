@@ -1,0 +1,60 @@
+body {
+  font-family: 'Open Sans Condensed', sans-serif;
+  color: #666;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.container {
+  padding: 5%;
+  text-align: center;
+}
+
+.pry-color {
+  color: rgb(22, 139, 249);
+}
+
+.heading {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: 200;
+  font-size: 50px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  color: #aaa;
+}
+
+.download h3 {
+  text-decoration: underline;
+  margin: 85px 0 10px 0;
+}
+
+.download img {
+  display: inline-block;
+  margin: 30px;
+}
+
+.download img:hover {
+  opacity: 0.6;
+}
+
+img.logo {
+  opacity: 0.8;
+}
+
+.screenshots img {
+  display: block;
+  max-width: 70%;
+  margin: 50px auto;
+  border: 2px rgb(22, 139, 249) solid;
+  border-radius: 10px;
+}
+
+.faint-text {
+  font-style: italic;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
