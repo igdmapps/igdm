@@ -1,6 +1,6 @@
 {
   "name": "IGdm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Desktop application for Instagram DMs",
   "main": "main.js",
   "scripts": {
