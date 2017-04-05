@@ -1,5 +1,7 @@
 const electron = require('electron')
 const app = electron.app
+const Menu = electron.Menu
+const menuTemplate = require('./menutemplate')
 const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
@@ -66,7 +68,11 @@ function getChat (evt, id) {
   })
 }
 
-app.on('ready', createWindow)
+app.on('ready', () => {
+  createWindow()
+  const menu = Menu.buildFromTemplate(menuTemplate)
+  Menu.setApplicationMenu(menu)
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()

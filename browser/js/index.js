@@ -32,6 +32,9 @@ function setActive (el) {
   let currentActive = document.querySelector('.chat-list ul li.active');
   if (currentActive) currentActive.classList.remove('active')
   el.classList.add('active');
+
+  // close opened emoji pane
+  document.querySelector('.emojis').classList.add('hide')
 }
 
 function scrollToChatBottom () {
@@ -147,6 +150,7 @@ function renderChatList (chatList) {
 function renderMessage (message, direction, time, isPost) {
   var div = document.createElement('div');
   var divContent = document.createElement('div');
+  var p = document.createElement('p');
   divContent.className = 'content';
   div.classList.add('message');
   div.classList.add(direction);
@@ -157,13 +161,15 @@ function renderMessage (message, direction, time, isPost) {
     divContent.innerText = message
   }
 
+  p.className = 'message-time'
   if (time) {
-    var p = document.createElement('p');
-    p.className = 'message-time'
     var msgDate = new Date(time);
     p.innerText = `${format(msgDate.getHours())}:${format(msgDate.getMinutes())}  ${format(msgDate.getMonth())}/${msgDate.getFullYear()}`
-    divContent.appendChild(p);
+  } else {
+    p.innerText = 'sending ...'
   }
+  divContent.appendChild(p);
+
   div.appendChild(divContent);
   
   return div

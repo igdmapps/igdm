@@ -238,7 +238,9 @@ a {
   font-size: 17px;
   color: #555;
   padding: 10px;
-  width: 100%;
+  padding-right: 5%;
+  width: 95.8%;
+  word-wrap: break-word;
   height: 35px;
   border: 1px #aaa solid;
 }
