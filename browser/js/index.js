@@ -1,5 +1,6 @@
 const electron = require('electron');
 const ipcRenderer = electron.ipcRenderer;
+const DUMMY_CHAT_ID = 'fake id'
 
 window.chats = [];
 window.chatsHash = {};
@@ -17,6 +18,14 @@ function format (n) {
 
 function getUsernames (chat_) {
   return chat_.accounts.map((acc) => acc._params.username).join(', ')
+}
+
+function isCurrentChat (chat_) {
+  if (window.currentChatId === DUMMY_CHAT_ID) {
+    return  !chatsHash[chat_.id]
+  } else {
+    return chat_.id === window.currentChatId
+  }
 }
 
 function setActive (el) {
@@ -46,6 +55,7 @@ function sendMessage (message, accounts, isNewChat) {
 }
 
 function getChat (id) {
+  window.currentChatId = id
   ipcRenderer.send('getChat', id)
 }
 
@@ -97,7 +107,12 @@ function renderSearchResult (users) {
     var li = renderChatListItem(user._params.username, 'send a message', user._params.picture);
     li.onclick = () => {
       setActive(li)
-      window.chatUsers[user.id] ? getChat(window.chatUsers[user.id]) : renderChat({items: [], accounts: [user]})
+      if (window.chatUsers[user.id]) {
+        getChat(window.chatUsers[user.id])
+      } else {
+        window.currentChatId = DUMMY_CHAT_ID
+        renderChat({items: [], accounts: [user]})
+      }
     }
     ul.appendChild(li);
   })
@@ -155,7 +170,17 @@ function renderMessage (message, direction, time, isPost) {
 }
 
 function renderChatHeader (chat_) {
-  document.querySelector('.chat-title').innerHTML = `<b>${getUsernames(chat_)}</b>`
+  let usernames = getUsernames(chat_);
+  let chatTitleContainer = document.querySelector('.chat-title');
+  let b = document.createElement('b');
+  b.innerText = `${usernames}`
+  chatTitleContainer.innerHTML = ''
+  chatTitleContainer.appendChild(b)
+
+  if (chat_.accounts.length === 1) {
+    // open user profile in browser
+    b.onclick = () => openInBrowser(`https://instagram.com/${usernames}`)
+  }
 }
 
 function renderChat (chat_) {
@@ -233,7 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   ipcRenderer.on('chat', (evt, chat_) => {
-    if (!chat.items || !chat.items.length || !chat_.items.length || chat.items[0].id != chat_.items[0].id) {
+    let isNewMessage = !chat.items || !chat.items.length || !chat_.items.length || chat.items[0].id != chat_.items[0].id
+    if (isNewMessage && isCurrentChat(chat_)) {
       renderChat(chat_)      
     }
   });

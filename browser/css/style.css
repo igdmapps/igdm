@@ -87,10 +87,6 @@ a {
   padding-top: 50px;
 }
 
-.chat-list::-webkit-scrollbar {
-  width: 1px;
-}
-
 .chat-list li {
   list-style: none;
   padding: 15px;
@@ -136,6 +132,11 @@ a {
 .chat-title {
   padding: 10px;
   min-height: 15px;
+}
+
+.chat-title b:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .messages {
