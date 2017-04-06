@@ -33,7 +33,12 @@ a {
 
 .download img {
   display: inline-block;
-  margin: 30px;
+  margin-top: 30px;
+}
+
+.download a {
+  display: inline-block;
+  width: 20%;
 }
 
 .download img:hover {
