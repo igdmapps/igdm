@@ -50,6 +50,20 @@
 
     ga('create', 'UA-96853108-1', 'auto');
     ga('send', 'pageview');
+
+    document.querySelectorAll('.download a').forEach(function (el){
+      el.addEventListener('click', function(event) {
+        event.preventDefault()
+        ga('send', 'event', {
+          eventCategory: 'Outbound Link',
+          eventAction: 'click',
+          eventLabel: el.href,
+          transport: 'beacon'
+        });
+
+        window.location = el.href;
+      })
+    }) 
   </script>
 </body>
 </html>
