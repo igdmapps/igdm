@@ -81,7 +81,9 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (!mainWindow) createWindow()
+  // only call createWindow afeter mainWindow is set to null at
+  // mainWindow.on('closed')
+  if (mainWindow === null) createWindow()
 })
 
 // reduce polling frequency when app is not active.
