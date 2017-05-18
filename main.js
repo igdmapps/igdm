@@ -16,7 +16,10 @@ if (process.platform === 'darwin') {
     'vendor/terminal-notifier.app/Contents/MacOS/terminal-notifier')
 }
 
-notifier.on('click', () => app.focus())
+notifier.on('click', () => {
+  app.focus();
+  mainWindow.webContents.send('focusNotifiedChat');
+})
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -133,5 +136,5 @@ electron.ipcMain.on('markAsRead', (evt, thread) => {
 electron.ipcMain.on('notify', (evt, message) => {
   // OSX uses the default terminal notifier icon
   let icon = process.platform !== 'darwin' ? path.join(__dirname, '/browser/img/icon.png') : undefined;
-  if (shouldNotify) notifier.notify({ title: 'IG:dm Desktop', sound: true, message, icon });
+  if (shouldNotify) notifier.notify({ title: 'IG:dm Desktop', sound: true, message, icon, wait: true });
 })

@@ -24,7 +24,7 @@
   "dependencies": {
     "fb": "^1.1.1",
     "instagram-private-api": "^0.5.15",
-    "node-notifier": "^4.6.1"
+    "node-notifier": "^5.1.2"
   },
   "devDependencies": {
     "electron-prebuilt": "^1.2.0",

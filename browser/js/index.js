@@ -67,15 +67,19 @@ function getChatList () {
 }
 
 function addNotification (li, chat_) {
+  if (chat_.items[0]._params.accountId == window.loggedInuserId) {
+    return
+  }
+
   const isNew = chatsHash && chatsHash[chat_.id] && chatsHash[chat_.id].items[0].id !== chat_.items[0].id
-  if (isNew) unreadChats[chat_.id] = chat_
+  if (isNew) unreadChats[chat_.id] = chat_;
 
   if (unreadChats[chat_.id]) {
-    if (chat_.id === window.chat.id) {
+    if (chat_.id === window.chat.id && document.hasFocus()) {
       markAsRead(chat_.id, li)
     } else {
       li.classList.add('notification')
-
+      window.notifiedChatId = li.getAttribute("id");
       if (isNew) ipcRenderer.send('notify', `new message from ${getUsernames(chat_)}`);
     }
   }
@@ -87,7 +91,7 @@ function registerChatUser (chat_) {
   }
 }
 
-function renderChatListItem (username, msgPreview, thumbnail) {
+function renderChatListItem (username, msgPreview, thumbnail, id) {
   var li = document.createElement('li');
   var imgSpan = document.createElement('div');
   var span = document.createElement('div');
@@ -99,6 +103,7 @@ function renderChatListItem (username, msgPreview, thumbnail) {
   imgSpan.appendChild(img);
   li.appendChild(imgSpan);
   li.appendChild(span);
+  if (id) li.setAttribute("id", `chatlist-${id}`);
 
   return li;
 }
@@ -130,7 +135,7 @@ function renderChatList (chatList) {
     var usernames = getUsernames(chat_);
     usernames = usernames.length <= 20 ? usernames : (usernames.substr(0, 20) + ' ...')
 
-    var li = renderChatListItem(usernames, msgPreview, chat_.accounts[0]._params.picture);
+    var li = renderChatListItem(usernames, msgPreview, chat_.accounts[0]._params.picture, chat_.id);
 
     registerChatUser(chat_)
     if (chat_.id === window.chat.id) setActive(li)
@@ -272,7 +277,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ipcRenderer.on('searchResult', (evt, users) => {
     renderSearchResult(users);
-  })
+  });
+
+  ipcRenderer.on('focusNotifiedChat', (evt) => {
+    document.querySelector(`#${window.notifiedChatId}`).click();
+  });
 
   document.querySelector('button.open-emoji').onclick = () => {
     document.querySelector('.emojis').classList.toggle('hide');
