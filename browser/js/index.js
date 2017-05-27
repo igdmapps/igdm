@@ -78,14 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.querySelector('#unfollowers').onclick = () => getUnfollowers();
-
   document.querySelector('#logout').onclick = () => ipcRenderer.send('logout');
 
   document.querySelector('#seen-flagger').onclick = (e) => {
     window.shouldSendSeenFlags = !window.shouldSendSeenFlags;
     e.target.innerText = window.shouldSendSeenFlags
-      ? 'DISABLE "SEEN" FLAGS'
-      : 'ENABLE "SEEN" FLAGS';
+      ? `DON'T SEND "SEEN" RECEIPTS`
+      : `SEND "SEEN" RECEIPTS`;
   }
   document.querySelector('.new-message form').onsubmit = (e) => e.preventDefault();
 
