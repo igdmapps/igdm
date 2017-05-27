@@ -89,24 +89,23 @@ exports.getUnfollowers = function (session) {
       resolve(unfollowers);
     }
 
-    const handleUsers = (newUsers, allUsers, usersGetter, otherUsersGetter) => {
+    const getUsers = (newUsers, allUsers, usersGetter, otherUsersGetter) => {
       newUsers.forEach((user) => allUsers.push(user))
-      if (!usersGetter.moreAvailable && !otherUsersGetter.moreAvailable) compare();
-      else if (usersGetter.moreAvailable) {
-        usersGetter.get().then((users) => handleUsers(users, allUsers, usersGetter, otherUsersGetter))
+      // moreAvailable maybe null. We are dodging that.
+      if (usersGetter.moreAvailable === false && otherUsersGetter.moreAvailable === false){
+        compare();
+      } else if (usersGetter.moreAvailable !== false) {
+        usersGetter.get()
+          .then((users) => getUsers(users, allUsers, usersGetter, otherUsersGetter))
+          .catch(reject);
       }
     }
 
     const followersGetter = new Client.Feed.AccountFollowers(session, accountId);
     const followingGetter = new Client.Feed.AccountFollowing(session, accountId)
 
-    followersGetter.get()
-      .then((users) => handleUsers(users, followers, followersGetter, followingGetter))
-      .catch(reject);
-
-    followingGetter.get()
-      .then((users) => handleUsers(users, following, followingGetter, followersGetter))
-      .catch(reject);
+    getUsers([], followers, followersGetter, followingGetter);
+    getUsers([], following, followingGetter, followersGetter);
   })
 }
 
