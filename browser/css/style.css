@@ -3,8 +3,16 @@ ul {
 }
 
 a {
-  cursor: pointer;
   text-decoration: underline;
+}
+
+button, a {
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  outline: none;
 }
 
 .italic {
@@ -27,17 +35,44 @@ a {
   color: #555;
 }
 
-.logout {
+.settings {
   position: absolute;
   top: 10px;
   right: 55px;
-  background: white;
-  color: rgb(22, 139, 249);
+  background: url(../img/user.png);
+  background-repeat: no-repeat;
+  background-size: 35px;
+  background-position: center;
+  width: 35px;
+  height: 35px;
   border: 1px rgb(22, 139, 249) solid;
   outline: none;
-  padding: 8px;
-  border-radius: 3px;
+  border-radius: 50%;
+}
+
+.dropdown {
+  position: absolute;
+  top: 50px;
+  right: 55px;
+  border: 1px solid #eee;
+  padding: 20px 0 20px 0;
+  background: white;
+  border-radius: 5px;
+  z-index: 2;
+  display: none;
+}
+
+.dropdown.active {
+  display: block;
+}
+
+.dropdown .item {
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 11px;
+  color: #666;
   cursor: pointer;
+  border-bottom: 1px #efefef solid;
 }
 
 .thumb {
@@ -95,7 +130,7 @@ a {
   cursor: pointer;
 }
 
-.chat-list li:hover, .chat-list li.active {
+.chat-list li:hover, .chat-list li.active, .dropdown .item:hover {
   background: #efefef;
 }
 
@@ -165,6 +200,7 @@ a {
   text-align: left;
   position: relative;
   word-wrap: break-word;
+  cursor: pointer;
 }
 
 .chat .message .content img {
@@ -177,7 +213,7 @@ a {
 }
 
 .message.outward .content {
-  margin-left: 75%;
+  margin-left: 70%;
   background: rgb(22, 139, 249);
   color: #efefef;
   font-weight: 200;
@@ -196,7 +232,7 @@ a {
   border-color: rgb(22, 139, 249) transparent transparent rgb(22, 139, 249);
 }
 
-.message.outward .content.ig-post:after{
+.message.outward .content.ig-media:after{
   border-color: #fff transparent transparent #fff;
 }
 
@@ -217,7 +253,7 @@ a {
   border-color: #fff transparent transparent transparent;
 }
 
-.message.inward .content, .message.inward .content.ig-post, .message.outward .content.ig-post {
+.message.inward .content, .message.inward .content.ig-media, .message.outward .content.ig-media {
   background: #fff;
   color: #666;
 }
@@ -225,6 +261,17 @@ a {
 .message-time {
   font-size: 10px;
   text-align: right;
+}
+
+.message-sender {
+  font-size: 10px;
+  margin-top: 0;
+}
+
+.seen {
+  text-align: right;
+  color: #aaa;
+  font-size: 14px;
 }
 
 .new-message {
@@ -245,6 +292,46 @@ a {
   border: 1px #aaa solid;
 }
 
+.viewer {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: white;
+  z-index: 3;
+  display: none;
+}
+
+.viewer.active {
+  display: block;
+}
+
+.viewer .content img {
+  max-width: 55%;
+  display: block;
+  margin: 0 auto;
+}
+
+.viewer button.close {
+  background: transparent;
+  opacity: 0.5;
+}
+
+.unfollowers li {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px #efefef solid;
+}
+
+.unfollow-button {
+  padding: 8px;
+  color: rgb(22, 139, 249);
+  background: white;
+}
+
+.unfollow-button:hover {
+  text-decoration: underline;
+}
 
 /**********************************
 EMOJIS
@@ -282,7 +369,6 @@ EMOJIS
 }
 
 .emojis:not(.hide) {
-  // animation: slideUp 0.4s easein 0 1 forwards continue;
   animation-name: slideUp;
   animation-duration: 0.2s;
   animation-timing-function: ease-out; 

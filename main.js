@@ -113,6 +113,11 @@ electron.ipcMain.on('logout', (evt, data) => {
   createWindow()
 })
 
+electron.ipcMain.on('getLoggedInUserId', (evt) => {
+  var userId = session._cookiesStore.storage.idx['i.instagram.com']['/'].ds_user_id.value;
+  mainWindow.webContents.send('loggedInUserId', userId)
+})
+
 electron.ipcMain.on('getChatList', getChatList)
 
 electron.ipcMain.on('getChat', getChat)
@@ -135,6 +140,16 @@ electron.ipcMain.on('markAsRead', (evt, thread) => {
 
 electron.ipcMain.on('notify', (evt, message) => {
   // OSX uses the default terminal notifier icon
-  let icon = process.platform !== 'darwin' ? path.join(__dirname, '/browser/img/icon.png') : undefined;
-  if (shouldNotify) notifier.notify({ title: 'IG:dm Desktop', sound: true, message, icon, wait: true });
+  let icon = process.platform !== 'darwin' ? path.join(__dirname, '/browser/img/icon.png') : undefined
+  if (shouldNotify) notifier.notify({ title: 'IG:dm Desktop', sound: true, message, icon, wait: true })
+})
+
+electron.ipcMain.on('getUnfollowers', (evt) => {
+  igdm.getUnfollowers(session).then((users) => {
+    mainWindow.webContents.send('unfollowers', users)
+  })
+})
+
+electron.ipcMain.on('unfollow', (evt, userId) => {
+  igdm.unfollow(session, userId)
 })

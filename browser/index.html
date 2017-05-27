@@ -5,9 +5,14 @@
     <title>Desktop IG:dm</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
-  <body>
+  <body no-js on-click-remove-class=".dropdown active">
     <div class="container">
-      <button class="logout">Logout</button>
+      <button class="settings" no-js on-mouseenter-add-class=".dropdown active"></button>
+      <div class="dropdown" no-js on-mouseleave-remove-class=".dropdown active">
+        <div class="item" id="seen-flagger">DISABLE "SEEN" FLAGS</div>
+        <div class="item" id="unfollowers">NOT FOLLOWING ME BACK</div>
+        <div class="item" id="logout">LOGOUT</div>
+      </div>
 
       <div class="chat-list">
         <div class="search-header">
@@ -29,15 +34,28 @@
             <input placeholder="type message here">
           </form>
         </div>
-        <button class="open-emoji"><img src="img/smiley.png" width="20px"></button>
+        <button class="open-emoji" no-js on-click-toggle-class=".emojis hide">
+          <img src="img/smiley.png" width="20px">
+        </button>
         <div class="emojis hide">
           <div class="emojis-header"></div>
           <div class="emojis-body"></div>
         </div>
       </div>
+
+      <div class="viewer">
+        <button class="close" no-js on-click-remove-class=".viewer active">
+          <img width="25px" src="img/close.png" alt="close icon">
+        </button>
+        <div class="content"></div>
+      </div>
     </div>
   </body>
   
+  <script type="text/javascript" src="../node_modules/nojs/dist/no.min.js"></script>
+  <script type="text/javascript" src="js/globals.js"></script>
   <script type="text/javascript" src="js/emoji.js"></script>
+  <script type="text/javascript" src="js/funcs.js"></script>
+  <script type="text/javascript" src="js/renderers.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
 </html>

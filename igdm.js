@@ -2,7 +2,7 @@ const fs = require('fs');
 const Client = require('instagram-private-api').V1;
 let storage, device;
 
-function checkAuth () {
+exports.checkAuth = function () {
   return new Promise((resolve, reject) => {
     let files = fs.readdirSync(`${__dirname}/cookies`);
 
@@ -22,7 +22,7 @@ function checkAuth () {
   })
 }
 
-function login (username, password) {
+exports.login = function (username, password) {
   // delete all session storage
   let files = fs.readdirSync(`${__dirname}/cookies`);
   files.forEach((filename) => {
@@ -38,7 +38,7 @@ function login (username, password) {
   })
 }
 
-function logout () {
+exports.logout = function () {
   // delete all session storage
   let files = fs.readdirSync(`${__dirname}/cookies`);
   files.forEach((filename) => {
@@ -46,33 +46,70 @@ function logout () {
   })
 }
 
-function getChatList (session) {
+exports.getChatList = function (session) {
   return new Promise((resolve, reject) => {
     var feed = new Client.Feed.Inbox(session, 10);
     feed.all().then(resolve).catch(reject)
   })
 }
 
-function getChat (session, chatId) {
+exports.getChat = function (session, chatId) {
   return new Promise((resolve, reject) => {
     Client.Thread.getById(session, chatId).then(resolve).catch(reject)
   })
 }
 
-function sendMessage (session, message, recipients) {
+exports.sendMessage = function (session, message, recipients) {
   return new Promise((resolve, reject) => {
     Client.Thread.configureText(session, recipients, message).then(resolve).catch(reject)
   })
 }
 
-function searchUsers (session, search) {
+exports.searchUsers = function (session, search) {
   return new Promise((resolve, reject) => {
     Client.Account.search(session, search).then(resolve).catch(reject)
   })
 }
 
-function seen (session, thread) {
+exports.seen = function (session, thread) {
   (new Client.Thread(session, thread)).seen()
 }
 
-module.exports = { checkAuth, login, logout, getChatList, getChat, sendMessage, searchUsers, seen }
+exports.getUnfollowers = function (session) {
+  return new Promise((resolve, reject) => {
+    let followers = [];
+    let following = [];
+    const accountId = session._cookiesStore.storage.idx['i.instagram.com']['/'].ds_user_id.value;
+
+    const compare = () => {
+      hashedFollowers = {}
+      followers.forEach((user) => hashedFollowers[user.id] = true);
+
+      let unfollowers = following.filter((user) => !hashedFollowers[user.id]);
+      resolve(unfollowers);
+    }
+
+    const handleUsers = (newUsers, allUsers, usersGetter, otherUsersGetter) => {
+      newUsers.forEach((user) => allUsers.push(user))
+      if (!usersGetter.moreAvailable && !otherUsersGetter.moreAvailable) compare();
+      else if (usersGetter.moreAvailable) {
+        usersGetter.get().then((users) => handleUsers(users, allUsers, usersGetter, otherUsersGetter))
+      }
+    }
+
+    const followersGetter = new Client.Feed.AccountFollowers(session, accountId);
+    const followingGetter = new Client.Feed.AccountFollowing(session, accountId)
+
+    followersGetter.get()
+      .then((users) => handleUsers(users, followers, followersGetter, followingGetter))
+      .catch(reject);
+
+    followingGetter.get()
+      .then((users) => handleUsers(users, following, followingGetter, followersGetter))
+      .catch(reject);
+  })
+}
+
+exports.unfollow = function (session, userId) {
+  Client.Relationship.destroy(session, userId);
+}
