@@ -10,7 +10,7 @@ button, a {
   cursor: pointer;
 }
 
-button {
+button, button:focus {
   border: none;
   outline: none;
 }
@@ -219,43 +219,39 @@ button {
   font-weight: 200;
 }
 
-.message.outward .content:after {
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: auto;
-  right: -10px;
-  top: 0px;
-  bottom: auto;
-  border: 10px solid;
-  border-color: rgb(22, 139, 249) transparent transparent rgb(22, 139, 249);
-}
-
-.message.outward .content.ig-media:after{
-  border-color: #fff transparent transparent #fff;
-}
-
 .message.inward .content{
   margin-right: 70%;
-}
-
-.message.inward .content:after{
-  position: absolute;
-  content: ' ';
-  width: 0;
-  height: 0;
-  left: -10px;
-  right: auto;
-  top: 0px;
-  bottom: auto;
-  border: 10px solid;
-  border-color: #fff transparent transparent transparent;
 }
 
 .message.inward .content, .message.inward .content.ig-media, .message.outward .content.ig-media {
   background: #fff;
   color: #666;
+}
+
+.message .content:after {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 0px;
+  bottom: auto;
+  border: 10px solid;
+}
+
+.message.inward .content:after{
+  left: -10px;
+  right: auto;;
+  border-color: #fff transparent transparent transparent;
+}
+
+.message.outward .content:after {
+  left: auto;
+  right: -10px;
+  border-color: rgb(22, 139, 249) transparent transparent rgb(22, 139, 249);
+}
+
+.message.outward .content.ig-media:after{
+  border-color: #fff transparent transparent #fff;
 }
 
 .message-time {
@@ -349,13 +345,10 @@ EMOJIS
 
 .open-emoji, .open-emoji:focus {
   background: none;
-  outline: none;
-  border: none;
   position: absolute;
   left: 93%;
   font-size: 25px;
   bottom: 40px;
-  cursor: pointer;
   opacity: 0.5;
 }
 
