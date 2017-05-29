@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>IG:dm Autoupdate</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="center">
+      <div id="percentage"></div>
+      <div id="message">Downloading ...</div>
+    </div>
+
+    <script type="text/javascript">
+      const ipcRenderer = require('electron').ipcRenderer;
+
+      ipcRenderer.on('download-progress', (evt, data) => {
+        document.querySelector('#percentage').innerText = `${data.percent}%`
+      })
+
+      ipcRenderer.on('error', (evt, message) => {
+        document.querySelector('#percentage').innerText = '';
+        document.querySelector('#message').innerText = message;
+      })
+    </script>
+  </body>
+</html>

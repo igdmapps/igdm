@@ -22,6 +22,7 @@
   "author": "ifedapo olarewaju",
   "license": "MIT",
   "dependencies": {
+    "electron-updater": "^1.16.0",
     "fb": "^1.1.1",
     "instagram-private-api": "^0.5.15",
     "node-notifier": "^5.1.2",

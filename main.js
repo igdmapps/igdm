@@ -1,14 +1,15 @@
-const electron = require('electron')
-const app = electron.app
-const Menu = electron.Menu
-const menuTemplate = require('./menutemplate')
-const BrowserWindow = electron.BrowserWindow
-const path = require('path')
-const url = require('url')
-const igdm = require('./igdm')
+const electron = require('electron');
+const app = electron.app;
+const Menu = electron.Menu;
+const menuTemplate = require('./menutemplate');
+const BrowserWindow = electron.BrowserWindow;
+const path = require('path');
+const url = require('url');
+const igdm = require('./igdm');
+const autoUpdater = require('./autoupdater');
+const notifier = require('node-notifier');
 let pollingInterval = 10000;
 let shouldNotify = false;
-const notifier = require('node-notifier')
 
 // OSX needs custom notifier for custom notification icons
 if (process.platform === 'darwin') {
@@ -72,9 +73,10 @@ function getChat (evt, id) {
 }
 
 app.on('ready', () => {
-  createWindow()
-  const menu = Menu.buildFromTemplate(menuTemplate)
-  Menu.setApplicationMenu(menu)
+  createWindow();
+  const menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
+  autoUpdater.init();
 })
 
 app.on('window-all-closed', () => {
