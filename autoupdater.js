@@ -1,6 +1,7 @@
 
 const {BrowserWindow} = require('electron');
 const log = require('electron-log');
+const url = require('url');
 const {autoUpdater} = require("electron-updater");
 let window;
 
