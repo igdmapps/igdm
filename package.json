@@ -30,8 +30,8 @@
     "nojs": "^0.1.1"
   },
   "devDependencies": {
-    "electron-builder": "^7.26.0",
-    "electron-prebuilt": "^1.2.0"
+    "electron": "^1.4.15",
+    "electron-builder": "^12.3.1"
   },
   "build": {
     "publish": [
