@@ -1,6 +1,6 @@
 {
   "name": "IGdm",
-  "version": "2.0.0-alpha.2",
+  "version": "2.0.0-alpha.3",
   "description": "Desktop application for Instagram DMs",
   "main": "main.js",
   "scripts": {
@@ -22,6 +22,7 @@
   "author": "ifedapo olarewaju",
   "license": "MIT",
   "dependencies": {
+    "electron-log": "^2.2.6",
     "electron-updater": "^1.16.0",
     "fb": "^1.1.1",
     "instagram-private-api": "^0.5.15",
@@ -29,10 +30,17 @@
     "nojs": "^0.1.1"
   },
   "devDependencies": {
-    "electron-prebuilt": "^1.2.0",
-    "electron-builder": "^7.15.2"
+    "electron-builder": "^7.26.0",
+    "electron-prebuilt": "^1.2.0"
   },
   "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "ifedapoolarewaju",
+        "repo": "igdm"
+      }
+    ],
     "appId": "com.ifedapoolarewaju.desktop.igdm",
     "copyright": "ifedapo Olarewaju 2017",
     "asar": false,
