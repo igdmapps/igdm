@@ -8,6 +8,7 @@
 * Display 'seen' reciepts
 * Configurable 'seen' receipts
 * Label group message sender
+* Software auto-update on new version
 
 
 ### 1.0.2 / 2017-04-10 ###
