@@ -1,50 +1,36 @@
 
 const {BrowserWindow} = require('electron');
-const log = require('electron-log');
 const url = require('url');
+const path = require('path');
 const {autoUpdater} = require("electron-updater");
-let window;
-
-//-------------------------------------------------------------------
-// Logging
-//
-// THIS SECTION IS NOT REQUIRED
-//
-// This logging setup is not required for auto-updates to work,
-// but it sure makes debugging easier :)
-//-------------------------------------------------------------------
-autoUpdater.logger = log;
-autoUpdater.logger.transports.file.level = 'info';
-log.info('App starting...');
+let win;
 
 exports.init = () => {
   autoUpdater.on('update-available', (ev, info) => {
-    window = new BrowserWindow({
-      width: 800,
-      height: 400,
+    win = new BrowserWindow({
+      width: 400,
+      height: 200,
       icon: `${__dirname}/browser/img/icon.png`,
-      maxWidth: 800,
-      maxHeight: 400
+      maxWidth: 400,
+      maxHeight: 200
     })
 
-    window.setTitle('IG:dm software update')
-    window.loadURL(url.format({
+    win.setTitle('IG:dm software update')
+    win.loadURL(url.format({
       pathname: path.join(__dirname, 'browser/autoupdate.html'),
       protocol: 'file:',
       slashes: true
     }))
 
-    window.on('closed', () => window = null)
+    win.on('closed', () => win = null)
   })
 
   autoUpdater.on('error', (ev, err) => {
-    log.info(err);
-    window.webContents.send('error', 'Update failed');
+    win.webContents.send('error', 'Update failed');
   })
 
   autoUpdater.on('download-progress', (ev, data) => {
-    log.info(data);
-    window.webContents.send('download-progress', data);
+    win.webContents.send('download-progress', data);
   })
 
   autoUpdater.on('update-downloaded', (ev, info) => autoUpdater.quitAndInstall());
