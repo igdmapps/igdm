@@ -11,20 +11,25 @@
       <br>
       <br>
       <div id="percentage"></div>
-      <div id="message">Downloading ...</div>
+      <div id="message">Downloading <span id="visual">....</span></div>
     </div>
 
     <script type="text/javascript">
       const ipcRenderer = require('electron').ipcRenderer;
 
       ipcRenderer.on('download-progress', (evt, data) => {
-        document.querySelector('#percentage').innerText = `${data.percent}%`
-      })
+        document.querySelector('#percentage').innerText = `${data.percent} %`
+      });
 
       ipcRenderer.on('error', (evt, message) => {
         document.querySelector('#percentage').innerText = '';
         document.querySelector('#message').innerText = message;
-      })
+      });
+
+      setInterval(() => {
+        let visual = document.querySelector('#visual');
+        visual.innerText =  visual.innerText == '....' ? '..' : '....';
+      }, 2000);
     </script>
   </body>
 </html>

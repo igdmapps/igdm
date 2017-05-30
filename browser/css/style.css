@@ -1,3 +1,16 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
 ul {
   padding-left: 0;
 }
@@ -300,6 +313,9 @@ button, button:focus {
 
 .viewer.active {
   display: block;
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-out;
 }
 
 .viewer .content img {
