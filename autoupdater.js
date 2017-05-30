@@ -26,7 +26,7 @@ exports.init = () => {
   })
 
   autoUpdater.on('error', (ev, err) => {
-    win.webContents.send('error', 'Update failed');
+    win.webContents.send('error', 'Update has failed! :(');
   })
 
   autoUpdater.on('download-progress', (ev, data) => {
