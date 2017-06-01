@@ -8,8 +8,21 @@ a {
   text-decoration: underline;
 }
 
+header {
+  border-bottom: 1px #eee solid;
+}
+
+header .logo {
+  opacity: 0.8;
+  padding-left: 5%;
+}
+
+header .logo span {
+  vertical-align: top;
+}
+
 .container {
-  padding: 5%;
+  padding: 1% 5% 5% 5%;
   text-align: center;
 }
 
@@ -17,8 +30,15 @@ a {
   color: rgb(22, 139, 249);
 }
 
+.pry-bg {
+  background-color: rgb(22, 139, 249);
+}
+
+.pry-border {
+  border: 2px rgb(22, 139, 249) solid;
+}
+
 .heading {
-  font-family: 'Open Sans Condensed', sans-serif;
   font-weight: 200;
   font-size: 50px;
   margin-top: 0px;
@@ -27,34 +47,44 @@ a {
 }
 
 .download h3 {
-  text-decoration: underline;
-  margin: 85px 0 10px 0;
+  margin: 10px 0 10px 0;
 }
 
 .download img {
   display: inline-block;
-  margin-top: 30px;
 }
 
 .download a {
   display: inline-block;
-  width: 20%;
+  width: 100px;
+  margin: 20px;
+  padding: 5px;
+  font-size: 20px;
+  color: #555;
+  border-radius: 100px;
+  text-decoration: none;
+  border: 2px #ccc solid;
 }
 
-.download img:hover {
-  opacity: 0.6;
+.download a:hover {
+  box-shadow: 10px 10px 50px #ccc;
+  background: rgb(52, 169, 249);
+  border: 2px rgb(52, 169, 249) solid;
+  color: white;
+  transition: all 0.2s ease;
 }
 
-img.logo {
-  opacity: 0.8;
+.screenshots a {
+  display: inline-block;
+  width: 480px;
+  margin: 50px 20px;
+  text-decoration: none;
+  color: #555;
 }
 
-.screenshots img {
-  display: block;
-  max-width: 70%;
-  margin: 50px auto;
-  border: 2px rgb(22, 139, 249) solid;
-  border-radius: 10px;
+.screenshots a img {
+  max-width: 100%;
+  box-shadow: 10px 10px 50px #ccc;  
 }
 
 .faint-text {
