@@ -1,4 +1,9 @@
-### 2.0 / 2017-05-29 ###
+### 2.0.1 / 2017-06-02 ###
+
+* Fix Message 'Seen' receipts bug.
+
+
+### 2.0 / 2017-06-01 ###
 
 * Better notification behaviour
 * Quote a chat message.
