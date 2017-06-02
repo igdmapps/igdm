@@ -123,7 +123,7 @@ function registerChatUser (chat_) {
 
 function getIsSeenText (chat_) {
   var text = '';
-  if (!chat_.items || !chat_.items.length || chat_.items[0]._params.accountId != window.loggedInuserId) {
+  if (!chat_.items || !chat_.items.length || chat_.items[0]._params.accountId != window.loggedInUserId) {
     return '';
   }
 
