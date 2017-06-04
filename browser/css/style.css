@@ -330,6 +330,8 @@ button, button:focus {
 }
 
 .unfollowers li {
+  display: inline-block;
+  width: 20%;
   text-align: center;
   padding: 10px;
   border-bottom: 1px #efefef solid;

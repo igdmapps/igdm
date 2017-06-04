@@ -180,7 +180,7 @@ function renderUnfollowers (users) {
     var li = dom(
       `<li>
         <img class="thumb" src="${user._params.picture}">
-        <span class="">${user._params.username}</span>
+        <div class="">${user._params.username}</div>
       </li>`
     );
     var unfollowButton = dom(`<button class="unfollow-button">UNFOLLOW</button>`);
