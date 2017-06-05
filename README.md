@@ -7,9 +7,11 @@ Multi-platform Desktop application for INSTAGRAM DMs, built with electron
 
 ### Preview
 
-![Login screen](docs/img/screenshot.png)
+![Start a chat](docs/img/startchat.gif)
 
-![Desktop screen](docs/img/screenshot2.png)
+![Quote a message](docs/img/quotemessage.gif)
+
+![View unfollowers](docs/img/unfollowers.gif)
 
 
 ## License

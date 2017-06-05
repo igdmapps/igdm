@@ -7,12 +7,13 @@ function format (number) {
 }
 
 function formatTime (time) {
+  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var date = new Date(time);
   var hours = format(date.getHours());
   var minutes = format(date.getMinutes());
-  var month = format(date.getMonth());
-  var year = date.getFullYear();
-  return `${hours}:${minutes}  ${month}/${year}`
+  var day = format(date.getDate());
+  var month = monthNames[date.getMonth()];
+  return `${day} ${month}  [${hours}:${minutes}]`
 }
 
 function truncate (text, length) {
