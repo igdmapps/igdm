@@ -329,6 +329,10 @@ button, button:focus {
   opacity: 0.5;
 }
 
+.unfollowers {
+  text-align: center;
+}
+
 .unfollowers li {
   display: inline-block;
   width: 20%;
