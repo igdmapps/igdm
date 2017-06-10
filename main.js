@@ -5,7 +5,7 @@ const menuTemplate = require('./menutemplate');
 const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
-const igdm = require('./igdm');
+const instagram = require('./instagram');
 const autoUpdater = require('./autoupdater');
 const notifier = require('node-notifier');
 let pollingInterval = 10000;
@@ -39,7 +39,7 @@ function createWindow () {
   }
   mainWindow.setTitle('Desktop IG:dm')
 
-  igdm.checkAuth().then((result) => {
+  instagram.checkAuth(session).then((result) => {
     let view = result.isLoggedIn ? 'browser/index.html' : 'browser/login.html'
     session = result.session || session
 
@@ -54,7 +54,7 @@ function createWindow () {
 }
 
 function getChatList () {
-  igdm.getChatList(session).then((chats) => {
+  instagram.getChatList(session).then((chats) => {
     mainWindow.webContents.send('chatList', chats)
 
     setTimeout(getChatList, pollingInterval);
@@ -63,7 +63,7 @@ function getChatList () {
 
 let timeoutObj;
 function getChat (evt, id) {
-  igdm.getChat(session, id).then((chat) => {
+  instagram.getChat(session, id).then((chat) => {
     mainWindow.webContents.send('chat', chat);
 
     if (timeoutObj) clearTimeout(timeoutObj)
@@ -103,14 +103,14 @@ app.on('browser-window-focus', () => {
 })
 
 electron.ipcMain.on('login', (evt, data) => {
-  igdm.login(data.username, data.password).then((session_) => {
+  instagram.login(data.username, data.password).then((session_) => {
     session = session_
     createWindow()
   }).catch(() => createWindow())
 })
 
 electron.ipcMain.on('logout', (evt, data) => {
-  igdm.logout()
+  instagram.logout()
   session = null
   createWindow()
 })
@@ -125,19 +125,19 @@ electron.ipcMain.on('getChatList', getChatList)
 electron.ipcMain.on('getChat', getChat)
 
 electron.ipcMain.on('message', (evt, data) => {
-  igdm.sendMessage(session, data.message, data.users).then((chat) => {
+  instagram.sendMessage(session, data.message, data.users).then((chat) => {
     if (data.isNewChat) getChat(null, chat[0].id)
   })
 })
 
 electron.ipcMain.on('searchUsers', (evt, search) => {
-  igdm.searchUsers(session, search).then((users) => {
+  instagram.searchUsers(session, search).then((users) => {
     mainWindow.webContents.send('searchResult', users);
   })
 })
 
 electron.ipcMain.on('markAsRead', (evt, thread) => {
-  igdm.seen(session, thread)
+  instagram.seen(session, thread)
 })
 
 electron.ipcMain.on('notify', (evt, message) => {
@@ -147,11 +147,11 @@ electron.ipcMain.on('notify', (evt, message) => {
 })
 
 electron.ipcMain.on('getUnfollowers', (evt) => {
-  igdm.getUnfollowers(session).then((users) => {
+  instagram.getUnfollowers(session).then((users) => {
     mainWindow.webContents.send('unfollowers', users)
   })
 })
 
 electron.ipcMain.on('unfollow', (evt, userId) => {
-  igdm.unfollow(session, userId)
+  instagram.unfollow(session, userId)
 })

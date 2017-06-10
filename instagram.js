@@ -1,49 +1,34 @@
-const fs = require('fs');
 const Client = require('instagram-private-api').V1;
-let storage, device;
+const utils = require('./utils');
 
-exports.checkAuth = function () {
+exports.checkAuth = function (session) {
   return new Promise((resolve, reject) => {
-    let files = fs.readdirSync(`${__dirname}/cookies`);
-
-    if (files.length && files[0].endsWith('.json')) {
-      let filename = files[0]
-      device = new Client.Device(filename.slice(0, -5)); // remove .json extension
-      storage = new Client.CookieFileStorage(`${__dirname}/cookies/${filename}`);
-
-      const session = new Client.Session(device, storage);
-      // see if IG allows this session to make request
-      return session.getAccountId()
-        .then(() => resolve({ isLoggedIn: true, session }))
-        .catch(Client.Exceptions.CookieNotValidError, () => resolve({ isLoggedIn: false }))
-    } else {
-      resolve({ isLoggedIn: false })
+    if (!session) {
+      const device = utils.getDevice();
+      const storage = utils.getCookieStorage();
+      if (!device || !storage) {
+        return resolve({ isLoggedIn: false });
+      }
+      session = new Client.Session(device, storage);
     }
-  })
+
+    session.getAccountId()
+      .then(() => resolve({ isLoggedIn: true, session }))
+      .catch(Client.Exceptions.CookieNotValidError, () => resolve({ isLoggedIn: false }))
+  });
 }
 
 exports.login = function (username, password) {
-  // delete all session storage
-  let files = fs.readdirSync(`${__dirname}/cookies`);
-  files.forEach((filename) => {
-    fs.unlinkSync(`${__dirname}/cookies/${filename}`);
-  })
-
+  utils.clearCookieFiles();
   return new Promise((resolve, reject) => {
-    // create file
-    device = new Client.Device(username);
-    storage = new Client.CookieFileStorage(`${__dirname}/cookies/${username}.json`);
-
+    const device = utils.getDevice(username);
+    const storage = utils.getCookieStorage(`${__dirname}/cookies/${username}.json`);
     Client.Session.create(device, storage, username, password).then(resolve).catch(reject)
   })
 }
 
 exports.logout = function () {
-  // delete all session storage
-  let files = fs.readdirSync(`${__dirname}/cookies`);
-  files.forEach((filename) => {
-    fs.unlinkSync(`${__dirname}/cookies/${filename}`);
-  })
+  utils.clearCookieFiles();
 }
 
 exports.getChatList = function (session) {
