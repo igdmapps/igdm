@@ -1,3 +1,10 @@
+### 2.0.2 / 2017-06-10 ###
+
+* Fix cookie file storage permission issues on linux
+* Fix Message date not showing day of the month. (Thanks @solomon-fibonacci)
+* Display Unfollowers in grid form. (Thanks @solomon-fibonacci)
+
+
 ### 2.0.1 / 2017-06-02 ###
 
 * Fix Message 'Seen' receipts bug.
