@@ -1,4 +1,4 @@
-### 2.0.2 / 2017-06-10 ###
+### 2.0.2 / 2017-06-20 ###
 
 * Fix cookie file storage permission issues on linux
 * Fix Message date not showing day of the month. (Thanks @solomon-fibonacci)
