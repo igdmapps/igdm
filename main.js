@@ -8,6 +8,7 @@ const url = require('url');
 const instagram = require('./instagram');
 const autoUpdater = require('./autoupdater');
 const notifier = require('node-notifier');
+const RATE_LIMIT_DELAY = 60000;
 let pollingInterval = 10000;
 let shouldNotify = false;
 
@@ -58,7 +59,7 @@ function getChatList () {
     mainWindow.webContents.send('chatList', chats)
 
     setTimeout(getChatList, pollingInterval);
-  })
+  }).catch((err) => console.log(err))
 }
 
 let timeoutObj;
@@ -69,7 +70,7 @@ function getChat (evt, id) {
     if (timeoutObj) clearTimeout(timeoutObj)
 
     timeoutObj = setTimeout(getChat, pollingInterval, {}, id);
-  })
+  }).catch((err) => console.log(err))
 }
 
 app.on('ready', () => {
