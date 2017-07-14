@@ -1,4 +1,5 @@
 const app = require('electron').app
+const { openExternal } = require('electron').shell
 
 const template = [
   {
@@ -38,7 +39,15 @@ const template = [
     submenu: [
       {
         label: 'Learn More',
-        click () { require('electron').shell.openExternal('https://ifedapoolarewaju.github.io/igdm') }
+        click () { openExternal('https://ifedapoolarewaju.github.io/igdm') }
+      },
+      {
+        label: 'Report an issue',
+        click () { openExternal('https://github.com/ifedapoolarewaju/igdm/issues/new') }
+      },
+      {
+        label: 'Star this project (Show us some love. 🙂)',
+        click () { openExternal('https://github.com/ifedapoolarewaju/igdm/stargazers') }
       }
     ]
   }
