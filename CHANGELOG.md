@@ -1,3 +1,8 @@
+### 2.0.3 / ????-??-?? ###
+
+* Link to report an issue #18
+* Link to star the project.
+
 ### 2.0.2 / 2017-06-20 ###
 
 * Fix cookie file storage permission issues on linux
