@@ -55,6 +55,6 @@ const getDevice = (username) => {
 }
 
 module.exports = {
-    canUseFileStorage, guessUsername,
-    getCookieStorage, clearCookieFiles, getDevice
+  canUseFileStorage, guessUsername,
+  getCookieStorage, clearCookieFiles, getDevice
 }
