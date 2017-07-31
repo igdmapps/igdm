@@ -104,10 +104,16 @@ app.on('browser-window-focus', () => {
 })
 
 electron.ipcMain.on('login', (evt, data) => {
+  if(data.username === "" || data.password === "") {
+    return mainWindow.webContents.send('loginError', "Please enter all required fields");
+  }
   instagram.login(data.username, data.password).then((session_) => {
     session = session_
     createWindow()
-  }).catch(() => createWindow())
+  }).catch((error) => {
+    const errorMessage = error.message;
+    mainWindow.webContents.send('loginError', errorMessage);
+  })
 })
 
 electron.ipcMain.on('logout', (evt, data) => {

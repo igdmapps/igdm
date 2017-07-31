@@ -62,3 +62,7 @@ button {
 button.wait {
   background: rgb(52, 169, 249);
 }
+
+.errorMessage {
+  color: #f75656;
+}

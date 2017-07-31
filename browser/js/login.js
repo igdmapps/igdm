@@ -14,5 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
     ipcRenderer.send('login', { username, password })
   }
 
+  /**
+   * Initializes when the user enters invalid login credentials
+   * @param {string} errorMessage
+   * @return {void}
+   */
+  ipcRenderer.on('loginError', (evt, errorMessage) => {
+    let button = document.querySelector('button[type=submit]');
+    button.innerText = 'LOGIN'
+    const errorElement = document.getElementById('error');
+    errorElement.innerHTML = errorMessage;
+  });
+
   document.querySelector('a').onclick = () => electron.shell.openExternal("https://github.com/ifedapoolarewaju/igdm")
 })
