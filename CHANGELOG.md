@@ -2,6 +2,7 @@
 
 * Link to report an issue #18
 * Link to star the project.
+* Failed login error messages (thank you @andela-mmakinde)
 
 ### 2.0.2 / 2017-06-20 ###
 
