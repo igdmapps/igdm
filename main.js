@@ -111,8 +111,7 @@ electron.ipcMain.on('login', (evt, data) => {
     session = session_
     createWindow()
   }).catch((error) => {
-    const errorMessage = error.message;
-    mainWindow.webContents.send('loginError', errorMessage);
+    mainWindow.webContents.send('loginError', error.message);
   })
 })
 
