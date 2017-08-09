@@ -68,9 +68,27 @@ function renderMessageAsLike (container) {
 
 function renderMessageAsText (container, message, noContext) {
   var text = typeof message === 'string' ? message : message._params.text;
-  container.appendChild(document.createTextNode(text));
+  if (urlRegex.test(text)) {
+    text = parseMessageUrl(text);
+    container.innerHTML = text;
+    var link = container.querySelector('a');
+    link.onclick = (e) => {
+      e.preventDefault();
+      var url = e.target.getAttribute('href');
+      url = /^(http|https):\/\//.test(url) ? url : "http://" + url;
+      openInBrowser(url);
+    }
+  } else {
+    container.appendChild(document.createTextNode(text));
+  }
 
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
+}
+
+function parseMessageUrl(text) {
+  return text.replace(urlRegex, function(url) {
+      return '<a href="' + url + '" target="_blank">' + url + '</a>';
+  });
 }
 
 function renderContextMenu (text) {

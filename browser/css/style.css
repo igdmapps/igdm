@@ -220,9 +220,13 @@ button, button:focus {
   max-width: 100%;
 }
 
-.chat .message .content .post-caption, .chat .message .content a {
+.chat .message .content .post-caption {
   font-size: 12px;
   color: #666;
+}
+
+.chat .message .content a {
+  color: #1A2333;
 }
 
 .message.outward .content {
