@@ -68,16 +68,8 @@ function renderMessageAsLike (container) {
 
 function renderMessageAsText (container, message, noContext) {
   var text = typeof message === 'string' ? message : message._params.text;
-  if (urlRegex.test(text)) {
-    text = parseMessageUrl(text);
-    container.innerHTML = text;
-    var link = container.querySelector('a');
-    link.onclick = (e) => {
-      e.preventDefault();
-      var url = e.target.getAttribute('href');
-      url = /^(http|https):\/\//.test(url) ? url : "http://" + url;
-      openInBrowser(url);
-    }
+  if (URL_REGEX.test(text)) {
+    renderMessageWithLink(container, text);
   } else {
     container.appendChild(document.createTextNode(text));
   }
@@ -85,10 +77,19 @@ function renderMessageAsText (container, message, noContext) {
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
 }
 
-function parseMessageUrl(text) {
-  return text.replace(urlRegex, function(url) {
-      return '<a href="' + url + '" target="_blank">' + url + '</a>';
+function renderMessageWithLink(container, text) {
+  text = text.replace(URL_REGEX, (url) => {
+    return `<a href="${url}" class="link-in-message" target="_blank">${url}</a>`;
   });
+
+  container.innerHTML += text;
+  var link = container.querySelector('a');
+  link.onclick = (e) => {
+    e.preventDefault();
+    var url = e.target.getAttribute('href');
+    url = /^(http|https):\/\//.test(url) ? url : "http://" + url;
+    openInBrowser(url);
+  }
 }
 
 function renderContextMenu (text) {

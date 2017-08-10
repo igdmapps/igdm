@@ -220,13 +220,9 @@ button, button:focus {
   max-width: 100%;
 }
 
-.chat .message .content .post-caption {
+.chat .message .content .post-caption, .chat .message .content a {
   font-size: 12px;
   color: #666;
-}
-
-.chat .message .content a {
-  color: #1A2333;
 }
 
 .message.outward .content {
@@ -269,6 +265,14 @@ button, button:focus {
 
 .message.outward .content.ig-media:after{
   border-color: #fff transparent transparent #fff;
+}
+
+.message.outward .content a.link-in-message {
+  color: white;
+}
+
+.message.inward .content a.link-in-message {
+  color: rgb(22, 139, 249);
 }
 
 .message-time {
