@@ -59,7 +59,7 @@ function getChatList () {
     mainWindow.webContents.send('chatList', chats)
 
     setTimeout(getChatList, pollingInterval);
-  }).catch(setTimeout(getChatList, RATE_LIMIT_DELAY))
+  }).catch(() => setTimeout(getChatList, RATE_LIMIT_DELAY))
 }
 
 let timeoutObj;
@@ -70,7 +70,7 @@ function getChat (evt, id) {
     if (timeoutObj) clearTimeout(timeoutObj)
 
     timeoutObj = setTimeout(getChat, pollingInterval, {}, id);
-  }).catch(setTimeout(getChat, RATE_LIMIT_DELAY, evt, id))
+  }).catch(() => setTimeout(getChat, RATE_LIMIT_DELAY, evt, id))
 }
 
 app.on('ready', () => {
