@@ -165,6 +165,6 @@ function showInViewer (dom) {
 
 function quoteText (text) {
   var input = document.querySelector(MSG_INPUT_SELECTOR);
-  input.value = `${text} ==================== ${input.value}`
+  input.value = `${text}\n==================\n${input.value}`
   input.focus();
 }
