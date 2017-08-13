@@ -81,9 +81,8 @@ function sendMessage (message, accounts, isNewChat) {
   ipcRenderer.send('message', { message, isNewChat, users })
 }
 
-function submitMessage (e, chat_) {
-  e.preventDefault();
-  var input = document.querySelector('.new-message form input');
+function submitMessage (chat_) {
+  var input = document.querySelector(MSG_INPUT_SELECTOR);
   var message = input.value;
   if (message.trim()) {
     sendMessage(message, chat_.accounts, !chat_.id);
@@ -93,6 +92,17 @@ function submitMessage (e, chat_) {
 
     msgContainer.appendChild(div);
     scrollToChatBottom();
+  }
+}
+
+function addSubmitHandler (chat_) {
+  const input = document.querySelector(MSG_INPUT_SELECTOR);
+  input.onkeyup = (evt) => {
+    // allow new line when shift key is pressed
+    if (evt.keyCode == 13 && !evt.shiftKey) {
+      evt.preventDefault();
+      submitMessage(chat_);
+    }
   }
 }
 
@@ -154,7 +164,7 @@ function showInViewer (dom) {
 }
 
 function quoteText (text) {
-  var input = document.querySelector('.new-message form input');
+  var input = document.querySelector(MSG_INPUT_SELECTOR);
   input.value = `${text} ==================== ${input.value}`
   input.focus();
 }

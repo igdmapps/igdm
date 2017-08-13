@@ -185,8 +185,8 @@ function renderChat (chat_) {
   renderMessageSeenText(msgContainer, chat_);
   scrollToChatBottom();
 
-  document.querySelector('.new-message form').onsubmit = (e) => submitMessage(e, chat_);
-  document.querySelector('.new-message form input').focus();
+  addSubmitHandler(chat_);
+  document.querySelector(MSG_INPUT_SELECTOR).focus();
 }
 
 function renderMessageSeenText (container, chat_) {

@@ -54,9 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelector('button.open-emoji').onclick = () => {
     const onEmojiSelected = (emoji) => {
-      document.querySelector('.new-message form input').value += emoji;
+      document.querySelector(MSG_INPUT_SELECTOR).value += emoji;
       document.querySelector('.emojis').classList.add('hide');
-      document.querySelector('.new-message form input').focus();
+      document.querySelector(MSG_INPUT_SELECTOR).focus();
     }
     window.showEmojis(
       document.querySelector('.emojis-header'),
@@ -86,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ? `DON'T SEND "SEEN" RECEIPTS`
       : `SEND "SEEN" RECEIPTS`;
   }
-  document.querySelector('.new-message form').onsubmit = (e) => e.preventDefault();
 
   getLoggedInUserId();
   getChatList();

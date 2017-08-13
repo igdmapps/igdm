@@ -214,6 +214,7 @@ button, button:focus {
   position: relative;
   word-wrap: break-word;
   cursor: pointer;
+  white-space: pre-line;
 }
 
 .chat .message .content img {
@@ -297,16 +298,17 @@ button, button:focus {
   width: 63%;
 }
 
-.new-message input, .new-message input:focus {
+.new-message textarea, .new-message textarea:focus {
   outline: none;
   font-size: 17px;
   color: #555;
-  padding: 10px;
+  padding: 15px 10px 10px 10px;
   padding-right: 5%;
   width: 95.8%;
   word-wrap: break-word;
-  height: 35px;
+  height: 30px;
   border: 1px #aaa solid;
+  resize: none;
 }
 
 .viewer {
