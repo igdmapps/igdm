@@ -1,9 +1,10 @@
 ### 2.0.3 / ????-??-?? ###
 
-* Link to report an issue #18
+* Link to report an issue [#18](issues/18)
 * Link to star the project.
-* Failed login error messages (thank you @andela-mmakinde) #17
-* Parse urls within messages (thank you @solomon-fibonacci) #6
+* Failed login error messages (thank you @andela-mmakinde) [#17](issues/17)
+* Parse urls within messages (thank you @solomon-fibonacci) [#6](issues/6)
+* Support newline in message sending/formatting [#21](issues/21)
 
 ### 2.0.2 / 2017-06-20 ###
 
