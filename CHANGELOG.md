@@ -2,7 +2,8 @@
 
 * Link to report an issue #18
 * Link to star the project.
-* Failed login error messages (thank you @andela-mmakinde)
+* Failed login error messages (thank you @andela-mmakinde) #17
+* Parse urls within messages (thank you @solomon-fibonacci) #6
 
 ### 2.0.2 / 2017-06-20 ###
 
