@@ -2,7 +2,7 @@ const electron = require('electron');
 const { Menu, MenuItem } = electron.remote
 const ipcRenderer = electron.ipcRenderer;
 const DUMMY_CHAT_ID = 'fake id';
-const URL_REGEX = new RegExp(/(([a-z]+:\/\/)?(([a-z0-9\-]+\.)+([a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(:[0-9]{1,5})?(\/[a-z0-9_\-\.~]+)*(\/([a-z0-9_\-\.]*)(\?[a-z0-9+_\-\.%=&amp;]*)?)?(#[a-zA-Z0-9!$&'()*+.=-_~:@/?]*)?)(\s+|$)/, 'i');
+const URL_REGEX = new RegExp(/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/, 'i');
 
 window.chats = [];
 window.chatsHash = {};

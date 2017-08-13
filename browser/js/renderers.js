@@ -87,7 +87,7 @@ function renderMessageWithLink(container, text) {
   link.onclick = (e) => {
     e.preventDefault();
     var url = e.target.getAttribute('href');
-    url = /^(http|https):\/\//.test(url) ? url : "http://" + url;
+    url = /^(http|https):\/\//.test(url) ? url : `http://${url}`;
     openInBrowser(url);
   }
 }
