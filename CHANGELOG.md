@@ -1,4 +1,4 @@
-### 2.0.3 / ????-??-?? ###
+### 2.1.0 / 2017-08-14 ###
 
 * Link to report an issue [#18](issues/18)
 * Link to star the project.
