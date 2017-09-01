@@ -101,6 +101,7 @@ app.on('browser-window-blur', () => {
 app.on('browser-window-focus', () => {
   pollingInterval = 10000;
   shouldNotify = false;
+  app.setBadgeCount(0);
 })
 
 electron.ipcMain.on('login', (evt, data) => {
@@ -149,7 +150,15 @@ electron.ipcMain.on('markAsRead', (evt, thread) => {
 electron.ipcMain.on('notify', (evt, message) => {
   // OSX uses the default terminal notifier icon
   let icon = process.platform !== 'darwin' ? path.join(__dirname, '/browser/img/icon.png') : undefined
-  if (shouldNotify) notifier.notify({ title: 'IG:dm Desktop', sound: true, message, icon, wait: true })
+  if (shouldNotify) {
+    notifier.notify({
+      title: 'IG:dm Desktop',
+      sound: true,
+      message, icon,
+      wait: true
+    });
+    app.setBadgeCount(app.getBadgeCount() + 1);
+  }
 })
 
 electron.ipcMain.on('getUnfollowers', (evt) => {

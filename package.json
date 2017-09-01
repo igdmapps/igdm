@@ -23,15 +23,15 @@
   "license": "MIT",
   "dependencies": {
     "electron-log": "^2.2.6",
-    "electron-updater": "^1.16.0",
-    "fb": "^1.1.1",
-    "instagram-private-api": "^0.5.15",
+    "electron-updater": "^2.8.9",
+    "fb": "^2.0.0",
+    "instagram-private-api": "^0.6.6",
     "node-notifier": "^5.1.2",
     "nojs": "^0.1.1"
   },
   "devDependencies": {
-    "electron": "^1.4.15",
-    "electron-builder": "^12.3.1"
+    "electron": "^1.8.0",
+    "electron-builder": "^19.27.3"
   },
   "build": {
     "publish": [

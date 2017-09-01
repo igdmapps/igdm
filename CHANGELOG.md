@@ -1,3 +1,7 @@
+### 2.?.? / 2017-??-?? ###
+
+* Add notification badges to app icon [#29](issues/29)
+
 ### 2.1.0 / 2017-08-14 ###
 
 * Link to report an issue [#18](issues/18)
