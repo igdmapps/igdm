@@ -35,7 +35,8 @@ function renderMessageAsPost (container, message) {
   var post = message.mediaShare._params;
 
   if (post.images) {
-    var img = dom(`<img src="${post.images[0].url}">`);
+    // carousels have nested arrays before getting to image url
+    var img = dom(`<img src="${post.images[0].url || post.images[0][0].url}">`);
     img.onload = () => scrollToChatBottom();
     container.appendChild(img);
   }
@@ -43,11 +44,28 @@ function renderMessageAsPost (container, message) {
   if (post.caption) {
     container.appendChild(dom(`<p class="post-caption">${truncate(post.caption, 30)}</p>`));
   }
-  
-  var a = dom('<a>view post</a>');
-  a.onclick = () => openInBrowser(post.webLink)
-  container.appendChild(a);
   container.classList.add('ig-media');
+  container.onclick = () => renderPost(post)
+}
+
+function renderPost (post) {
+  const postDom = dom('<div class="center"></div>');
+  if (post.videos) {
+    postDom.appendChild(dom(`<video width="${post.videos[0].width}" controls>
+                                <source src="${post.videos[0].url}" type="video/mp4">
+                              </video>`));
+  } else if (post.carouselMedia && post.carouselMedia.length) {
+    window.carouselInit(postDom, post.images.map((el) => el[0].url))
+  } else {
+    postDom.appendChild(dom(`<img src="${post.images[0].url}"/>`));
+  }
+  if (post.caption) {
+    postDom.appendChild(dom(`<p class="post-caption">${post.caption}</p>`));
+  }
+  const browserLink = dom('<button class="view-on-ig">View this post on Instagram</button>')
+  browserLink.onclick = () => openInBrowser(post.webLink)
+  postDom.appendChild(browserLink);
+  showInViewer(postDom);
 }
 
 function renderMessageAsImage (container, message) {

@@ -22,9 +22,9 @@ function truncate (text, length) {
 }
 
 function dom(content) {
-    var template = document.createElement('template');
-    template.innerHTML = content;
-    return template.content.firstChild;
+  var template = document.createElement('template');
+  template.innerHTML = content;
+  return template.content.firstChild;
 }
 
 function getUsernames (chat_, shouldTruncate) {

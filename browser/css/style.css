@@ -328,10 +328,13 @@ button, button:focus {
   animation-timing-function: ease-out;
 }
 
-.viewer .content img {
-  max-width: 55%;
+.viewer .content img, .viewer .content video {
   display: block;
   margin: 0 auto;
+}
+
+.viewer .content img {
+  max-width: 55%;
 }
 
 .viewer button.close {
@@ -359,6 +362,25 @@ button, button:focus {
 
 .unfollow-button:hover {
   text-decoration: underline;
+}
+
+.view-on-ig {
+  background: white;
+  color: rgb(22, 139, 249);
+  border: 1px rgb(22, 139, 249) solid;
+  outline: none;
+  padding: 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 13px;
+  transition: all .2s ease-out .1s;
+}
+
+.view-on-ig:hover {
+  background: rgb(22, 139, 249);
+  color: white;
 }
 
 /**********************************
@@ -426,4 +448,27 @@ EMOJIS
   font-size: 20px;
   margin: 3px 3px;
   cursor: pointer;
+}
+
+/******************************
+CAROUSEL
+******************************/
+
+.carousel-left, .carousel-right {
+  position: absolute;
+  padding: 40px;
+  top: 200px;
+  opacity: 0.5;
+}
+
+.carousel-left {
+  left: 0;
+  background: url(../img/chevron-left.png) no-repeat center;
+  background-size: 30px;
+}
+
+.carousel-right {
+  right: 0;
+  background: url(../img/chevron-right.png) no-repeat center;
+  background-size: 30px;
 }

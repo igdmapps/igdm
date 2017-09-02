@@ -1,6 +1,7 @@
 ### 2.?.? / 2017-??-?? ###
 
 * Add notification badges to app icon [#29](issues/29)
+* View shared IG posts within the app [#27](issues/27)
 
 ### 2.1.0 / 2017-08-14 ###
 
