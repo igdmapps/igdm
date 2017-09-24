@@ -206,7 +206,7 @@ button, button:focus {
 
 .chat .message .content {
   display: block;
-  padding: 15px 15px 2px 15px;
+  padding: 7px 7px 2px 7px;
   max-width: 200px;
   border-radius: 8px;
   text-align: left;
@@ -278,11 +278,14 @@ button, button:focus {
 .message-time {
   font-size: 10px;
   text-align: right;
+  margin-top: 0;
+  margin-bottom: 5px;
 }
 
 .message-sender {
   font-size: 10px;
   margin-top: 0;
+  margin-bottom: 6px;
 }
 
 .seen {
