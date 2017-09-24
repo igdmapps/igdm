@@ -97,3 +97,11 @@ exports.getUnfollowers = function (session) {
 exports.unfollow = function (session, userId) {
   Client.Relationship.destroy(session, userId);
 }
+
+exports.getLoggedInUser = function (session) {
+  return new Promise((resolve, reject) => {
+    session.getAccountId().then((id) => {
+      Client.Account.getById(session, id).then(resolve).catch(reject);
+    });
+  });
+}

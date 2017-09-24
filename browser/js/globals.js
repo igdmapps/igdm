@@ -13,4 +13,5 @@ window.chatUsers = {};
 window.currentChatId = null;
 window.notifiedChatId = null;
 window.loggedInUserId = null;
+window.loggedInUser = null;
 window.shouldSendSeenFlags = true;

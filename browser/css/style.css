@@ -58,7 +58,6 @@ button, button:focus {
   background-position: center;
   width: 35px;
   height: 35px;
-  border: 1px rgb(22, 139, 249) solid;
   outline: none;
   border-radius: 50%;
 }

@@ -1,5 +1,5 @@
-function getLoggedInUserId () {
-  ipcRenderer.send('getLoggedInUserId');
+function getLoggedInUser () {
+  ipcRenderer.send('getLoggedInUser');
 }
 
 function getChat (id) {
@@ -21,7 +21,11 @@ function unfollow (userId) {
 
 // This code runs once the DOM is loaded (just in case you missed it).
 document.addEventListener('DOMContentLoaded', () => {
-  ipcRenderer.on('loggedInUserId', (evt, userId) => window.loggedInUserId = userId);
+  ipcRenderer.on('loggedInUser', (evt, user) => {
+    window.loggedInUserId = user.id;
+    window.loggedInUser = user;
+    setProfilePic();
+  });
 
   ipcRenderer.on('chatList', (evt, chats_) => {
     if (!window.chats.length || window.chats[0].items[0].id !== chats_[0].items[0].id) {
@@ -87,6 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
       : `SEND "SEEN" RECEIPTS`;
   }
 
-  getLoggedInUserId();
+  getLoggedInUser();
   getChatList();
 })

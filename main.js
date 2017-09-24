@@ -122,9 +122,10 @@ electron.ipcMain.on('logout', (evt, data) => {
   createWindow()
 })
 
-electron.ipcMain.on('getLoggedInUserId', (evt) => {
-  var userId = session._cookiesStore.storage.idx['i.instagram.com']['/'].ds_user_id.value;
-  mainWindow.webContents.send('loggedInUserId', userId)
+electron.ipcMain.on('getLoggedInUser', (evt) => {
+  instagram.getLoggedInUser(session).then((user) => {
+    mainWindow.webContents.send('loggedInUser', user);
+  })
 })
 
 electron.ipcMain.on('getChatList', getChatList)
