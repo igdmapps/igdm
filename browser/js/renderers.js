@@ -62,7 +62,7 @@ function renderPost (post) {
   if (post.caption) {
     postDom.appendChild(dom(`<p class="post-caption">${post.caption}</p>`));
   }
-  const browserLink = dom('<button class="view-on-ig">View this post on Instagram</button>')
+  const browserLink = dom('<button class="view-on-ig">View on Instagram</button>')
   browserLink.onclick = () => openInBrowser(post.webLink)
   postDom.appendChild(browserLink);
   showInViewer(postDom);

@@ -333,6 +333,7 @@ button, button:focus {
 .viewer .content img, .viewer .content video {
   display: block;
   margin: 0 auto;
+  margin-top: 50px;
 }
 
 .viewer .content img {
@@ -342,6 +343,13 @@ button, button:focus {
 .viewer button.close {
   background: transparent;
   opacity: 0.5;
+}
+
+.viewer .post-caption {
+  margin: 10px auto;
+  max-width: 250px;
+  word-wrap: break-word;
+  font-size: 15px;
 }
 
 .unfollowers {
@@ -367,22 +375,21 @@ button, button:focus {
 }
 
 .view-on-ig {
-  background: white;
-  color: rgb(22, 139, 249);
+  background: rgb(22, 139, 249);
+  color: white;
   border: 1px rgb(22, 139, 249) solid;
   outline: none;
   padding: 8px;
   border-radius: 3px;
   cursor: pointer;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   font-size: 13px;
   transition: all .2s ease-out .1s;
 }
 
 .view-on-ig:hover {
-  background: rgb(22, 139, 249);
-  color: white;
+  opacity: 0.8;
 }
 
 /**********************************
@@ -460,7 +467,7 @@ CAROUSEL
   position: absolute;
   padding: 40px;
   top: 200px;
-  opacity: 0.5;
+  opacity: 0.2;
 }
 
 .carousel-left {
