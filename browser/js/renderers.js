@@ -3,7 +3,8 @@ function renderMessage (message, direction, time, type) {
     mediaShare: renderMessageAsPost,
     text: renderMessageAsText,
     like: renderMessageAsLike,
-    media: renderMessageAsImage
+    media: renderMessageAsImage,
+    link: renderMessageAsLink
   }
 
   var div = dom(`<div class="message ${direction}"></div>`);
@@ -86,26 +87,26 @@ function renderMessageAsLike (container) {
 
 function renderMessageAsText (container, message, noContext) {
   var text = typeof message === 'string' ? message : message._params.text;
-  if (URL_REGEX.test(text)) {
-    renderMessageWithLink(container, text);
-  } else {
-    container.appendChild(document.createTextNode(text));
-  }
-
+  container.appendChild(document.createTextNode(text));
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
 }
 
-function renderMessageWithLink(container, text) {
-  text = text.replace(URL_REGEX, (url) => {
-    return `<a href="${url}" class="link-in-message" target="_blank">${url}</a>`;
+function renderMessageAsLink (container, message) {
+  const { link } = message.link._params;
+  const text = message.link._params.text;
+  if (link.image && link.image.url) {
+    var img = dom(`<img src="${link.image.url}">`);
+    img.onload = () => scrollToChatBottom();
+    container.appendChild(img);
+  }
+  // replace all contained links with anchor tags
+  container.innerHTML += text.replace(URL_REGEX, (url) => {
+    return `<a class="link-in-message">${url}</a>`;
   });
-
-  container.innerHTML += text;
-  var link = container.querySelector('a');
-  link.onclick = (e) => {
-    e.preventDefault();
-    var url = e.target.getAttribute('href');
-    url = /^(http|https):\/\//.test(url) ? url : `http://${url}`;
+  container.classList.add('ig-media');
+  container.onclick = () => {
+    // for links that don't have protocol included
+    const url = /^(http|https):\/\//.test(link.url) ? link.url : `http://${link.url}`;
     openInBrowser(url);
   }
 }

@@ -267,7 +267,7 @@ button, button:focus {
   border-color: #fff transparent transparent #fff;
 }
 
-.message.outward .content a.link-in-message {
+.message.outward .content:not(.ig-media) a.link-in-message {
   color: white;
 }
 

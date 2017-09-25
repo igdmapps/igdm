@@ -2,6 +2,8 @@
 
 * Add notification badges to app icon [#29](issues/29)
 * View shared IG posts within the app [#27](issues/27)
+* Display user profile pic on settings icon.
+* Render links as media now. [#34](issues/34)
 
 ### 2.1.0 / 2017-08-14 ###
 
