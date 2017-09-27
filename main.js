@@ -76,7 +76,7 @@ function getChat (evt, id) {
 app.on('ready', () => {
   createWindow();
   const menu = Menu.buildFromTemplate(menuTemplate);
-  // Menu.setApplicationMenu(menu);
+  Menu.setApplicationMenu(menu);
   autoUpdater.init();
 })
 

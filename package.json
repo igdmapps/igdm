@@ -1,6 +1,6 @@
 {
   "name": "IGdm",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Desktop application for Instagram DMs",
   "main": "main.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "nojs": "^0.1.1"
   },
   "devDependencies": {
-    "electron": "^1.8.0",
+    "electron": "^1.7.8",
     "electron-builder": "^19.27.3"
   },
   "build": {
@@ -50,8 +50,7 @@
     },
     "win": {
       "target": "nsis",
-      "publisherName": "ifedapoolarewaju",
-      "iconUrl": "https://github.com/ifedapoolarewaju/igdm/build/icon.ico"
+      "publisherName": "ifedapoolarewaju"
     }
   }
 }
