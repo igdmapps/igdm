@@ -4,6 +4,7 @@ function renderMessage (message, direction, time, type) {
     text: renderMessageAsText,
     like: renderMessageAsLike,
     media: renderMessageAsImage,
+    reel_share: renderMessageAsReelShare,
     link: renderMessageAsLink
   }
 
@@ -20,7 +21,7 @@ function renderMessage (message, direction, time, type) {
   if (!type && typeof message === 'string') type = 'text';
 
   if (renderers[type]) renderers[type](divContent, message);
-  else renderMessageAsText(divContent, '<unsupported message format>', true);
+  else renderMessageAsText(divContent, '<unsupported message format type '+type+'> '+JSON.stringify(message), true);
 
   divContent.appendChild(dom(
     `<p class="message-time">
@@ -67,6 +68,24 @@ function renderPost (post) {
   browserLink.onclick = () => openInBrowser(post.webLink)
   postDom.appendChild(browserLink);
   showInViewer(postDom);
+}
+
+function renderMessageAsReelShare (container, message) {
+  if (message._params.reelShare.media.video_versions) {
+    var url = typeof message === 'string' ? message : message._params.reelShare.media.video_versions[0].url
+    var img = dom(`<video controls src="${url}">`);
+    img.onload = () => scrollToChatBottom();
+    container.appendChild(img);
+    container.classList.add('ig-media');
+
+    container.addEventListener('click', () => {
+      showInViewer(dom(`<video controls src="${url}">`));
+    })
+  }
+
+  if (message._params.reelShare.text) {
+    container.appendChild(document.createTextNode(message._params.reelShare.text));
+  }
 }
 
 function renderMessageAsImage (container, message) {
