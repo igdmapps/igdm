@@ -7,4 +7,4 @@ if [ -z "$GH_TOKEN" ]; then
 fi
 
 # This will build, package and upload the app to GitHub.
-node_modules/.bin/build -mwl --x64 -p always
+node_modules/.bin/build -mwl --x64 --ia32 -p always
