@@ -75,8 +75,12 @@ function getChat (evt, id) {
 
 app.on('ready', () => {
   createWindow();
-  const menu = Menu.buildFromTemplate(menuTemplate);
-  Menu.setApplicationMenu(menu);
+  // only set the menu template when in production mode/
+  // this also leaves the dev console enabled when in dev mode.
+  if (!process.defaultApp) {
+    const menu = Menu.buildFromTemplate(menuTemplate);
+    Menu.setApplicationMenu(menu); 
+  }
   autoUpdater.init();
 })
 
