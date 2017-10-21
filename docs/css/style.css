@@ -93,3 +93,23 @@ header .logo span {
   opacity: 0.6;
 }
 
+.socio-link {
+  color: #888;
+  text-decoration: none;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  padding: 2px 5px 2px 2px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.socio-link:hover, .socio-link:focus {
+  color: #555;
+  border-color: #555;
+}
+
+.socio-link img {
+  border-radius: 50%;
+  vertical-align: bottom;
+}
+
