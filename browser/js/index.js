@@ -91,6 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
       : `SEND "SEEN" RECEIPTS`;
   }
 
+  // close modal viewer when esc is pressed
+  document.onkeyup = (e) => {
+    if (e.keyCode == 27) { // ESC keycode
+      document.querySelector('.viewer').classList.remove('active');
+    }
+  }
+
   getLoggedInUser();
   getChatList();
 })
