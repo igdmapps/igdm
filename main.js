@@ -137,9 +137,11 @@ electron.ipcMain.on('getChatList', getChatList)
 electron.ipcMain.on('getChat', getChat)
 
 electron.ipcMain.on('message', (evt, data) => {
-  instagram.sendMessage(session, data.message, data.users).then((chat) => {
-    if (data.isNewChat) getChat(null, chat[0].id)
-  })
+  if (data.isNewChat) {
+    instagram.sendNewChatMessage(session, data.message, data.users).then((chat) => getChat(null, chat[0].id))
+  } else {
+    instagram.sendMessage(session, data.message, data.chatId)
+  }
 })
 
 electron.ipcMain.on('searchUsers', (evt, search) => {

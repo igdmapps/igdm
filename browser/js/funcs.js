@@ -73,19 +73,20 @@ function markAsRead (id, li) {
 
     delete unreadChats[id];
   }
-  li.classList.remove('notification'); // or whatever
+  li.classList.remove('notification');
 }
 
-function sendMessage (message, accounts, isNewChat) {
+function sendMessage (message, accounts, chatId) {
+  const isNewChat = !chatId;
   var users = accounts.map((account) => account.id);
-  ipcRenderer.send('message', { message, isNewChat, users })
+  ipcRenderer.send('message', { message, isNewChat, users, chatId });
 }
 
 function submitMessage (chat_) {
   var input = document.querySelector(MSG_INPUT_SELECTOR);
   var message = input.value;
   if (message.trim()) {
-    sendMessage(message, chat_.accounts, !chat_.id);
+    sendMessage(message, chat_.accounts, chat_.id);
     input.value = '';
     var div = renderMessage(message, 'outward');
     var msgContainer = document.querySelector('.chat .messages');

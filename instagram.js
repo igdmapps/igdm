@@ -44,9 +44,18 @@ exports.getChat = function (session, chatId) {
   })
 }
 
-exports.sendMessage = function (session, message, recipients) {
+exports.sendNewChatMessage = function (session, message, recipients) {
   return new Promise((resolve, reject) => {
     Client.Thread.configureText(session, recipients, message).then(resolve).catch(reject)
+  })
+}
+
+exports.sendMessage = function (session, message, chatId) {
+  return new Promise((resolve, reject) => {
+    Client.Thread.getById(session, chatId)
+      .then((thread) => {
+        thread.broadcastText(message).then(resolve).catch(reject)
+      }).catch(reject)
   })
 }
 
