@@ -1,3 +1,10 @@
+### 2.3.0 / 2017-12-04 ###
+
+* Render stories when they are replied to (thank you @cce)
+* close modal view on esc button
+* fix unneeded new thread creation when DMing a group [#22](issues/22)
+* You can now upload photos in the DM [#3](issues/3)
+
 ### 2.2.0 / 2017-09-27 ###
 
 * Add notification badges to app icon [#29](issues/29)
