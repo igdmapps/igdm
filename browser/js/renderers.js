@@ -229,6 +229,7 @@ function renderChat (chat_) {
   scrollToChatBottom();
 
   addSubmitHandler(chat_);
+  addAttachmentSender(chat_);
   document.querySelector(MSG_INPUT_SELECTOR).focus();
 }
 

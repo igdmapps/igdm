@@ -305,8 +305,8 @@ button, button:focus {
   font-size: 17px;
   color: #555;
   padding: 15px 10px 10px 10px;
-  padding-right: 5%;
-  width: 95.8%;
+  padding-right: 8.5%;
+  width: 92.3%;
   word-wrap: break-word;
   height: 30px;
   border: 1px #aaa solid;
@@ -392,6 +392,18 @@ button, button:focus {
   opacity: 0.8;
 }
 
+.open-emoji, .open-emoji:focus, .send-attachment, .send-attachment:focus {
+  background: none;
+  position: absolute;
+  font-size: 25px;
+  bottom: 40px;
+  opacity: 0.5;
+}
+
+ .send-attachment {
+   left: 90.5%;
+ }
+
 /**********************************
 EMOJIS
 ***********************************/
@@ -406,13 +418,8 @@ EMOJIS
   }
 }
 
-.open-emoji, .open-emoji:focus {
-  background: none;
-  position: absolute;
+.open-emoji {
   left: 93%;
-  font-size: 25px;
-  bottom: 40px;
-  opacity: 0.5;
 }
 
 .emojis {

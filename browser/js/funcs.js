@@ -107,6 +107,21 @@ function addSubmitHandler (chat_) {
   }
 }
 
+function sendAttachment(filePath, chat_) {
+  var recipients = chat_.accounts.map((account) => account.id)
+  ipcRenderer.send('upload', { filePath, recipients, isNewChat: !chat_.id })
+}
+
+function addAttachmentSender(chat_) {
+  document.querySelector('.send-attachment').onclick = () => {
+    const fileInput = document.querySelector('.file-input');
+    fileInput.click();
+    fileInput.onchange = () => {
+      sendAttachment(fileInput.files[0].path, chat_);
+    }
+  }
+}
+
 function addNotification (el, chat_) {
   if (chat_.items[0]._params.accountId == window.loggedInUserId) {
     return

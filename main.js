@@ -144,6 +144,13 @@ electron.ipcMain.on('message', (evt, data) => {
   }
 })
 
+electron.ipcMain.on('upload', (evt, data) => {
+  instagram.uploadFile(session, data.filePath, data.recipients)
+    .then((chat) => {
+      if (data.isNewChat) getChat(null, chat[0].id)
+    })
+})
+
 electron.ipcMain.on('searchUsers', (evt, search) => {
   instagram.searchUsers(session, search).then((users) => {
     mainWindow.webContents.send('searchResult', users);

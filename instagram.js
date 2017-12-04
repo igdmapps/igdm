@@ -65,6 +65,16 @@ exports.searchUsers = function (session, search) {
   })
 }
 
+exports.uploadFile = function (session, filePath, recipients) {
+  return new Promise((resolve, reject) => {
+    Client.Upload.photo(session, filePath)
+      .then(function (upload) {
+        Client.Thread.configurePhoto(session, recipients, upload.params.uploadId)
+          .then(resolve).catch(reject);
+      }).catch(reject);
+  })
+}
+
 exports.seen = function (session, thread) {
   (new Client.Thread(session, thread)).seen()
 }
