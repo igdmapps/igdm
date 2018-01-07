@@ -1,6 +1,6 @@
 {
   "name": "IGdm",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Desktop application for Instagram DMs",
   "main": "main.js",
   "scripts": {
@@ -44,7 +44,6 @@
     ],
     "appId": "com.ifedapoolarewaju.desktop.igdm",
     "copyright": "ifedapo Olarewaju 2017",
-    "asar": false,
     "mac": {
       "category": "public.app-category.social-networking"
     },

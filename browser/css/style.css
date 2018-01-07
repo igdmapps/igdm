@@ -201,7 +201,7 @@ button, button:focus {
 
 .chat .message {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
 
 .chat .message .content {

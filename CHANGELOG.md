@@ -1,3 +1,7 @@
+### 2.3.1 / 2018-01-07 ###
+
+* store user cookies in external app directory
+
 ### 2.3.0 / 2017-12-04 ###
 
 * Render stories when they are replied to (thank you @cce)

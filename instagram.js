@@ -22,7 +22,7 @@ exports.login = function (username, password) {
   utils.clearCookieFiles();
   return new Promise((resolve, reject) => {
     const device = utils.getDevice(username);
-    const storage = utils.getCookieStorage(`${__dirname}/cookies/${username}.json`);
+    const storage = utils.getCookieStorage(`${username}.json`);
     Client.Session.create(device, storage, username, password).then(resolve).catch(reject)
   })
 }

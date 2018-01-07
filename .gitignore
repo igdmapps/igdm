@@ -36,8 +36,6 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-cookies/*
-!cookies/.keep
 dist
 .DS_Store
 .vscode/
