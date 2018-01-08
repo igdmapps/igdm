@@ -74,6 +74,15 @@ header .logo span {
   transition: all 0.2s ease;
 }
 
+.donations img, .donations pre {
+  display: inline-block;
+  font-size: 17px;
+}
+
+.donations img {
+  vertical-align: middle;
+}
+
 .screenshots a {
   display: inline-block;
   width: 480px;
