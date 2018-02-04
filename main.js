@@ -35,7 +35,7 @@ function createWindow () {
       height: 800,
       icon: `${__dirname}/browser/img/icon.png`,
       minWidth: 800,
-      minHeight: 715
+      minHeight: 500
     })
   }
   mainWindow.setTitle('Desktop IG:dm')
