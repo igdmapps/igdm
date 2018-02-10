@@ -17,6 +17,11 @@ header .logo {
   padding-left: 5%;
 }
 
+header .logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
 header .logo span {
   vertical-align: top;
 }

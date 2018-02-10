@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Running IG:dm on Windows and Linux</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="Description" CONTENT="While IG:dm is built to support all platforms (MacOS, Linux, Windows), there are some known issues you might face when trying to get it running on your Windows or Linux machines (no notable issues on MacOS). Here's a list of them, and possible workarounds.">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link rel="stylesheet" type="text/css" href="../css/blog.css">
+  <link rel="icon" type="image/png" href="../img/icon.png">
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-6350923924096600",
+      enable_page_level_ads: true
+    });
+  </script>
+</head>
+
+<body>
+  <a href="https://github.com/ifedapoolarewaju/igdm" target="_blank">
+    <img style="position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67"
+      alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png">
+  </a>
+  
+  <header>
+    <h2 class="logo">
+      <a href="http://igdm.me">
+        <img src="../img/icon.png" width="35px">
+        <span>IG:dm Desktop</span>
+      </a>
+    </h2>
+  </header>
+
+  <div class="container">
+    <h1 class="pry-color">Getting IG:dm running on WINDOWS and LINUX</h1>
+    <div class="blog-post-content">
+      <a href="http://igdm.me" target="_blank">IG:dm (Instagram desktop messenger)</a> is a desktop application used for continuing your Instagram chats from your mobile devices,
+      to your computer (just like for whatsapp).
+      <br>
+      <br>
+      While IG:dm is built to support all platforms (MacOS, Linux, Windows), there are some known issues you might face when trying
+      to get it running on your Windows or Linux machines (no notable issues on MacOS). Here's a list of them, and possible workarounds.
+
+      <h4 class="pry-color">1. Cannot Install on Windows 10 and Windows 8</h4>
+      There have been <a href="https://github.com/ifedapoolarewaju/igdm/issues/70">cases</a> where the windows installer crashes
+      while being executed with the following error:
+      <br>
+
+      <img src="../img/blog/winerror.png" alt="">
+      <br>
+      
+      <b>There are 2 alternatives to solve this problem:</b>
+      <br>
+      <div class="smaller-text">
+        <b>i. Run it as Administrator in Windows 7 compatibilty mode.</b> To do this:
+        <br>
+        <pre>
+          - Right click on setup file (i.e the IG:dm installer)
+          - Go to "Properties"
+          - Go to the "Compatibility" tab
+          - Click on "Run this program in compatibility mode for:"
+          - Select "Windows 7"
+          - At the bottom tick the checkbox "Run this program as an administrator"
+          - Click the "Apply" button to apply the changes
+          - Then try to run the installer again
+        </pre>
+        <img src="../img/blog/win7compat.png" alt="">
+        <br>
+        <br>      
+        <b>ii. Download an older
+        <a href="https://github.com/ifedapoolarewaju/igdm/releases/download/v2.1.0/IGdm-Setup-2.1.0.exe">version 2.1.0</a>:</b>
+        <br>
+        A downside to this is that you would not be able to leverage on the newer feature and updates added to the newer versions.
+      </div>
+
+      <h4 class="pry-color">2. How to run it on Linux</h4>
+      As of <a href="https://github.com/ifedapoolarewaju/igdm/releases/download/v2.3.1/IGdm-2.3.1-x86_64.AppImage" target="_blank">version 2.3.1</a>, the Linux version of IG:dm comes as an <a href="http://https://appimage.org/" target="_blank">AppImage</a>
+      which is a format for packaging applications in a way that allows them to run on common Linux-based operating systems,
+      such as RHEL, CentOS, Ubuntu, Fedora, Debian and derivatives.
+      <br>
+      <br>
+      However, in some cases, you might ge the follwoing error when you try to run it on a Linux machine:
+      <pre class="smaller-text">This Packpage is not compatible</pre>
+
+      <b>To fix this:</b>
+      You need to convert the IGdm appImage file into an executable file by follwoing the steps <a href="https://unix.stackexchange.com/questions/379134/how-run-appimage-with-left-click-mouse-in-deepin/379353#379353" target="_blank">here</a>
+
+      <h4 class="pry-color">3. Unable to Login due to 2-Factor Authentication</h4>
+      Although this issue is not specific to any particular platform, it is a common issue, so I feel it might be worth the mention.
+      <br>
+      As of version 2.3.1, <a href="http://igdm.me" target="_blank">IG:dm</a> does not have support for <a href="https://help.instagram.com/566810106808145">Instagram's two-factor authentication</a>
+      so if you are a user with a 2-factor authentication on, you might find yourself unable to login to IG:dm
+      <br>
+      <b>How to fix this</b>
+      <div class="smaller-text">
+        A current work around for this would be to:
+        <pre>
+          - Disable two-step authentication on instagram and then login to IG:dm
+          - After logging in to IG:dm, re-enable two-step authentication.
+        </pre>
+        After doing this, Instagram would recognize your IG:dm device from that point on, and you would not be required to enter the 2-step
+        verification code even if you logout and then log back in with IG:dm.
+        <br>
+        <br>
+        <b>disclaimer:</b> If you do not feel comfortable about temporarily disabling two-step authentication on your account, please don't go through with it, and instead find a better alternative :)
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-96853108-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+
+</html>

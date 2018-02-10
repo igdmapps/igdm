@@ -1,0 +1,14 @@
+.container {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.blog-post-content {
+    text-align: left;
+    word-wrap: break-word;
+    line-height: 25px;
+    font-size: 18px;
+}
+
+.blog-post-content .smaller-text {
+    font-size: 15px;
+}
