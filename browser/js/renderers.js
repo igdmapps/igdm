@@ -69,12 +69,12 @@ function renderPost (post) {
 }
 
 function renderMessageAsUserStory (container, message) {
+  container.classList.add('ig-media');
   if (message._params.reelShare.media.image_versions2) {
     var url = message._params.reelShare.media.image_versions2.candidates[0].url
     var img = dom(`<img src="${url}">`);
     img.onload = () => scrollToChatBottom();
     container.appendChild(img);
-    container.classList.add('ig-media');
 
     container.addEventListener('click', () => {
       if (message._params.reelShare.media.video_versions) {
@@ -87,7 +87,7 @@ function renderMessageAsUserStory (container, message) {
   }
 
   if (message._params.reelShare.text) {
-    container.appendChild(document.createTextNode(message._params.reelShare.text));
+    container.appendChild(dom(`<p class="post-caption">${message._params.reelShare.text}</p>`));
   }
 }
 

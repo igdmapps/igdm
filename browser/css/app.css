@@ -456,7 +456,7 @@ button, button:focus {
 }
 
 
-.chat .message .content .post-caption {
+.chat .message .content .post-caption, .chat .message .content .link-in-message {
   padding: 0.5rem 0.75rem;
   margin-bottom: 0.25rem;
 }
