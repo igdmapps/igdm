@@ -39,7 +39,7 @@ const template = [
     submenu: [
       {
         label: 'Learn More',
-        click () { openExternal('https://ifedapoolarewaju.github.io/igdm') }
+        click () { openExternal('http://igdm.me') }
       },
       {
         label: 'Report an issue',

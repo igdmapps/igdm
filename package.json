@@ -2,7 +2,7 @@
   "name": "IGdm",
   "version": "2.3.1",
   "description": "Desktop application for Instagram DMs",
-  "main": "main.js",
+  "main": "main/main.js",
   "scripts": {
     "start": "gulp build && electron .",
     "pack": "gulp build && build --dir",

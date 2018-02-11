@@ -10,14 +10,14 @@ exports.init = () => {
     win = new BrowserWindow({
       width: 400,
       height: 200,
-      icon: `${__dirname}/browser/img/icon.png`,
+      icon: `${__dirname}/../browser/img/icon.png`,
       maxWidth: 400,
       maxHeight: 200
     })
 
     win.setTitle('IG:dm software update')
     win.loadURL(url.format({
-      pathname: path.join(__dirname, 'browser/autoupdate.html'),
+      pathname: path.join(__dirname, '../browser/autoupdate.html'),
       protocol: 'file:',
       slashes: true
     }))

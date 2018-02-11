@@ -20,7 +20,7 @@ function createWindow () {
     mainWindow = new BrowserWindow({
       width: 1200,
       height: 800,
-      icon: `${__dirname}/browser/img/icon.png`,
+      icon: `${__dirname}/../browser/img/icon.png`,
       minWidth: 500,
       minHeight: 400
     })
@@ -28,7 +28,7 @@ function createWindow () {
   mainWindow.setTitle('IG:dm - Instagram Desktop Messenger')
 
   instagram.checkAuth(session).then((result) => {
-    let view = result.isLoggedIn ? 'browser/index.html' : 'browser/login.html'
+    let view = result.isLoggedIn ? '../browser/index.html' : '../browser/login.html'
     session = result.session || session
 
     mainWindow.loadURL(url.format({
