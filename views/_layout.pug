@@ -1,0 +1,21 @@
+block titleDeterminer
+  if pageTitle
+    - var title = 'IGDM - ' + pageTitle
+  else
+    - var title = 'IGDM - Instagram Desktop Messenger'
+  unless pageID
+    - var pageID = ''
+doctype html
+html(lang='en')
+  head
+    block head
+      title= title
+      meta(charset='utf-8')
+      meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+      meta(name='viewport', content='width=device-width, initial-scale=1, user-scalable=no')
+
+      link(rel='stylesheet', type='text/css', href='css/bootstrap.min.css')
+  block body
+    body
+      block content
+        .container-fluid

@@ -1,0 +1,50 @@
+extends _layout
+
+append head
+  link(rel='stylesheet', type='text/css', href='css/app.css')
+
+block body
+  body(no-js='', on-click-remove-class='.dropdown active')
+    .container_fluid.app
+      .header.d-flex.p-3
+        button.col-md-auto.settings(no-js='', on-mouseenter-add-class='.dropdown-menu active')
+        .dropdown-menu(no-js='', on-mouseleave-remove-class='.dropdown-menu active')
+          #seen-flagger.dropdown-item(title="You'd know when recipients read your message, but they won't know when you read theirs")
+            | Don't send 'Seen' receipts
+          #unfollowers.dropdown-item Users not following back
+          #logout.dropdown-item Log out
+        .search-header.col-md-auto
+          input.form-control(type='text', name='search', placeholder='Search Instagram users')
+      .appBody
+        .chat-list.col-4
+          .listStrapper.row
+            ul
+        .chat.col-8
+          .chat-title.row.p-3
+          .messages.row.p-3.pt-5
+            .center.cover
+              img(src='img/icon.png', width='300px')
+              p.italic Search and select a chat to start.
+          .messageBox.row.p-3
+            .new-message
+              form
+                textarea(placeholder='Start a message' id="messageText")
+            button.send-attachment
+              img(src='img/attachment.png', width='20px')
+            input.file-input.hide(type='file', accept='image/jpeg,image/jpg')
+            button.open-emoji(no-js='', on-click-toggle-class='.emojis hide')
+              img(src='img/smiley.png', width='20px')
+            .emojis.hide
+              .emojis-header
+              .emojis-body
+        .viewer
+          button.close(no-js='', on-click-remove-class='.viewer active')
+            img(width='25px', src='img/close.png', alt='close icon')
+          .content
+  script(type='text/javascript', src='../node_modules/nojs/dist/no.min.js')
+  script(type='text/javascript', src='js/globals.js')
+  script(type='text/javascript', src='js/emoji.js')
+  script(type='text/javascript', src='js/carousel.js')
+  script(type='text/javascript', src='js/funcs.js')
+  script(type='text/javascript', src='js/renderers.js')
+  script(type='text/javascript', src='js/index.js')

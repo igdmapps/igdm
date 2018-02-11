@@ -1,0 +1,23 @@
+extends _layout
+
+append head
+  link(rel='stylesheet', type='text/css', href='css/login.css')
+
+block content
+  .container.cardBox.pb-5.pt-3.pt-sm-5
+    form.pageCard.mx-auto.p-4.p-sm-5
+      .clearfix.welcomeBox
+        img.brand.d-block.float-none.mx-auto(src='img/icon.png', width='64px')
+        h2.text-center.title Welcome
+        span.d-block.text-center Login with your Instagram credentials
+      .input-group.loginInputs.mt-4
+        input.form-control.username(type='text', name='username', placeholder='Username')
+        input.form-control.password(type='password', name='password', placeholder='Password')
+      button.loginButton.mt-3.btn.btn-primary(type='submit') Login to Instagram
+      span#error.d-block.errorMessage.text-center.mt-3
+      .disclaimer.mt-5.text-center
+        p
+          | This app is not affiliated with Instagram. You can visit the open source project 
+          a(href="#") here.
+        p We never store your password.
+  script(type='text/javascript', src='js/login.js')
