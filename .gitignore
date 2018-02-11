@@ -41,4 +41,5 @@ dist
 .vscode/
 
 # Extras
-browser/*.html
+browser/index.html
+browser/login.html

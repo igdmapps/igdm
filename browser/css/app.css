@@ -53,31 +53,6 @@ button, button:focus {
   border-radius: 100%;
 }
 
-.dropdown {
-  position: absolute;
-  top: 50px;
-  right: 55px;
-  border: 1px solid #eee;
-  padding: 20px 0 20px 0;
-  background: white;
-  border-radius: 5px;
-  z-index: 2;
-  display: none;
-}
-
-.dropdown.active {
-  display: block;
-}
-
-.dropdown .item {
-  padding: 10px 15px;
-  text-align: center;
-  font-size: 11px;
-  color: #666;
-  cursor: pointer;
-  border-bottom: 1px #efefef solid;
-}
-
 .thumb {
   width: 3rem;
   height: 3rem;
@@ -123,7 +98,7 @@ button, button:focus {
   flex-direction: row;
 }
 
-.chat-list li:hover, .chat-list li.active, .dropdown .item:hover {
+.chat-list li:hover, .chat-list li.active {
   background-color: #DFDFDF;
   background-image: linear-gradient(to left, #FCFCFC, #e9ecef);
 }
@@ -367,14 +342,124 @@ button, button:focus {
   opacity: 0.5;
 }
 
- .send-attachment {
- right: 4rem;
- bottom: 1rem;
- width: 3rem;
- height: 3rem;
- box-sizing: border-box;
- padding-top: 0;
- }
+.send-attachment {
+  right: 4rem;
+  bottom: 1rem;
+  width: 3rem;
+  height: 3rem;
+  box-sizing: border-box;
+  padding-top: 0;
+}
+
+.app {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-list {
+  max-height: inherit;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px #EFEFEF solid;
+}
+
+.chat {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.listStrapper {
+  flex: 1 1;
+  overflow-y: overlay;
+  background-color: #FCFCFC;
+}
+
+@media (max-width:768px) {
+  .chat-list {
+    width: 4.5rem;
+  }
+  .chat {
+    max-width: calc(100% - 4.5rem);
+  }
+}
+
+.appBody {
+  position: relative;
+  flex: 1 1;
+  width: 100%;
+}
+
+.header .search-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 25%;
+}
+
+.header {
+  background-image: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+  border-bottom: 1px solid #DFDFDF;
+}
+
+.messageBox {
+  border-top: 1px solid #DADADA;
+  position: relative;
+}
+
+.ig-media .message-time {
+  display: none;
+}
+
+.dropdown-menu.active {
+  display: block;
+  top: 4.5rem;
+  left: 1rem;
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+}
+
+.ig-media .message-sender {
+  padding: 0.5rem;
+}
+
+::-webkit-scrollbar {
+  background: whiteSmoke;
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb:window-inactive, ::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: solid whiteSmoke 2px;
+}
+
+::-webkit-scrollbar-thumb:window-inactive:hover, ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+.chat .message .content .post-caption {
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.25rem;
+}
 
 /**********************************
 EMOJIS
@@ -413,6 +498,10 @@ EMOJIS
   animation-name: slideIn;
   animation-duration: 0.2s;
   animation-timing-function: ease-out; 
+}
+
+.emojis.hide {
+    display: none;
 }
 
 .emojis-header {
@@ -474,114 +563,4 @@ CAROUSEL
   right: 0;
   background: url(../img/chevron-right.png) no-repeat center;
   background-size: 30px;
-}
-
-.app {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.chat-list {
-    max-height: inherit;
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px #EFEFEF solid;
-}
-
-.chat {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.listStrapper {
-    flex: 1 1;
-    overflow-y: overlay;
-    background-color: #FCFCFC;
-}
-
-@media (max-width:768px) {
-  .chat-list {
-      width: 4.5rem;
-  }
-  .chat {
-      max-width: calc(100% - 4.5rem);
-  }
-}
-
-.appBody {
-  position: relative;
-  flex: 1 1;
-  width: 100%;
-}
-
-.header .search-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    min-width: 25%;
-}
-
-.header {
-    background-image: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-    border-bottom: 1px solid #DFDFDF;
-}
-
-.messageBox {
-  border-top: 1px solid #DADADA;
-  position: relative;
-}
-
-.emojis.hide {
-    display: none !important;
-}
-
-.ig-media .message-time {
-    display: none;
-}
-
-.dropdown-menu.active {
-  display: block;
-  top: 4.5rem;
-  left: 1rem;
-}
-
-.ig-media .message-sender {
-  padding: 0.5rem;
-}
-
-::-webkit-scrollbar {
-  background: whiteSmoke;
-  width: 6px;
-}
-
-::-webkit-scrollbar-thumb:window-inactive, ::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: solid whiteSmoke 2px;
-}
-
-::-webkit-scrollbar-thumb:window-inactive:hover, ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-
-.chat .message .content .post-caption {
-    padding: 0.5rem 0.75rem;
-    margin-bottom: 0.25rem;
 }
