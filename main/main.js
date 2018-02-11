@@ -7,6 +7,10 @@ const path = require('path');
 const url = require('url');
 const instagram = require('./instagram');
 const autoUpdater = require('./autoupdater');
+
+// fixes electron's timeout inconsistency
+require('./timeout-shim').fix();
+
 const RATE_LIMIT_DELAY = 60000;
 let pollingInterval = 10000;
 
