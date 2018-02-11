@@ -8,7 +8,7 @@ function renderMessage (message, direction, time, type) {
     link: renderMessageAsLink
   }
 
-  var div = dom(`<div class="message ${direction}"></div>`);
+  var div = dom(`<div class="message clearfix ${direction}"></div>`);
   var divContent = dom('<div class="content"></div>');
 
   if (direction === 'inward') {
@@ -24,9 +24,7 @@ function renderMessage (message, direction, time, type) {
   else renderMessageAsText(divContent, '<unsupported message format>', true);
 
   divContent.appendChild(dom(
-    `<p class="message-time">
-      ${time ? formatTime(time) : 'sending ...'}
-    </p>`)
+    `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
   );
   div.appendChild(divContent);
   
@@ -147,8 +145,9 @@ function renderContextMenu (text) {
 
 function renderChatListItem (username, msgPreview, thumbnail, id) {
   var li = document.createElement('li');
+  li.classList.add('col-12', 'p-3');
   li.appendChild(dom(`<div><img class="thumb" src="${thumbnail}"></div>`));
-  li.appendChild(dom(`<div class="username"><b>${username}</b><br>${msgPreview}</div>`));
+  li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${username}</b><br>${msgPreview}</div>`));
   if (id) li.setAttribute("id", `chatlist-${id}`);
 
   return li;
@@ -158,7 +157,7 @@ function renderSearchResult (users) {
   var ul = document.querySelector('.chat-list ul');
   ul.innerHTML = "";
   users.forEach((user) => {
-    var li = renderChatListItem(user._params.username, 'send a message', user._params.picture);
+    var li = renderChatListItem(user._params.username, 'Send a message', user._params.picture);
     li.onclick = () => {
       setActive(li);
       if (window.chatUsers[user.id]) {
@@ -241,12 +240,12 @@ function renderUnfollowers (users) {
   var ul = dom(`<ul class="unfollowers"></ul>`);
   users.forEach((user) => {
     var li = dom(
-      `<li>
+      `<li class="col-12 col-md-4 col-lg-3">
         <img class="thumb" src="${user._params.picture}">
         <div class="">${user._params.username}</div>
       </li>`
     );
-    var unfollowButton = dom(`<button class="unfollow-button">UNFOLLOW</button>`);
+    var unfollowButton = dom(`<button class="unfollow-button">Unfollow</button>`);
     unfollowButton.onclick = () => {
       unfollow(user.id);
       li.remove();

@@ -14,7 +14,7 @@ function formatTime (time) {
   let minutes = format(date.getMinutes());
   let day = format(date.getDate());
   let month = MONTHS[date.getMonth()];
-  return `${day}, ${month}.  ${hours}:${minutes}`
+  return `${hours}:${minutes} - ${month} ${day}`
 }
 
 function truncate (text, length) {
@@ -29,7 +29,7 @@ function dom(content) {
 
 function getUsernames (chat_, shouldTruncate) {
   var usernames = chat_.accounts.map((acc) => acc._params.username).join(', ');
-  return shouldTruncate ? truncate(usernames, 20) : usernames;
+  return usernames;
 }
 
 function isCurrentChat (chat_) {

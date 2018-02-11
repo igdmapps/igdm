@@ -1,12 +1,12 @@
 {
-  "name": "IGdm",
+  "name": "igdm",
   "version": "2.3.1",
   "description": "Desktop application for Instagram DMs",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "pack": "build --dir",
-    "dist": "build -mwl --x64"
+    "start": "gulp build && electron .",
+    "pack": "gulp build && build --dir",
+    "dist": "gulp build && build -mwl --x64"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.0",
+    "bootstrap": "^4.0.0",
     "electron-log": "^2.2.6",
     "electron-updater": "^2.8.9",
     "fb": "^2.0.0",
@@ -34,7 +35,9 @@
     "electron": "^1.8.2",
     "electron-builder": "^19.27.3",
     "electron-builder-lib": "^20.0.0",
-    "electron-builder-squirrel-windows": "^20.0.0"
+    "electron-builder-squirrel-windows": "^20.0.0",
+    "gulp": "^3.9.1",
+    "gulp-pug": "^3.3.0"
   },
   "build": {
     "publish": [

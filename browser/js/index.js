@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     )
   }
 
-  let searchForm = document.querySelector('.chat-list input[name=search]');
+  let searchForm = document.querySelector('.header input[name=search]');
   searchForm.onkeyup = (e) => {
     const value = searchForm.value;
     const trimmedValue = value.trim() 
@@ -102,6 +102,16 @@ document.addEventListener('DOMContentLoaded', () => {
     window.shouldNotify = false
   }
 
+  function OnInput() {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight - 30) + 'px';
+  }
+  
+  const tx = document.getElementById('messageText');
+  const scrHeight = tx.scrollHeight - 6;
+  tx.setAttribute('style', 'height:' + (scrHeight).toString() + 'px;overflow-y:hidden;');
+  tx.addEventListener("input", OnInput, false);
+
   getLoggedInUser();
   getChatList();
-})
+});

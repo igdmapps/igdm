@@ -41,25 +41,16 @@ button, button:focus {
   margin: 0 auto;
 }
 
-.container {
-  width: 100%;
-  margin: 0 auto;
-  font-family: sans-serif;
-  color: #555;
-}
-
 .settings {
-  position: absolute;
-  top: 10px;
-  right: 55px;
+  position: relative;
   background: url(../img/user.png);
   background-repeat: no-repeat;
-  background-size: 35px;
+  background-size: 100%;
   background-position: center;
-  width: 35px;
-  height: 35px;
+  width: 3rem;
+  height: 3rem;
   outline: none;
-  border-radius: 50%;
+  border-radius: 100%;
 }
 
 .dropdown {
@@ -88,8 +79,8 @@ button, button:focus {
 }
 
 .thumb {
-  width: 40px;
-  height: 40px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
 }
 
@@ -98,58 +89,52 @@ button, button:focus {
 }
 
 .chat-list {
-  padding: 20px;
-  width: 25%;
-  position: absolute;
-  top: 20px;
-  left: 0;
-  height: 90vh;
   overflow: scroll;
 }
 
 .chat-list input[name=search] {
-  margin: 0 auto;
-  margin-top: 40px;
-  height: 20px;
-  width: 92%;
+  margin-top: 0;
+  width: 100%;
   font-size: 14px;
-  border-radius: 3px;
-  padding: 10px;
   display: block;
   outline: none;
   border: 1px #ccc solid;
 }
 
 .chat-list .search-header {
-  position: fixed;
-  width: 25%;
-  background: #fff;
-  height: 90px;
-  padding-bottom: 10px;
-  top: 0;
+  background: orange;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-list ul {
-  padding-top: 50px;
+  width: 100%;
+  margin-bottom: 0;
 }
 
 .chat-list li {
   list-style: none;
-  padding: 15px;
-  border-bottom: 1px #efefef solid;
+  border-bottom: 1px #EFEFEF solid;
   vertical-align: middle;
   cursor: pointer;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .chat-list li:hover, .chat-list li.active, .dropdown .item:hover {
-  background: #efefef;
+  background-color: #DFDFDF;
+  background-image: linear-gradient(to left, #FCFCFC, #e9ecef);
 }
 
 .chat-list li .username {
   vertical-align: top;
-  margin-left: 10px;
   font-size: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1 1;
 }
 
 .chat-list li.notification:after {
@@ -166,19 +151,13 @@ button, button:focus {
   color: #fff;
 }
 
-.chat-list div {
+.chat-list .listStrapper div {
   display: inline-block;
 }
 
-.chat {
-  padding: 15px;
-  width: 65%;
-  margin-left: 30%;
-}
-
 .chat-title {
-  padding: 10px;
-  min-height: 15px;
+  min-height: 0;
+  border-bottom: 1px #EFEFEF solid;
 }
 
 .chat-title b:hover {
@@ -187,11 +166,10 @@ button, button:focus {
 }
 
 .messages {
-  height: 75vh;
-  overflow: scroll;
+  overflow: auto;
+  flex: 1 1;
   background: #efefef;
-  padding: 20px 20px 0px 20px;
-  border: 1px #efefef solid;
+  background-image: linear-gradient(to bottom, #f8f9fa, #e9ecef);
 }
 
 .messages .cover img {
@@ -201,19 +179,20 @@ button, button:focus {
 
 .chat .message {
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 0.25rem;
 }
 
 .chat .message .content {
-  display: block;
-  padding: 7px 7px 2px 7px;
-  max-width: 200px;
-  border-radius: 8px;
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  max-width: 75%;
+  border-radius: 0.5rem;
   text-align: left;
   position: relative;
   word-wrap: break-word;
   cursor: pointer;
   white-space: pre-line;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .chat .message .content img {
@@ -221,50 +200,37 @@ button, button:focus {
 }
 
 .chat .message .content .post-caption, .chat .message .content a {
-  font-size: 12px;
+  font-size: 1rem;
   color: #666;
 }
 
 .message.outward .content {
-  margin-left: 70%;
-  background: rgb(22, 139, 249);
+  background: linear-gradient(to top right, #0371e7, #1888ff);
   color: #efefef;
-  font-weight: 200;
+  font-weight: 400;
+  margin-left: auto;
+  float: right;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .message.inward .content{
-  margin-right: 70%;
+  margin-right: auto;
+  float: left;
+  padding: 0.5rem 0.75rem;
+  max-width: 75%;
+  color: #666;
+  background-color: #FCFCFC;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
-.message.inward .content, .message.inward .content.ig-media, .message.outward .content.ig-media {
+.message.inward .content.ig-media, .message.outward .content.ig-media {
   background: #fff;
   color: #666;
-}
-
-.message .content:after {
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: 0px;
-  bottom: auto;
-  border: 10px solid;
-}
-
-.message.inward .content:after{
-  left: -10px;
-  right: auto;;
-  border-color: #fff transparent transparent transparent;
-}
-
-.message.outward .content:after {
-  left: auto;
-  right: -10px;
-  border-color: rgb(22, 139, 249) transparent transparent rgb(22, 139, 249);
-}
-
-.message.outward .content.ig-media:after{
-  border-color: #fff transparent transparent #fff;
+  max-width: 75%;
+  padding: 0;
+  overflow: hidden;
 }
 
 .message.outward .content:not(.ig-media) a.link-in-message {
@@ -276,40 +242,42 @@ button, button:focus {
 }
 
 .message-time {
-  font-size: 10px;
+  font-size: 0.65rem;
   text-align: right;
+  font-weight: 400;
   margin-top: 0;
-  margin-bottom: 5px;
+  margin-bottom: 0;
 }
 
 .message-sender {
-  font-size: 10px;
+  font-size: 0.65rem;
   margin-top: 0;
-  margin-bottom: 6px;
+  margin-bottom: 0.25rem;
 }
 
 .seen {
   text-align: right;
   color: #aaa;
-  font-size: 14px;
+  font-size: 0.75rem;
+  font-style: normal;
 }
 
 .new-message {
-  position: absolute;
-  bottom: 30px;
-  width: 63%;
+  position: relative;
+  width: 100%;
 }
 
 .new-message textarea, .new-message textarea:focus {
-  outline: none;
-  font-size: 17px;
+  outline: none !important;
+  box-shadow: none;
+  font-size: 1rem;
   color: #555;
-  padding: 15px 10px 10px 10px;
-  padding-right: 8.5%;
-  width: 92.3%;
+  padding: 0.75rem;
+  width: 100%;
   word-wrap: break-word;
-  height: 30px;
-  border: 1px #aaa solid;
+  padding-right: 6rem;
+  height: 3rem;
+  border: none;
   resize: none;
 }
 
@@ -317,7 +285,8 @@ button, button:focus {
   position: absolute;
   top: 0;
   width: 100%;
-  min-height: 100vh;
+  overflow-y: auto;
+  bottom: 0;
   background: white;
   z-index: 3;
   display: none;
@@ -325,6 +294,7 @@ button, button:focus {
 
 .viewer.active {
   display: block;
+  align-items: center;
   animation-name: fadeIn;
   animation-duration: 0.4s;
   animation-timing-function: ease-out;
@@ -333,7 +303,6 @@ button, button:focus {
 .viewer .content img, .viewer .content video {
   display: block;
   margin: 0 auto;
-  margin-top: 50px;
 }
 
 .viewer .content img {
@@ -358,16 +327,15 @@ button, button:focus {
 
 .unfollowers li {
   display: inline-block;
-  width: 20%;
   text-align: center;
-  padding: 10px;
-  border-bottom: 1px #efefef solid;
+  margin-top: 3rem;
 }
 
 .unfollow-button {
-  padding: 8px;
-  color: rgb(22, 139, 249);
-  background: white;
+  padding: 0.25rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #168bf9;
+  color: #FFF;
 }
 
 .unfollow-button:hover {
@@ -395,74 +363,93 @@ button, button:focus {
 .open-emoji, .open-emoji:focus, .send-attachment, .send-attachment:focus {
   background: none;
   position: absolute;
-  font-size: 25px;
-  bottom: 40px;
+  font-size: 24px;
   opacity: 0.5;
 }
 
  .send-attachment {
-   left: 90.5%;
+ right: 4rem;
+ bottom: 1rem;
+ width: 3rem;
+ height: 3rem;
+ box-sizing: border-box;
+ padding-top: 0;
  }
 
 /**********************************
 EMOJIS
 ***********************************/
 
-@keyframes slideUp {
+@keyframes slideIn {
   from {
-    transform: translateY(200px);
+    transform: translateY(20px);
+    transform: translateX(20px);
+    opacity: 0;
   }
 
   to {
     transform: translateY(0px);
+    transform: translateX(0px);
+    opacity: 1;
   }
 }
 
-.open-emoji {
-  left: 93%;
-}
+.open-emoji {right: 1rem;bottom: 1rem;width: 3rem;height: 3rem;box-sizing: border-box;padding-top: 0;}
 
 .emojis {
   width: 500px;
-  position: absolute;
-  bottom: 100px;
-  right: 60px;
+  max-height: calc(100% - 2rem);
+  max-width: 90%;
+  position: fixed;
+  bottom: 1rem;
+  right: 4rem;
   background: white;
   border: 1px #efefef solid;
+  display: flex;
+  flex-direction: column;
 }
 
 .emojis:not(.hide) {
-  animation-name: slideUp;
+  animation-name: slideIn;
   animation-duration: 0.2s;
   animation-timing-function: ease-out; 
 }
 
 .emojis-header {
   width: 100%;
-  padding: 3px;
+  padding: 0.25rem;
   border-bottom: 1px #efefef solid;
-  overflow-x: scroll;
+  overflow-x: auto;
+  white-space: nowrap;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .emojis-header div {
   display: inline-block;
-  font-size: 25px;
-  padding: 5px;
+  font-size: 1.5rem;
+  padding: 0.45rem;
+  width: 3rem;
+  height: 3rem;
   cursor: pointer;
-  margin: 0 10px;
 }
 
 .emojis-body {
-  height: 300px;
-  overflow-y: scroll;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   word-wrap: break-word;
   padding: 10px 10px;
-  margin-bottom: 10px;
+  text-align: center;
 }
 
 .emojis-body .emoji {
-  font-size: 20px;
-  margin: 3px 3px;
+  font-size: 1.25rem;
+  margin: 0.1rem;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  overflow-y: hidden;
   cursor: pointer;
 }
 
@@ -487,4 +474,114 @@ CAROUSEL
   right: 0;
   background: url(../img/chevron-right.png) no-repeat center;
   background-size: 30px;
+}
+
+.app {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-list {
+    max-height: inherit;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px #EFEFEF solid;
+}
+
+.chat {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.listStrapper {
+    flex: 1 1;
+    overflow-y: overlay;
+    background-color: #FCFCFC;
+}
+
+@media (max-width:768px) {
+  .chat-list {
+      width: 4.5rem;
+  }
+  .chat {
+      max-width: calc(100% - 4.5rem);
+  }
+}
+
+.appBody {
+  position: relative;
+  flex: 1 1;
+  width: 100%;
+}
+
+.header .search-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 25%;
+}
+
+.header {
+    background-image: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+    border-bottom: 1px solid #DFDFDF;
+}
+
+.messageBox {
+  border-top: 1px solid #DADADA;
+  position: relative;
+}
+
+.emojis.hide {
+    display: none !important;
+}
+
+.ig-media .message-time {
+    display: none;
+}
+
+.dropdown-menu.active {
+  display: block;
+  top: 4.5rem;
+  left: 1rem;
+}
+
+.ig-media .message-sender {
+  padding: 0.5rem;
+}
+
+::-webkit-scrollbar {
+  background: whiteSmoke;
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb:window-inactive, ::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: solid whiteSmoke 2px;
+}
+
+::-webkit-scrollbar-thumb:window-inactive:hover, ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+.chat .message .content .post-caption {
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.25rem;
 }
