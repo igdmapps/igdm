@@ -32,7 +32,9 @@
   },
   "devDependencies": {
     "electron": "^1.7.8",
-    "electron-builder": "^19.27.3"
+    "electron-builder": "^19.27.3",
+    "electron-builder-lib": "^20.0.0",
+    "electron-builder-squirrel-windows": "^20.0.0"
   },
   "build": {
     "publish": [
@@ -48,8 +50,21 @@
       "category": "public.app-category.social-networking"
     },
     "win": {
-      "target": "nsis",
+      "target": [
+        "nsis",
+        "nsis-web",
+        "squirrel",
+        "portable"
+      ],
       "publisherName": "ifedapoolarewaju"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "zip",
+        "deb"
+      ],
+      "maintainer": "Ifedapo Olarewaju <ifedapoolarewaju@gmail.com>"
     }
   }
 }
