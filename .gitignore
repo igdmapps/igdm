@@ -39,3 +39,6 @@ jspm_packages
 dist
 .DS_Store
 .vscode/
+
+# Extras
+browser/*.html

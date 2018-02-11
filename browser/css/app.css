@@ -200,7 +200,7 @@ button, button:focus {
 }
 
 .chat .message .content .post-caption, .chat .message .content a {
-  font-size: 12px;
+  font-size: 1rem;
   color: #666;
 }
 
@@ -578,4 +578,10 @@ CAROUSEL
 
 ::-webkit-scrollbar-thumb:window-inactive:hover, ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+.chat .message .content .post-caption {
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.25rem;
 }

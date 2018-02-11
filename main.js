@@ -38,7 +38,7 @@ function createWindow () {
       minHeight: 400
     })
   }
-  mainWindow.setTitle('IGDM - Instagram Desktop Messenger')
+  mainWindow.setTitle('IG:dm - Instagram Desktop Messenger')
 
   instagram.checkAuth(session).then((result) => {
     let view = result.isLoggedIn ? 'browser/index.html' : 'browser/login.html'
