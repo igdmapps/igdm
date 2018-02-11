@@ -48,10 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSearchResult(users);
   });
 
-  ipcRenderer.on('focusNotifiedChat', (evt) => {
-    document.querySelector(`#${window.notifiedChatId}`).click();
-  });
-
   ipcRenderer.on('unfollowers', (evt, users) => {
     renderUnfollowers(users);
   });
@@ -96,6 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.keyCode == 27) { // ESC keycode
       document.querySelector('.viewer').classList.remove('active');
     }
+  }
+
+  window.onblur = () => {
+    window.shouldNotify = true
+  }
+
+  window.onfocus = () => {
+    window.shouldNotify = false
   }
 
   getLoggedInUser();

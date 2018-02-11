@@ -138,8 +138,21 @@ function addNotification (el, chat_) {
     } else {
       el.classList.add('notification');
       window.notifiedChatId = el.getAttribute("id");
-      if (isNew) ipcRenderer.send('notify', `new message from ${getUsernames(chat_)}`);
+      if (isNew && window.shouldNotify) {
+        notify(`new message from ${getUsernames(chat_)}`);
+      }
     }
+  }
+}
+
+function notify (message) {
+  ipcRenderer.send('increase-badge-count');
+  const notification = new Notification('IG:dm Desktop', {
+    body: message
+  });
+
+  notification.onclick = () => {
+    document.querySelector(`#${window.notifiedChatId}`).click();
   }
 }
 

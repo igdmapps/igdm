@@ -7,21 +7,8 @@ const path = require('path');
 const url = require('url');
 const instagram = require('./instagram');
 const autoUpdater = require('./autoupdater');
-const notifier = require('node-notifier');
 const RATE_LIMIT_DELAY = 60000;
 let pollingInterval = 10000;
-let shouldNotify = false;
-
-// OSX needs custom notifier for custom notification icons
-if (process.platform === 'darwin') {
-  notifier.options.customPath = path.join(__dirname,
-    'vendor/terminal-notifier.app/Contents/MacOS/terminal-notifier')
-}
-
-notifier.on('click', () => {
-  app.focus();
-  mainWindow.webContents.send('focusNotifiedChat');
-})
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -99,12 +86,10 @@ app.on('activate', () => {
 // reduce polling frequency when app is not active.
 app.on('browser-window-blur', () => {
   pollingInterval = 30000;
-  shouldNotify = true;
 })
 
 app.on('browser-window-focus', () => {
   pollingInterval = 10000;
-  shouldNotify = false;
   app.setBadgeCount(0);
 })
 
@@ -161,18 +146,8 @@ electron.ipcMain.on('markAsRead', (evt, thread) => {
   instagram.seen(session, thread)
 })
 
-electron.ipcMain.on('notify', (evt, message) => {
-  // OSX uses the default terminal notifier icon
-  let icon = process.platform !== 'darwin' ? path.join(__dirname, '/browser/img/icon.png') : undefined
-  if (shouldNotify) {
-    notifier.notify({
-      title: 'IG:dm Desktop',
-      sound: true,
-      message, icon,
-      wait: true
-    });
-    app.setBadgeCount(app.getBadgeCount() + 1);
-  }
+electron.ipcMain.on('increase-badge-count', (evt) => {
+  app.setBadgeCount(app.getBadgeCount() + 1);
 })
 
 electron.ipcMain.on('getUnfollowers', (evt) => {
