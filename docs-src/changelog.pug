@@ -1,0 +1,51 @@
+extends _layout
+
+prepend titleDeterminer
+  - var pageDesc = 'The official IG:dm changelog summaries. See the full changelogs on GitHub.'
+  - var pageTitle = 'Changelog'
+
+append head
+  link(rel='stylesheet', href='/css/markdown.css')
+
+prepend header
+  - var navtype = 'transparent navbar-dark'
+  - var promo = 'active'
+
+block content
+  section.changelog
+    :markdown-it
+      ## Newest v2.3.0 Features
+      - You can now upload photos in the DM.
+      - Fix unneeded new thread creation when DMing a group.
+      - Close modal view on esc button.
+      - View Story replies sent to you
+      
+      [View full list](https://github.com/ifedapoolarewaju/igdm/blob/master/CHANGELOG.md#230--2017-12-04) 
+      
+      ## v2.2.0 Features
+      - Watch/View and save/download posts shared via DMs.
+      - Notification badges are now added for Mac.
+      - Shared urls are now displayed in rich format.
+      
+      [View full list](https://github.com/ifedapoolarewaju/igdm/blob/master/CHANGELOG.md#220--2017-09-27)
+      
+      ## v2.1.0 Features
+      - Helpful login error messages.
+      - Parse urls within messages.
+      - Support newline in message sending/formatting.
+      - Fix chatlist/chatrooms refusing to update after sometime.
+      - Quote messages now formats on newlines.
+      
+      [View full list](https://github.com/ifedapoolarewaju/igdm/blob/master/CHANGELOG.md#210--2017-08-14)
+      
+      ## v2.0.0 Features
+      - Better notification system
+      - Quote a chat message.
+      - View users not following you back.
+      - View image messages.
+      - You can now view shared images.
+      - Disable message reciepts.
+        - Prevent users from knowing you've seen their messages
+      - Software now auto-updates when there's a new version.
+
+      [View full list](https://github.com/ifedapoolarewaju/igdm/blob/master/CHANGELOG.md#20--2017-06-01)

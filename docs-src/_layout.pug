@@ -1,0 +1,88 @@
+block titleDeterminer
+  if pageTitle
+    - var title = 'IG:dm - ' + pageTitle
+  else
+    - var title = 'IG:dm - Instagram Direct Messages on Desktop'
+  if pageDesc
+    - var description = pageDesc
+  else 
+    - var description = 'Oops! There\'s no description available for this page.'
+
+doctype html
+html(lang='en')
+  head
+    block head
+      meta(charset='utf-8')
+      meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+      meta(http-equiv='X-UA-Compatible', content='IE=edge')
+      title= title
+
+      meta(property='og:title', content=title)
+      meta(property='og:type', content='website')
+      meta(property='og:url', content='http://igdm.me/')
+      meta(property='og:image', content='/img/icon.png')
+      meta(property='og:description', content=description)
+      meta(property='og:locale', content='en_US')
+      meta(property='og:site_name', content=title)
+      meta(name='author', content='IG:dm Contributors')
+
+      meta(name='viewport',           content='width=device-width, initial-scale=1, user-scalable=no')
+      meta(name='description',        content=description)
+      meta(name='theme-color',        content='#EFEFEF')
+      meta(name='application-name',   content='IG:dm')
+      link(rel='icon',                href='/img/icon.png')
+      link(rel='icon',                href='/img/icon.png' type='image/x-icon')
+      link(rel='icon',                href='/img/icon.png' type='shortcut icon')
+      link(rel='apple-touch-icon',    href='/img/icon.png')
+      link(rel='stylesheet',          href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=' crossorigin='anonymous')
+      link(rel='stylesheet',          href='https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css')
+      link(rel='stylesheet',          href='https://fonts.googleapis.com/css?family=Muli:400,700,900')
+      link(rel='stylesheet',          href='/css/global.css')
+      script(async='', src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
+      script.
+        (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-6350923924096600",
+        enable_page_level_ads: true
+        });
+  body
+    block header
+      a.forkus(href='https://github.com/ifedapoolarewaju/igdm', target='_blank')
+        img(src='/img/github-fork-us.svg', alt='Fork us on GitHub')
+      unless promo
+        - var promo = ''
+      .promoBanner(class=promo)
+        .backgroundSkew
+        block navigation
+          mixin link(href, friendlyName)
+            li.nav-item
+              a.nav-link(href=href)= friendlyName
+          unless navtype
+            - var navtype = 'navbar-light'
+          nav.navbar.navbar-expand-md.container(class=navtype)
+            a.navbar-brand(href='/')
+              img(src="/img/icon.png" width="32" height="32" class="d-inline-block align-top" alt="PrismarineJS")
+            button.navbar-toggler(type='button', data-toggle="collapse"
+            data-target="#navbarContent" aria-controls="navbarContent"
+            aria-expanded="false" aria-label="Toggle navigation")
+              span.navbar-toggler-icon
+            .collapse.navbar-collapse(id="navbarContent")
+              ul.navbar-nav.mr-auto
+                +link('https://github.com/ifedapoolarewaju/igdm', 'GitHub')
+                +link('https://www.producthunt.com/posts/igdm', 'ProductHunt')
+    .container
+      block content
+    block footer
+      footer.pb-5.pt-5.mt-5
+        .footerBackground
+        .footerWrapper.container.text-center
+          p.col-md-8.mx-auto Please note that this is an open source project and is not affiliated with Instagram.
+          p.mb-0 Copyright © #{new Date().getFullYear()} IG:dm contributors.
+      script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js')
+      script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
+      script.
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-96853108-1', 'auto');
+        ga('send', 'pageview');
