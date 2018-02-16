@@ -25,7 +25,7 @@
     "bluebird": "^3.5.0",
     "bootstrap": "^4.0.0",
     "electron-log": "^2.2.6",
-    "electron-updater": "^2.8.9",
+    "electron-updater": "^2.20.2",
     "fb": "^2.0.0",
     "instagram-private-api": "github:huttarichard/instagram-private-api#66ab6c4293daac88dba18333c641889299145316",
     "node-notifier": "^5.1.2",
@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "electron": "^1.8.2",
-    "electron-builder": "^19.27.3",
+    "electron-builder": "^19.56.2",
     "electron-builder-lib": "^20.0.0",
     "electron-builder-squirrel-windows": "^20.0.0",
     "gulp": "^3.9.1",
@@ -55,8 +55,6 @@
     "win": {
       "target": [
         "nsis",
-        "nsis-web",
-        "squirrel",
         "portable"
       ],
       "publisherName": "ifedapoolarewaju"
@@ -68,6 +66,7 @@
         "deb"
       ],
       "maintainer": "Ifedapo Olarewaju <ifedapoolarewaju@gmail.com>"
-    }
+    },
+    "asar": false
   }
 }
