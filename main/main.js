@@ -9,7 +9,10 @@ const instagram = require('./instagram');
 const autoUpdater = require('./autoupdater');
 
 // fixes electron's timeout inconsistency
-require('./timeout-shim').fix();
+// not doing this on windows because the fix doesn't work for windows.
+if (process.platform != 'win32') {
+  require('./timeout-shim').fix();
+}
 
 const RATE_LIMIT_DELAY = 60000;
 let pollingInterval = 10000;
