@@ -1,0 +1,70 @@
+extends _blog
+
+prepend titleDeterminer
+  - var pageDesc = 'There are some known issues to get IG:dm up and running on Windows, learn how to get it up and running.'
+  - var pageTitle = 'Getting IG:dm running on Windows and Linux'
+
+block blogContent
+  :markdown-it()
+    # Getting IG:dm running on Windows and Linux
+
+    [IG:dm](http://igdm.me/) (Instagram Desktop Messenger) is a desktop application used for continuing 
+    your Instagram chats from your mobile devices to your computer—just like WhatsApp.
+    
+    While IG:dm is built to support all platforms (macOS, Linux, and Windows), there are some known issues you might encounter when trying
+    to get it running on your Windows or Linux machines. Here’s a list of them, and possible workarounds.
+    
+    ### Cannot Install on Windows 10 and Windows 8
+    There have been [cases](https://github.com/ifedapoolarewaju/igdm/issues/70) where the windows installer crashes
+    while being executed with the following error:
+    
+    ![Windows Error](../img/blog/winerror.png)
+    
+    #### There are 2 known solutions to solve this problem:
+    
+    - **Run it as Administrator in Windows 7 compatibility mode.** To do this:
+      - Right click on setup file (i.e the IG:dm installer)
+      - Go to "Properties"
+      - Go to the "Compatibility" tab
+      - Click on "Run this program in compatibility mode for:"
+      - Select "Windows 7"
+      - At the bottom tick the checkbox "Run this program as an administrator"
+      - Click the "Apply" button to apply the changes
+      - Then try to run the installer again
+
+    ![Windows Screenshot](../img/blog/win7compat.png)
+
+    - **Download an older [version 2.1.0](https://github.com/ifedapoolarewaju/igdm/releases/download/v2.1.0/IGdm-Setup-2.1.0.exe)**:
+      A downside to this is that you would not be able to leverage on the newer feature and updates added to the newer versions.
+    
+    ### How to run it on Linux
+    
+    As of [version 2.3.1](https://github.com/ifedapoolarewaju/igdm/releases/download/v2.3.1/IGdm-2.3.1-x86_64.AppImage),
+    the Linux version of IG:dm comes as an [AppImage](http://https://appimage.org/) which is a format for packaging applications
+    in a way that allows them to run on common Linux-based operating systems, such as RHEL, CentOS, Ubuntu, Fedora, Debian, and derivatives.
+    
+    However, in some cases, you might get the following error when you try to run it on a Linux machine:
+    `This Package is not compatible`
+    
+    #### To fix this:
+    You need to convert the IGdm AppImage file into an executable file by following the steps 
+    [here](https://unix.stackexchange.com/questions/379134/how-run-appimage-with-left-click-mouse-in-deepin/379353#379353)
+    
+    ### Unable to Login due to 2-Factor Authentication
+    Although this issue is not specific to any particular platform, it is a common issue.
+    
+    As of version 2.3.1, IG:dm does not have support for 
+    [Instagram's two-factor authentication](https://help.instagram.com/566810106808145)
+    so if you are a user with a 2-factor authentication on, you might find yourself unable to login to IG:dm
+    
+    #### How to fix this
+    
+    A current workaround for this would be to:
+    - Disable two-step authentication on Instagram and then login to IG:dm
+    - After logging in to IG:dm, re-enable two-step authentication.
+    
+    After doing this, Instagram would recognize your IG:dm device from that point on, and you would not be required to enter the 2-step
+    verification code even if you log out and then log back in with IG:dm.
+    
+    **Disclaimer:** If you do not feel comfortable with temporarily disabling two-step authentication 
+    on your account, please don't go through with it.

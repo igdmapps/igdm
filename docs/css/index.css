@@ -1,0 +1,38 @@
+.promoBanner.active {
+    position: relative;
+    color: #FFF;
+}
+
+.promoBanner.active .backgroundSkew {
+    background-image: linear-gradient(150deg,#dd27c6 0%,#8805ff 100%);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: skewY(-1deg);
+    transform-origin: 0;
+    z-index: -1;
+}
+
+.download a.btn img {
+    display: inline-block;
+    position: relative;
+    bottom: 2px;
+}
+
+.promo h1 {
+    font-weight: 900;
+}
+
+.download .downloadCount {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.screenshots a {
+    color: #666;
+}
+
+.promo h3 {
+    font-weight: 600;
+}

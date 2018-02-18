@@ -1,0 +1,12 @@
+extends ..\_layout
+
+append head
+  link(rel='stylesheet', href='/css/blog.css')
+
+prepend header
+  - var navtype = 'navbar-dark'
+  - var promo = 'still'
+
+block content
+  .mt-5.col-md-8
+    block blogContent
