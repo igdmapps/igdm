@@ -1,0 +1,80 @@
+extends _layout
+
+prepend titleDeterminer
+  - var pageDesc = 'A desktop application for Instagram direct messages. Download for Windows, Mac and Linux'
+
+append head
+  link(rel='stylesheet', href='/css/index.css')
+
+prepend header
+  - var navtype = 'transparent navbar-dark'
+  - var promo = 'active'
+
+append navigation
+  .container.promo.pb-5.pt-2.mb-5.text-center
+    h1.text-center.display-1.col-md-auto IG:dm
+    h3.text-center.col-12.col-md-8.m-auto Continue your Instagram direct messages from your phone to your desktop.
+    .download.col-md-auto.mt-5
+      h5
+        | Download the latest 
+        span v2.3.0
+      div.mt-2(class="btn-group" role="group" aria-label="Download buttons")
+        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igdm/releases/download/v2.3.1/IGdm-Setup-2.3.1.exe')
+          i.mdi.mdi-windows
+          span.ml-2 Windows
+        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igdm/releases/download/v2.3.1/IGdm-2.3.1.dmg')
+          i.mdi.mdi-apple 
+          span.ml-2 macOS
+        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igdm/releases/download/v2.3.1/IGdm-2.3.1-x86_64.AppImage')
+          i.mdi.mdi-linux
+          span.ml-2 Linux
+      a.downloadCount.mt-3.d-block(href='https://twitter.com/teddyskillz2/status/910252532026548224', target='_blank') Over 4000+ Downloads!
+
+block content
+  section.features.mt-5
+    h1.text-center Features
+    .screenshots.row.mt-5.text-center
+      a.col-md-6.mb-4(href='img/startchat.gif', target='_blank')
+        | Search for users and start a conversation
+        img.mt-3.img-fluid(src='img/startchat.gif')
+      a.col-md-6.mb-4(href='img/unfollowers.gif', target='_blank')
+        | View a list of users not following you back
+        img.mt-3.img-fluid(src='img/unfollowers.gif')
+      a.col-md-6.mb-4(href='img/quotemessage.gif', target='_blank')
+        | Quote a chat message
+        img.mt-3.img-fluid(src='img/quotemessage.gif')
+      a.col-md-6(href='img/viewimage.gif', target='_blank')
+        | View chat images
+        img.mt-3.img-fluid(src='img/viewimage.gif')
+  section.issues.mt-5.text-center
+    h2 Issues running IG:dm on your computer?
+    span
+      | Please see 
+      a(href='http://igdm.me/blog/igdm-on-windows-linux', target='_blank') common issues and fixes 
+      | for running IG:dm on your desktop.
+
+  section.donations.mt-5.text-center
+    h2 Donations
+    | IG:dm
+    | is an open source project that can be used for free by anyone, donations
+    | and incentives are wholeheartedly welcome.
+    br
+    | The following is a Bitcoin address where donations can be sent.
+    .donations
+      code n3NM9EubVwdvNm9qiTgLC8DHsRtTHvoyaD6
+
+append footer
+  script.
+    document.querySelectorAll('.download a').forEach(function (el){
+      el.addEventListener('click', function(event) {
+        event.preventDefault()
+        ga('send', 'event', {
+          eventCategory: 'Outbound Link',
+          eventAction: 'click',
+          eventLabel: el.href,
+          transport: 'beacon'
+        });
+
+        window.location = el.href;
+      })
+    }) 
