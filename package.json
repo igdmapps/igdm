@@ -62,11 +62,9 @@
     "linux": {
       "target": [
         "AppImage",
-        "zip",
-        "deb"
+        "zip"
       ],
       "maintainer": "Ifedapo Olarewaju <ifedapoolarewaju@gmail.com>"
-    },
-    "asar": false
+    }
   }
 }
