@@ -55,7 +55,7 @@ html(lang='en')
         block navigation
           mixin link(href, friendlyName)
             li.nav-item
-              a.nav-link(href=href)= friendlyName
+              a.nav-link(href=href)&attributes(attributes)= friendlyName
           unless navtype
             - var navtype = 'navbar-light'
           nav.navbar.navbar-expand-md.container(class=navtype)
@@ -67,8 +67,10 @@ html(lang='en')
               span.navbar-toggler-icon
             .collapse.navbar-collapse(id="navbarContent")
               ul.navbar-nav.mr-auto
-                +link('https://github.com/ifedapoolarewaju/igdm', 'GitHub')
-                +link('https://www.producthunt.com/posts/igdm', 'ProductHunt')
+                +link('/changelog', 'Changelog')
+                +link('/blog', 'Blog')
+                +link('https://github.com/ifedapoolarewaju/igdm', 'GitHub')(target='_blank')
+                +link('https://www.producthunt.com/posts/igdm', 'ProductHunt')(target='_blank')
     .container
       block content
     block footer

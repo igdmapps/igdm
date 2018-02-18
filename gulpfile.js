@@ -6,7 +6,7 @@ var minifyhtml = require('gulp-htmlmin');
 
 gulp.task('html', function () {
   return gulp.src(['./browser/views/**/*.pug', '!./browser/views/**/_*.pug'])
-    .pipe(pug())
+    .pipe(pug({pretty: true}))
     .pipe(gulp.dest(function (file) {
       return './browser/'
     }));
@@ -14,15 +14,11 @@ gulp.task('html', function () {
 
 gulp.task('website-html', function () {
   return gulp.src(['./docs-src/**/*.pug', '!./docs-src/**/_*.pug'])
-    .pipe(pug())
-    .pipe(minifyhtml({
-      collapseWhitespace: true,
-      minifyJS: true
-    }))
+    .pipe(pug({ pretty: true }))
     .pipe(gulp.dest(function (file) {
       // Keeps folder and file structure intact
-      let base = file.base.split('docs-src\\');
-      return base[0] + 'docs\\' + base[1];
+      let base = file.base.split('docs-src/');
+      return base[0] + 'docs/' + base[1];
     }));
 });
 

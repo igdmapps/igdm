@@ -1,1 +1,127 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>IG:dm - Getting IG:dm running on Windows and Linux</title><meta property="og:title" content="IG:dm - Getting IG:dm running on Windows and Linux"><meta property="og:type" content="website"><meta property="og:url" content="http://igdm.me/"><meta property="og:image" content="/img/icon.png"><meta property="og:description" content="There are some known issues to get IG:dm up and running on Windows, learn how to get it up and running."><meta property="og:locale" content="en_US"><meta property="og:site_name" content="IG:dm - Getting IG:dm running on Windows and Linux"><meta name="author" content="IG:dm Contributors"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><meta name="description" content="There are some known issues to get IG:dm up and running on Windows, learn how to get it up and running."><meta name="theme-color" content="#EFEFEF"><meta name="application-name" content="IG:dm"><link rel="icon" href="/img/icon.png"><link rel="icon" href="/img/icon.png" type="image/x-icon"><link rel="icon" href="/img/icon.png" type="shortcut icon"><link rel="apple-touch-icon" href="/img/icon.png"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:400,700,900"><link rel="stylesheet" href="/css/global.css"><script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>(adsbygoogle=window.adsbygoogle||[]).push({google_ad_client:"ca-pub-6350923924096600",enable_page_level_ads:!0})</script><link rel="stylesheet" href="/css/blog.css"></head><body><a class="forkus" href="https://github.com/ifedapoolarewaju/igdm" target="_blank"><img src="/img/github-fork-us.svg" alt="Fork us on GitHub"></a><div class="promoBanner still"><div class="backgroundSkew"></div><nav class="navbar navbar-expand-md container navbar-dark"><a class="navbar-brand" href="/"><img class="d-inline-block align-top" src="/img/icon.png" width="32" height="32" alt="PrismarineJS"></a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarContent"><ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="https://github.com/ifedapoolarewaju/igdm">GitHub</a></li><li class="nav-item"><a class="nav-link" href="https://www.producthunt.com/posts/igdm">ProductHunt</a></li></ul></div></nav></div><div class="container"><div class="mt-5 col-md-8"><h1>Getting IG:dm running on Windows and Linux</h1><p><a href="http://igdm.me/">IG:dm</a> (Instagram Desktop Messenger) is a desktop application used for continuing your Instagram chats from your mobile devices to your computer—just like WhatsApp.</p><p>While IG:dm is built to support all platforms (macOS, Linux, and Windows), there are some known issues you might encounter when trying to get it running on your Windows or Linux machines. Here’s a list of them, and possible workarounds.</p><h3>Cannot Install on Windows 10 and Windows 8</h3><p>There have been <a href="https://github.com/ifedapoolarewaju/igdm/issues/70">cases</a> where the windows installer crashes while being executed with the following error:</p><p><img src="../img/blog/winerror.png" alt="Windows Error"></p><h4>There are 2 known solutions to solve this problem:</h4><ul><li><strong>Run it as Administrator in Windows 7 compatibility mode.</strong> To do this:<ul><li>Right click on setup file (i.e the IG:dm installer)</li><li>Go to &quot;Properties&quot;</li><li>Go to the &quot;Compatibility&quot; tab</li><li>Click on &quot;Run this program in compatibility mode for:&quot;</li><li>Select &quot;Windows 7&quot;</li><li>At the bottom tick the checkbox &quot;Run this program as an administrator&quot;</li><li>Click the &quot;Apply&quot; button to apply the changes</li><li>Then try to run the installer again</li></ul></li></ul><p><img src="../img/blog/win7compat.png" alt="Windows Screenshot"></p><ul><li><strong>Download an older <a href="https://github.com/ifedapoolarewaju/igdm/releases/download/v2.1.0/IGdm-Setup-2.1.0.exe">version 2.1.0</a></strong>: A downside to this is that you would not be able to leverage on the newer feature and updates added to the newer versions.</li></ul><h3>How to run it on Linux</h3><p>As of <a href="https://github.com/ifedapoolarewaju/igdm/releases/download/v2.3.1/IGdm-2.3.1-x86_64.AppImage">version 2.3.1</a>, the Linux version of IG:dm comes as an <a href="http://https://appimage.org/">AppImage</a> which is a format for packaging applications in a way that allows them to run on common Linux-based operating systems, such as RHEL, CentOS, Ubuntu, Fedora, Debian, and derivatives.</p><p>However, in some cases, you might get the following error when you try to run it on a Linux machine: <code>This Package is not compatible</code></p><h4>To fix this:</h4><p>You need to convert the IGdm AppImage file into an executable file by following the steps <a href="https://unix.stackexchange.com/questions/379134/how-run-appimage-with-left-click-mouse-in-deepin/379353#379353">here</a></p><h3>Unable to Login due to 2-Factor Authentication</h3><p>Although this issue is not specific to any particular platform, it is a common issue.</p><p>As of version 2.3.1, IG:dm does not have support for <a href="https://help.instagram.com/566810106808145">Instagram's two-factor authentication</a> so if you are a user with a 2-factor authentication on, you might find yourself unable to login to IG:dm</p><h4>How to fix this</h4><p>A current workaround for this would be to:</p><ul><li>Disable two-step authentication on Instagram and then login to IG:dm</li><li>After logging in to IG:dm, re-enable two-step authentication.</li></ul><p>After doing this, Instagram would recognize your IG:dm device from that point on, and you would not be required to enter the 2-step verification code even if you log out and then log back in with IG:dm.</p><p><strong>Disclaimer:</strong> If you do not feel comfortable with temporarily disabling two-step authentication on your account, please don't go through with it.</p></div></div><footer class="pb-5 pt-5 mt-5"><div class="footerBackground"></div><div class="footerWrapper container text-center"><p class="col-md-8 mx-auto">Please note that this is an open source project and is not affiliated with Instagram.</p><p class="mb-0">Copyright © 2018 IG:dm contributors.</p></div></footer><script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script><script>!function(e,a,t,n,g,c,o){e.GoogleAnalyticsObject=g,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),o=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",o.parentNode.insertBefore(c,o)}(window,document,"script",0,"ga"),ga("create","UA-96853108-1","auto"),ga("send","pageview")</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IG:dm - Getting IG:dm running on Windows and Linux</title>
+    <meta property="og:title" content="IG:dm - Getting IG:dm running on Windows and Linux">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://igdm.me/">
+    <meta property="og:image" content="/img/icon.png">
+    <meta property="og:description" content="There are some known issues to get IG:dm up and running on Windows, learn how to get it up and running.">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="IG:dm - Getting IG:dm running on Windows and Linux">
+    <meta name="author" content="IG:dm Contributors">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="There are some known issues to get IG:dm up and running on Windows, learn how to get it up and running.">
+    <meta name="theme-color" content="#EFEFEF">
+    <meta name="application-name" content="IG:dm">
+    <link rel="icon" href="/img/icon.png">
+    <link rel="icon" href="/img/icon.png" type="image/x-icon">
+    <link rel="icon" href="/img/icon.png" type="shortcut icon">
+    <link rel="apple-touch-icon" href="/img/icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:400,700,900">
+    <link rel="stylesheet" href="/css/global.css">
+    <script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: "ca-pub-6350923924096600",
+      enable_page_level_ads: true
+      });
+    </script>
+    <link rel="stylesheet" href="/css/blog.css">
+  </head>
+  <body><a class="forkus" href="https://github.com/ifedapoolarewaju/igdm" target="_blank"><img src="/img/github-fork-us.svg" alt="Fork us on GitHub"></a>
+    <div class="promoBanner still">
+      <div class="backgroundSkew"></div>
+      <nav class="navbar navbar-expand-md container navbar-dark"><a class="navbar-brand" href="/"><img class="d-inline-block align-top" src="/img/icon.png" width="32" height="32" alt="PrismarineJS"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <ul class="navbar-nav mr-auto">
+                  <li class="nav-item"><a class="nav-link" href="/changelog">Changelog</a></li>
+                  <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
+                  <li class="nav-item"><a class="nav-link" href="https://github.com/ifedapoolarewaju/igdm" target="_blank">GitHub</a></li>
+                  <li class="nav-item"><a class="nav-link" href="https://www.producthunt.com/posts/igdm" target="_blank">ProductHunt</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="mt-5 col-md-8"><h1>Getting IG:dm running on Windows and Linux</h1>
+<p><a href="http://igdm.me/">IG:dm</a> (Instagram Desktop Messenger) is a desktop application used for continuing
+your Instagram chats from your mobile devices to your computer—just like WhatsApp.</p>
+<p>While IG:dm is built to support all platforms (macOS, Linux, and Windows), there are some known issues you might encounter when trying
+to get it running on your Windows or Linux machines. Here’s a list of them, and possible workarounds.</p>
+<h3>Cannot Install on Windows 10 and Windows 8</h3>
+<p>There have been <a href="https://github.com/ifedapoolarewaju/igdm/issues/70">cases</a> where the windows installer crashes
+while being executed with the following error:</p>
+<p><img src="../img/blog/winerror.png" alt="Windows Error"></p>
+<h4>There are 2 known solutions to solve this problem:</h4>
+<ul>
+<li><strong>Run it as Administrator in Windows 7 compatibility mode.</strong> To do this:
+<ul>
+<li>Right click on setup file (i.e the IG:dm installer)</li>
+<li>Go to &quot;Properties&quot;</li>
+<li>Go to the &quot;Compatibility&quot; tab</li>
+<li>Click on &quot;Run this program in compatibility mode for:&quot;</li>
+<li>Select &quot;Windows 7&quot;</li>
+<li>At the bottom tick the checkbox &quot;Run this program as an administrator&quot;</li>
+<li>Click the &quot;Apply&quot; button to apply the changes</li>
+<li>Then try to run the installer again</li>
+</ul>
+</li>
+</ul>
+<p><img src="../img/blog/win7compat.png" alt="Windows Screenshot"></p>
+<ul>
+<li><strong>Download an older <a href="https://github.com/ifedapoolarewaju/igdm/releases/download/v2.1.0/IGdm-Setup-2.1.0.exe">version 2.1.0</a></strong>:
+A downside to this is that you would not be able to leverage on the newer feature and updates added to the newer versions.</li>
+</ul>
+<h3>How to run it on Linux</h3>
+<p>As of <a href="https://github.com/ifedapoolarewaju/igdm/releases/download/v2.3.1/IGdm-2.3.1-x86_64.AppImage">version 2.3.1</a>,
+the Linux version of IG:dm comes as an <a href="http://https://appimage.org/">AppImage</a> which is a format for packaging applications
+in a way that allows them to run on common Linux-based operating systems, such as RHEL, CentOS, Ubuntu, Fedora, Debian, and derivatives.</p>
+<p>However, in some cases, you might get the following error when you try to run it on a Linux machine:
+<code>This Package is not compatible</code></p>
+<h4>To fix this:</h4>
+<p>You need to convert the IGdm AppImage file into an executable file by following the steps
+<a href="https://unix.stackexchange.com/questions/379134/how-run-appimage-with-left-click-mouse-in-deepin/379353#379353">here</a></p>
+<h3>Unable to Login due to 2-Factor Authentication</h3>
+<p>Although this issue is not specific to any particular platform, it is a common issue.</p>
+<p>As of version 2.3.1, IG:dm does not have support for
+<a href="https://help.instagram.com/566810106808145">Instagram's two-factor authentication</a>
+so if you are a user with a 2-factor authentication on, you might find yourself unable to login to IG:dm</p>
+<h4>How to fix this</h4>
+<p>A current workaround for this would be to:</p>
+<ul>
+<li>Disable two-step authentication on Instagram and then login to IG:dm</li>
+<li>After logging in to IG:dm, re-enable two-step authentication.</li>
+</ul>
+<p>After doing this, Instagram would recognize your IG:dm device from that point on, and you would not be required to enter the 2-step
+verification code even if you log out and then log back in with IG:dm.</p>
+<p><strong>Disclaimer:</strong> If you do not feel comfortable with temporarily disabling two-step authentication
+on your account, please don't go through with it.</p>
+
+      </div>
+    </div>
+    <footer class="pb-5 pt-5 mt-5">
+      <div class="footerBackground"></div>
+      <div class="footerWrapper container text-center">
+        <p class="col-md-8 mx-auto">Please note that this is an open source project and is not affiliated with Instagram.</p>
+        <p class="mb-0">Copyright © 2018 IG:dm contributors.</p>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-96853108-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </body>
+</html>
