@@ -108,7 +108,13 @@ electron.ipcMain.on('login', (evt, data) => {
     session = session_
     createWindow()
   }).catch((error) => {
-    mainWindow.webContents.send('loginError', error.message);
+    let message = 'An unknown error occurred.';
+    if (error.message) {
+      message = error.message;
+    } else if (error.hasOwnProperty('json') && !!error.json.two_factor_required) {
+      message = 'You have two factor authentication enabled. Two factor authentication is not yet supported.';
+    }
+    mainWindow.webContents.send('loginError', message);
   })
 })
 
