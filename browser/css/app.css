@@ -113,7 +113,7 @@ button, button:focus {
 }
 
 .chat-list li.notification:after {
-  content: '1';
+  content: ' ';
   position: absolute;
   right: 30px;
   width: 15px;
