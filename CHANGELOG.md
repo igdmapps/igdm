@@ -1,8 +1,9 @@
-### 2.4.0 / 2018-02-11 ###
+### 2.4.0 / 2018-03-25 ###
 
 * New fresh UI look (thank you @ciolt)
 * Use HTML 5 notifications
 * Fix for chat not updating after a long while (by fixing electron timeout)
+* Warn about no 2fa support (thank you @raimille1)
 
 ### 2.3.1 / 2018-01-07 ###
 
