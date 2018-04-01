@@ -4,6 +4,8 @@
   "description": "Desktop application for Instagram DMs",
   "main": "main/main.js",
   "scripts": {
+    "build": "gulp build",
+    "gui": "electron .",
     "start": "gulp build && electron .",
     "pack": "gulp build && build --dir",
     "dist": "gulp build && build -mwl --x64"
@@ -24,6 +26,7 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "bootstrap": "^4.0.0",
+    "bower": "^1.8.4",
     "electron-log": "^2.2.6",
     "electron-updater": "^2.20.2",
     "fb": "^2.0.0",
