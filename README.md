@@ -27,8 +27,28 @@ To setup this project locally for development purposes please follow the followi
 
 5. Start the application locally by running `npm start`
 
-That's it! :) Now you can have those pull requests rolling in! :D
+### Wrapped Local Development with Docker+Nut
 
+To setup this project locally using Docker and Nut tools for development purposes, please follow the following steps:
+
+1. Ensure you have Docker CE installed [See](https://docs.docker.com/install/)
+
+2. Clone this repo by running the command - `git clone https://github.com/ifedapoolarewaju/igdm.git`
+
+3. Navigate to the directory where the repo is cloned to. (e.g `cd igdm`)
+
+4. Download Nut by running `curl -L https://github.com/matthieudelaro/nut/raw/manualbuild/release/linux/nut -o nut && chmod a+x nut`
+
+4. Run `sudo mv nut /usr/local/bin/nut` to move the nut executable to you local binaries *optional step* 
+   If you choose not to execute this step, use the nut commands just by simply adding a `./` before `nut`
+
+5. Start the wrapped application by running `nut run`
+
+6. See your changes by running `nut reload`
+
+If you haven't done the Docker [post-installation step](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user) just add `sudo` to the nut commands
+
+That's it! :) Now you can have those pull requests rolling in! :D
 
 ## License
 
