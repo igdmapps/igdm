@@ -39,7 +39,7 @@ To setup this project locally using Docker and Nut tools for development purpose
 
 4. Download Nut by running `curl -L https://github.com/matthieudelaro/nut/raw/manualbuild/release/linux/nut -o nut && chmod a+x nut`
 
-4. Run `sudo mv nut /usr/local/bin/nut` to move the nut executable to you local binaries *optional step* 
+4. Run `sudo mv nut /usr/local/bin/nut` to move the nut executable to your local binaries *optional step* 
    If you choose not to execute this step, use the nut commands just by simply adding a `./` before `nut`
 
 5. Start the wrapped application by running `nut run`
