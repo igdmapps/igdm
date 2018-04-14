@@ -98,7 +98,7 @@ function submitMessage (chat_) {
 
 function addSubmitHandler (chat_) {
   const input = document.querySelector(MSG_INPUT_SELECTOR);
-  input.onkeyup = (evt) => {
+  input.onkeypress = (evt) => {
     // allow new line when shift key is pressed
     if (evt.keyCode == 13 && !evt.shiftKey) {
       evt.preventDefault();
