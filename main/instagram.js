@@ -83,7 +83,7 @@ exports.getUnfollowers = function (session) {
   return new Promise((resolve, reject) => {
     let followers = [];
     let following = [];
-    const accountId = session._cookiesStore.storage.idx['i.instagram.com']['/'].ds_user_id.value;
+    const accountId = session._cookiesStore.storage.idx['instagram.com']['/'].ds_user_id.value;
 
     const compare = () => {
       hashedFollowers = {}
