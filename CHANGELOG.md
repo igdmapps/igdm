@@ -1,3 +1,7 @@
+### 2.4.1 / 2018-04-21 ###
+
+* Fix cookie error
+
 ### 2.4.0 / 2018-03-25 ###
 
 * New fresh UI look (thank you @ciolt)

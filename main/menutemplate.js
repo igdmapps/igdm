@@ -48,6 +48,10 @@ const template = [
       {
         label: 'Star this project (Show us some love. 🙂)',
         click () { openExternal('https://github.com/ifedapoolarewaju/igdm/stargazers') }
+      },
+      {
+        label: 'Donate to this Project',
+        click() { openExternal('http://paypal.me/SolomonOmojola') }
       }
     ]
   }

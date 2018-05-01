@@ -10,6 +10,12 @@ prepend header
   - var navtype = 'transparent navbar-dark'
   - var promo = 'active'
 
+  .psa
+    b Sponsored: &nbsp;
+    span Looking to buy real likes? Visit &nbsp;
+    a(href="https://gramblast.com/buy-likes-on-instagram" target="_blank")
+     b Gramblast.com
+
 append navigation
   .container.promo.pb-5.pt-2.mb-5.text-center
     h1.text-center.display-1.col-md-auto IG:dm
@@ -19,13 +25,13 @@ append navigation
         | Download the latest 
         span v2.4.0
       div.mt-2(class="btn-group" role="group" aria-label="Download buttons")
-        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igdm/releases/download/v2.4.0/IGdm-Setup-2.4.0.exe')
+        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igdm/releases/download/v2.4.1/IGdm-Setup-2.4.1.exe')
           i.mdi.mdi-windows
           span.ml-2 Windows
-        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igdm/releases/download/v2.4.0/IGdm-2.4.0.dmg')
+        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igdm/releases/download/v2.4.1/IGdm-2.4.1.dmg')
           i.mdi.mdi-apple 
           span.ml-2 macOS
-        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igdm/releases/download/v2.4.0/IGdm-2.4.0-x86_64.AppImage')
+        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igdm/releases/download/v2.4.1/IGdm-2.4.1-x86_64.AppImage')
           i.mdi.mdi-linux
           span.ml-2 Linux
     a.downloadCount.mt-3.d-block(href='https://twitter.com/teddyskillz2/status/910252532026548224', target='_blank') Over 4000+ Downloads!
@@ -58,8 +64,9 @@ block content
     | IG:dm
     | is an open source project that can be used for free by anyone, donations
     | and incentives are wholeheartedly welcome.
-    br
-    | The following is a Bitcoin address where donations can be sent.
+    p
+      a.btn.btn-link.btn-outline-light(role="button" href='http://paypal.me/SolomonOmojola' target="_blank") Donate via PayPal
+    | You can also donate via BITCOIN to the following Bitcoin address.
     .donations
       code 3NM9EubVwdvNm9qiTgLC8DHsRtTHvoyaD6
 

@@ -1,6 +1,6 @@
 {
   "name": "IGdm",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Desktop application for Instagram DMs",
   "main": "main/main.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "electron-log": "^2.2.6",
     "electron-updater": "^2.20.2",
     "fb": "^2.0.0",
-    "instagram-private-api": "github:huttarichard/instagram-private-api#66ab6c4293daac88dba18333c641889299145316",
+    "instagram-private-api": "github:ifedapoolarewaju/instagram-private-api#54613a55a0e74b2263b5fed31223691ae2fde899",
     "node-notifier": "^5.1.2",
     "nojs": "^0.1.1"
   },
@@ -65,7 +65,8 @@
     "linux": {
       "target": [
         "AppImage",
-        "zip"
+        "zip",
+        "deb"
       ],
       "maintainer": "Ifedapo Olarewaju <ifedapoolarewaju@gmail.com>"
     }
