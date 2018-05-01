@@ -17,8 +17,7 @@ macros:
   run:
     actions:
     - npm install
-    - npm run build
-    - npm run gui
+    - npm start
 
   reload:
     actions:

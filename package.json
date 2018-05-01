@@ -5,7 +5,6 @@
   "main": "main/main.js",
   "scripts": {
     "build": "gulp build",
-    "gui": "electron .",
     "start": "gulp build && electron .",
     "pack": "gulp build && build --dir",
     "dist": "gulp build && build -mwl --x64"
