@@ -1,3 +1,7 @@
+### 2.4.2 / 2018-05-29 ###
+
+* Fix Users not following bug
+
 ### 2.4.1 / 2018-04-21 ###
 
 * Fix cookie error
