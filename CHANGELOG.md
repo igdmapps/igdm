@@ -1,3 +1,7 @@
+### 2.4.3 / 2018-06-01 ###
+
+* Fix inbox list
+
 ### 2.4.2 / 2018-05-29 ###
 
 * Fix Users not following bug
