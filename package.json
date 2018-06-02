@@ -4,6 +4,7 @@
   "description": "Desktop application for Instagram DMs",
   "main": "main/main.js",
   "scripts": {
+    "build": "gulp build",
     "start": "gulp build && electron .",
     "pack": "gulp build && build --dir",
     "dist": "gulp build && build -mwl --x64"

@@ -1,0 +1,24 @@
+syntax_version: "7"
+
+docker_image: alaxalves/igdm:latest
+
+enable_gui: true
+
+container_working_directory: /igdm
+
+work_in_project_folder_as: /igdm
+
+volumes: 
+  main:
+    host_path: .
+    container_path: /igdm
+
+macros:
+  run:
+    actions:
+    - npm install
+    - npm start
+
+  reload:
+    actions:
+    - npm run build
