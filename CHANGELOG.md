@@ -1,3 +1,7 @@
+### 2.5.0 / 2018-06-04 ###
+
+* Load older chat messages
+
 ### 2.4.3 / 2018-06-01 ###
 
 * Fix inbox list
