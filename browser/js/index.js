@@ -3,6 +3,9 @@ function getLoggedInUser () {
 }
 
 function getChat (id) {
+  if (window.currentChatId !== id) {
+    window.olderMessages = []
+  }
   window.currentChatId = id;
   ipcRenderer.send('getChat', id);
 }
@@ -41,7 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
       getIsSeenText(chat_) != getIsSeenText(window.chat)
     )
 
-    if (isNewMessage && isCurrentChat(chat_)) renderChat(chat_);
+    if (isNewMessage && isCurrentChat(chat_) && !window.gettingOlderMessages) renderChat(chat_);
+  });
+
+  ipcRenderer.on('olderMessages', (_, messages) => {
+    window.olderMessages = window.olderMessages.concat(messages)
+    renderOlderMessages(messages);
+    // reset the value only after all is done. So don't move this up
+    window.gettingOlderMessages = false;
   });
 
   ipcRenderer.on('searchResult', (evt, users) => {

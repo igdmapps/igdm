@@ -37,7 +37,7 @@ function renderMessageAsPost (container, message) {
   if (post.images) {
     // carousels have nested arrays before getting to image url
     var img = dom(`<img src="${post.images[0].url || post.images[0][0].url}">`);
-    img.onload = () => scrollToChatBottom();
+    img.onload = conditionedScrollToBottom();
     container.appendChild(img);
   }
 
@@ -73,7 +73,7 @@ function renderMessageAsUserStory (container, message) {
   if (message._params.reelShare.media.image_versions2) {
     var url = message._params.reelShare.media.image_versions2.candidates[0].url
     var img = dom(`<img src="${url}">`);
-    img.onload = () => scrollToChatBottom();
+    img.onload = conditionedScrollToBottom();
     container.appendChild(img);
 
     container.addEventListener('click', () => {
@@ -94,7 +94,7 @@ function renderMessageAsUserStory (container, message) {
 function renderMessageAsImage (container, message) {
   var url = typeof message === 'string' ? message : message._params.media[0].url
   var img = dom(`<img src="${url}">`);
-  img.onload = () => scrollToChatBottom();
+  img.onload = conditionedScrollToBottom();
   container.appendChild(img);
   container.classList.add('ig-media');
 
@@ -118,7 +118,7 @@ function renderMessageAsLink (container, message) {
   const text = message.link._params.text;
   if (link.image && link.image.url) {
     var img = dom(`<img src="${link.image.url}">`);
-    img.onload = () => scrollToChatBottom();
+    img.onload = conditionedScrollToBottom();
     container.appendChild(img);
   }
   // replace all contained links with anchor tags
@@ -177,7 +177,10 @@ function renderChatList (chatList) {
   chatList.forEach((chat_) => {
     var msgPreview = getMsgPreview(chat_);
     var usernames = getUsernames(chat_, true);
-    var thumbnail = chat_.accounts[0]._params.picture;
+    let thumbnail = '';
+    if (chat_.accounts[0]) {
+      thumbnail = chat_.accounts[0]._params.picture;
+    }
     var li = renderChatListItem(usernames, msgPreview, thumbnail, chat_.id);
 
     registerChatUser(chat_);
@@ -211,25 +214,38 @@ function renderChatHeader (chat_) {
 function renderChat (chat_) {
   window.chat = chat_;
 
-  var msgContainer = document.querySelector('.chat .messages');
+  var msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   msgContainer.innerHTML = '';
   renderChatHeader(chat_);
   var messages = chat_.items.slice().reverse();
+  // load older messages if they exist too
+  messages = window.olderMessages.slice().reverse().concat(messages);
   messages.forEach((message) => {
-    if (message._params.accountId == window.loggedInUserId) var direction = 'outward';
-    else var direction = 'inward';
-
-    var div = renderMessage(message, direction,
+    var div = renderMessage(message, getMsgDirection(message),
       message._params.created, message._params.type
     );
     msgContainer.appendChild(div);
   })
   renderMessageSeenText(msgContainer, chat_);
   scrollToChatBottom();
+  loadOlderMsgsOnScrollTop();
 
   addSubmitHandler(chat_);
   addAttachmentSender(chat_);
   document.querySelector(MSG_INPUT_SELECTOR).focus();
+}
+
+function renderOlderMessages (messages) {
+  const msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
+  const domPostion = msgContainer.firstChild;
+  messages.forEach((message) => {
+    var div = renderMessage(message, getMsgDirection(message),
+      message._params.created, message._params.type
+    );
+    msgContainer.prepend(div);
+  });
+  // scroll back to dom position before the older messages were rendered
+  domPostion.scrollIntoView();
 }
 
 function renderMessageSeenText (container, chat_) {

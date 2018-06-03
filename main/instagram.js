@@ -44,6 +44,32 @@ exports.getChat = function (session, chatId) {
   })
 }
 
+exports.getOlderMessages = function (session, thread, chatId) {
+  return new Promise((resolve, reject) => {
+    const needsNewThread = !thread || thread.threadId !== chatId
+    if (needsNewThread) {
+      thread = new Client.Feed.ThreadItems(session, chatId)
+    }
+
+    if (!needsNewThread && !thread.isMoreAvailable()) {
+      // there aren't any older messages
+      resolve({thread, messages: []})
+    }
+
+    thread.get().then((messages) => {
+      if (needsNewThread) {
+        if (thread.isMoreAvailable()) {
+          // get the next 20 because the first 20 messages already were fetched with #getChat
+          return thread.get().then((messages) => resolve({ thread, messages }))
+        }
+        // there aren't any older messages
+        messages = []
+      }
+      resolve({thread, messages})
+    }).catch(reject)
+  })
+}
+
 exports.sendNewChatMessage = function (session, message, recipients) {
   return new Promise((resolve, reject) => {
     Client.Thread.configureText(session, recipients, message).then(resolve).catch(reject)

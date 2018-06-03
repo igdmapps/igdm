@@ -49,9 +49,30 @@ function setActive (el) {
   document.querySelector('.emojis').classList.add('hide');
 }
 
+function getMsgDirection (message) {
+  if (message._params.accountId == window.loggedInUserId) return 'outward';
+  else return 'inward';
+}
+
 function scrollToChatBottom () {
-  let msgContainer = document.querySelector('.chat .messages');
+  let msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   msgContainer.scrollTop = msgContainer.scrollHeight;
+}
+
+function conditionedScrollToBottom () {
+  if (!window.gettingOlderMessages) {
+    return scrollToChatBottom
+  }
+}
+
+function loadOlderMsgsOnScrollTop() {
+  let msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
+  msgContainer.onscroll = (e) => {
+    if (e.target.scrollTop < 10 && !window.gettingOlderMessages) {
+      ipcRenderer.send('getOlderMessages', window.currentChatId);
+      window.gettingOlderMessages = true;
+    }
+  }
 }
 
 function getMsgPreview (chat_) {

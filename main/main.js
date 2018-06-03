@@ -57,7 +57,13 @@ function getChatList () {
 }
 
 let timeoutObj;
+let messagesThread;
 function getChat (evt, id) {
+  // used to get older messages, see #getOlderMessages
+  if (messagesThread && messagesThread.threadId != id) {
+    messagesThread = null
+  }
+
   instagram.getChat(session, id).then((chat) => {
     mainWindow.webContents.send('chat', chat);
 
@@ -118,13 +124,13 @@ electron.ipcMain.on('login', (evt, data) => {
   })
 })
 
-electron.ipcMain.on('logout', (evt, data) => {
+electron.ipcMain.on('logout', () => {
   instagram.logout()
   session = null
   createWindow()
 })
 
-electron.ipcMain.on('getLoggedInUser', (evt) => {
+electron.ipcMain.on('getLoggedInUser', () => {
   instagram.getLoggedInUser(session).then((user) => {
     mainWindow.webContents.send('loggedInUser', user);
   })
@@ -134,7 +140,15 @@ electron.ipcMain.on('getChatList', getChatList)
 
 electron.ipcMain.on('getChat', getChat)
 
-electron.ipcMain.on('message', (evt, data) => {
+electron.ipcMain.on('getOlderMessages', (_, id) => {
+  instagram.getOlderMessages(session, messagesThread, id)
+    .then((data) => {
+      messagesThread = data.thread
+      mainWindow.webContents.send('olderMessages', data.messages)
+    })
+})
+
+electron.ipcMain.on('message', (_, data) => {
   if (data.isNewChat) {
     instagram.sendNewChatMessage(session, data.message, data.users).then((chat) => getChat(null, chat[0].id))
   } else {
@@ -142,33 +156,33 @@ electron.ipcMain.on('message', (evt, data) => {
   }
 })
 
-electron.ipcMain.on('upload', (evt, data) => {
+electron.ipcMain.on('upload', (_, data) => {
   instagram.uploadFile(session, data.filePath, data.recipients)
     .then((chat) => {
       if (data.isNewChat) getChat(null, chat[0].id)
     })
 })
 
-electron.ipcMain.on('searchUsers', (evt, search) => {
+electron.ipcMain.on('searchUsers', (_, search) => {
   instagram.searchUsers(session, search).then((users) => {
     mainWindow.webContents.send('searchResult', users);
   })
 })
 
-electron.ipcMain.on('markAsRead', (evt, thread) => {
+electron.ipcMain.on('markAsRead', (_, thread) => {
   instagram.seen(session, thread)
 })
 
-electron.ipcMain.on('increase-badge-count', (evt) => {
+electron.ipcMain.on('increase-badge-count', (_) => {
   app.setBadgeCount(app.getBadgeCount() + 1);
 })
 
-electron.ipcMain.on('getUnfollowers', (evt) => {
+electron.ipcMain.on('getUnfollowers', (_) => {
   instagram.getUnfollowers(session).then((users) => {
     mainWindow.webContents.send('unfollowers', users)
   })
 })
 
-electron.ipcMain.on('unfollow', (evt, userId) => {
+electron.ipcMain.on('unfollow', (_, userId) => {
   instagram.unfollow(session, userId)
 })
