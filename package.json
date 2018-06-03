@@ -32,11 +32,11 @@
     "nojs": "^0.1.1"
   },
   "devDependencies": {
-    "electron": "^1.8.2",
+    "electron": "^2.0.2",
     "electron-builder": "^19.56.2",
     "electron-builder-lib": "^20.0.0",
     "electron-builder-squirrel-windows": "^20.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-htmlmin": "^4.0.0",
     "gulp-pug": "^3.3.0",
     "jstransformer-markdown-it": "^2.0.0"

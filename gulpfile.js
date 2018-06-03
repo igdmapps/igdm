@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var pug = require('gulp-pug');
-var minifyhtml = require('gulp-htmlmin');
 
 gulp.task('html', function () {
   return gulp.src(['./browser/views/**/*.pug', '!./browser/views/**/_*.pug'])
@@ -27,4 +26,4 @@ gulp.task('watch', function(){
   gulp.watch('./docs-src/**/*.pug', ['website-html']);
 })
 
-gulp.task('build', ['html']);
+gulp.task('build', gulp.series('html'));
