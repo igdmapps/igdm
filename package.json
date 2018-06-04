@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "electron": "^2.0.2",
-    "electron-builder": "^19.56.2",
+    "electron-builder": "^20.15.0",
     "electron-builder-lib": "^20.0.0",
     "electron-builder-squirrel-windows": "^20.0.0",
     "gulp": "^4.0.0",
