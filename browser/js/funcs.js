@@ -159,7 +159,7 @@ function addNotification (el, chat_) {
     } else {
       el.classList.add('notification');
       window.notifiedChatId = el.getAttribute("id");
-      if (isNew && window.shouldNotify) {
+      if (isNew && window.shouldNotify && !window.isWindowFocused) {
         notify(`new message from ${getUsernames(chat_)}`);
       }
     }
