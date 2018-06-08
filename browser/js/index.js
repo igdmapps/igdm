@@ -97,6 +97,13 @@ document.addEventListener('DOMContentLoaded', () => {
       : `SEND "SEEN" RECEIPTS`;
   }
 
+  document.querySelector('#notifier-settings').onclick = (e) => {
+      window.shouldNotify = !window.shouldNotify;
+      e.target.innerText = window.shouldNotify
+          ? `Disable Notifications`
+          : `Enable Notifications`;
+  }
+
   // close modal viewer when esc is pressed
   document.onkeyup = (e) => {
     if (e.keyCode == 27) { // ESC keycode
@@ -105,11 +112,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.onblur = () => {
-    window.shouldNotify = true
+    window.isWindowFocused = false
   }
 
   window.onfocus = () => {
-    window.shouldNotify = false
+    window.isWindowFocused = true
   }
 
   function OnInput() {
