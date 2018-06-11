@@ -17,7 +17,7 @@ gulp.task('website-html', function () {
     .pipe(gulp.dest(function (file) {
       // Keeps folder and file structure intact
       let base = file.base.split('docs-src/');
-      return base[0] + 'docs/' + base[1];
+      return './docs/' + (base[1] ? base[1] : '');
     }));
 });
 

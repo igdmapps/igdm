@@ -1,3 +1,7 @@
+### 2.5.1 / 2018-06-11 ###
+
+* Mute Notifications
+
 ### 2.5.0 / 2018-06-04 ###
 
 * Load older chat messages
