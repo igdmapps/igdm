@@ -11,6 +11,8 @@ block body
         .dropdown-menu(no-js='', on-mouseleave-remove-class='.dropdown-menu active')
           #seen-flagger.dropdown-item(title="You'd know when recipients read your message, but they won't know when you read theirs")
             | Don't send 'Seen' receipts
+          #notifier-settings.dropdown-item
+            | Disable Notifications
           #unfollowers.dropdown-item Users not following back
           #logout.dropdown-item Log out
         .search-header.col-md-auto
