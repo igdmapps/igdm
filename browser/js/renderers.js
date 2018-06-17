@@ -140,7 +140,7 @@ function renderContextMenu (text) {
     click: () => quoteText(text)
   });
   menu.append(menuItem);
-  menu.popup();
+  menu.popup({});
 }
 
 function renderChatListItem (username, msgPreview, thumbnail, id) {
