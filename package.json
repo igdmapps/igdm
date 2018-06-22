@@ -31,7 +31,6 @@
     "node-notifier": "^5.1.2",
     "nojs": "^0.1.1"
   },
-  // change electron-builder version after https://github.com/electron-userland/electron-builder/issues/2958 is fixed.
   "devDependencies": {
     "electron": "^2.0.2",
     "electron-builder": "20.14.7",
