@@ -39,7 +39,9 @@
     "gulp": "^4.0.0",
     "gulp-htmlmin": "^4.0.0",
     "gulp-pug": "^3.3.0",
-    "jstransformer-markdown-it": "^2.0.0"
+    "jquery": "^3.3.1",
+    "jstransformer-markdown-it": "^2.0.0",
+    "popper.js": "^1.14.3"
   },
   "build": {
     "publish": [
@@ -49,8 +51,13 @@
         "repo": "igdm"
       }
     ],
+    "files": [
+      "./build/**/*",
+      "./main/**/*",
+      "./browser/**/*"
+    ],
     "appId": "com.ifedapoolarewaju.desktop.igdm",
-    "copyright": "ifedapo Olarewaju 2017",
+    "copyright": "Ifedapo Olarewaju 2018",
     "mac": {
       "target": [
         "dmg",
