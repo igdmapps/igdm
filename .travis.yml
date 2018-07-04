@@ -1,0 +1,7 @@
+language: node_js
+
+node_js:
+    - "8" # use latest LTS
+
+script:
+    - npm audit
