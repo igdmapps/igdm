@@ -1,3 +1,8 @@
+### 2.5.2 / 2018-09-08 ###
+
+* Fix broken "Quote message"
+* Fix Broken linux build
+
 ### 2.5.1 / 2018-06-11 ###
 
 * Mute Notifications

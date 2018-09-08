@@ -1,6 +1,6 @@
 {
   "name": "IGdm",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Desktop application for Instagram DMs",
   "main": "main/main.js",
   "scripts": {
@@ -33,8 +33,8 @@
   },
   "devDependencies": {
     "electron": "^2.0.2",
-    "electron-builder": "20.14.7",
-    "electron-builder-lib": "^20.15.0",
+    "electron-builder": "^20.16.4",
+    "electron-builder-lib": "^20.16.4",
     "electron-builder-squirrel-windows": "^20.15.0",
     "gulp": "^4.0.0",
     "gulp-htmlmin": "^4.0.0",
