@@ -48,6 +48,22 @@ function createWindow () {
   mainWindow.on('closed', () => mainWindow = null)
 }
 
+function createCheckpointWindow() {
+  const checkpointWindow = new BrowserWindow({
+    width: 300,
+    height: 300,
+    resizable: false,
+    icon: `${__dirname}/../browser/img/icon.png`,
+  })
+  checkpointWindow.setTitle('IG:dm - Instagram verification code')
+  checkpointWindow.loadURL(url.format({
+    pathname: path.join(__dirname, '../browser/checkpoint.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+  return checkpointWindow
+}
+
 function getChatList () {
   instagram.getChatList(session).then((chats) => {
     mainWindow.webContents.send('chatList', chats)
@@ -71,6 +87,20 @@ function getChat (evt, id) {
 
     timeoutObj = setTimeout(getChat, pollingInterval, {}, id);
   }).catch(() => setTimeout(getChat, RATE_LIMIT_DELAY, evt, id))
+}
+
+function handleCheckpoint (checkpointError) {
+  return new Promise((resolve, reject) => {
+    instagram.startCheckpoint(checkpointError)
+      .then((challenge) => {
+        const cpWindow = createCheckpointWindow()
+        electron.ipcMain.on('checkpointCode', (evt, data) => {
+          electron.ipcMain.removeAllListeners('checkpointCode')
+          cpWindow.close()
+          challenge.code(data.code).then(resolve).catch(reject)
+        })
+      }).catch(reject)
+  })
 }
 
 app.on('ready', () => {
@@ -110,18 +140,32 @@ electron.ipcMain.on('login', (evt, data) => {
   if(data.username === "" || data.password === "") {
     return mainWindow.webContents.send('loginError', "Please enter all required fields");
   }
-  instagram.login(data.username, data.password).then((session_) => {
-    session = session_
-    createWindow()
-  }).catch((error) => {
+  const login = (keepLastSession) => {
+    instagram.login(data.username, data.password, keepLastSession).then((session_) => {
+      session = session_
+      createWindow()
+    }).catch((error) => {
+      if (instagram.isCheckpointError(error)) {
+        handleCheckpoint(error)
+          .then(() => login(true))
+          .catch(() => mainWindow.webContents.send('loginError', getErrorMsg(error)))
+      } else {
+        mainWindow.webContents.send('loginError', getErrorMsg(error));
+      }
+    })
+  }
+
+  const getErrorMsg = (error) => {
     let message = 'An unknown error occurred.';
     if (error.message) {
       message = error.message;
     } else if (error.hasOwnProperty('json') && !!error.json.two_factor_required) {
       message = 'You have two factor authentication enabled. Two factor authentication is not yet supported.';
     }
-    mainWindow.webContents.send('loginError', message);
-  })
+    return message
+  }
+
+  login()
 })
 
 electron.ipcMain.on('logout', () => {

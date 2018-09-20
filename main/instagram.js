@@ -18,8 +18,10 @@ exports.checkAuth = function (session) {
   });
 }
 
-exports.login = function (username, password) {
-  utils.clearCookieFiles();
+exports.login = function (username, password, keepLastSession) {
+  if (!keepLastSession) {
+    utils.clearCookieFiles();
+  }
   return new Promise((resolve, reject) => {
     const device = utils.getDevice(username);
     const storage = utils.getCookieStorage(`${username}.json`);
@@ -29,6 +31,14 @@ exports.login = function (username, password) {
 
 exports.logout = function () {
   utils.clearCookieFiles();
+}
+
+exports.isCheckpointError = (error) => {
+  return (error instanceof Client.Exceptions.CheckpointError)
+}
+
+exports.startCheckpoint = (error) => {
+  return Client.Web.Challenge.resolve(error, 'email')
 }
 
 exports.getChatList = function (session) {

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>IG:dm - Instagram Desktop Messenger</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+  </head>
+  <body>
+    <div class="container cardBox pb-5 pt-3 pt-sm-5">
+      <form class="pageCard mx-auto p-4 p-sm-5">
+        <div class="clearfix welcomeBox"><span class="d-block text-center">Please enter the verification code sent to your e-mail address</span></div>
+        <div class="input-group loginInputs mt-4">
+          <input class="form-control code" type="text" name="code" required="true" placeholder="Code">
+        </div>
+        <button class="loginButton mt-3 btn btn-primary" type="submit">Submit Code</button><span class="d-block errorMessage text-center mt-3" id="error"></span>
+      </form>
+    </div>
+    <script type="text/javascript" src="js/checkpoint.js"></script>
+  </body>
+</html>
