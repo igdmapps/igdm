@@ -1,3 +1,7 @@
+### 2.5.3 / 2018-09-20 ###
+
+* Add support for checkpoint verification
+
 ### 2.5.2 / 2018-09-08 ###
 
 * Fix broken "Quote message"
