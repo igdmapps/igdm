@@ -1,3 +1,7 @@
+### 2.5.4 / 2018-09-30 ###
+
+* Fix endless "message sending..." glitch
+
 ### 2.5.3 / 2018-09-20 ###
 
 * Add support for checkpoint verification
