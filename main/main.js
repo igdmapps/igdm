@@ -65,6 +65,9 @@ function createCheckpointWindow() {
 }
 
 function getChatList () {
+  if (!session) {
+    return
+  }
   instagram.getChatList(session).then((chats) => {
     mainWindow.webContents.send('chatList', chats)
 
@@ -75,6 +78,9 @@ function getChatList () {
 let timeoutObj;
 let messagesThread;
 function getChat (evt, id) {
+  if (!session) {
+    return
+  }
   // used to get older messages, see #getOlderMessages
   if (messagesThread && messagesThread.threadId != id) {
     messagesThread = null
@@ -82,9 +88,9 @@ function getChat (evt, id) {
 
   instagram.getChat(session, id).then((chat) => {
     mainWindow.webContents.send('chat', chat);
-
-    if (timeoutObj) clearTimeout(timeoutObj)
-
+    if (timeoutObj) {
+      clearTimeout(timeoutObj)
+    }
     timeoutObj = setTimeout(getChat, pollingInterval, {}, id);
   }).catch(() => setTimeout(getChat, RATE_LIMIT_DELAY, evt, id))
 }
