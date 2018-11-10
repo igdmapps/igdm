@@ -4,6 +4,7 @@ function renderMessage (message, direction, time, type) {
     text: renderMessageAsText,
     like: renderMessageAsLike,
     media: renderMessageAsImage,
+    raven_media: renderMessageAsRavenImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
     link: renderMessageAsLink
   }
@@ -101,6 +102,22 @@ function renderMessageAsImage (container, message) {
   container.addEventListener('click', () => {
     showInViewer(dom(`<img src="${url}">`));
   })
+}
+
+function renderMessageAsRavenImage (container, message) {
+  container.classList.add('ig-media');
+
+  if (message._params.ravenMedia.image_versions2) {
+    var url = message._params.ravenMedia.image_versions2.candidates[0].url
+    var img = dom(`<img src="${url}">`);
+    img.onload = conditionedScrollToBottom();
+    container.appendChild(img);
+
+    container.addEventListener('click', () => {
+      showInViewer(dom(`<img src="${url}">`));
+    })
+  }
+
 }
 
 function renderMessageAsLike (container) {
