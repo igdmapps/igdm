@@ -52,6 +52,10 @@ const template = [
       {
         label: 'Donate to this Project',
         click() { openExternal('http://paypal.me/SolomonOmojola') }
+      },
+      {
+        label: 'Try IGdm Pro',
+        click() { openExternal('https://pro.igdm.me') }
       }
     ]
   }
