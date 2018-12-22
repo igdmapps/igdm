@@ -113,6 +113,9 @@ function handleCheckpoint (checkpointError) {
   })
 }
 
+// fixes this issue https://github.com/electron/electron/issues/10864
+app.setAppUserModelId('com.ifedapoolarewaju.desktop.igdm')
+
 app.on('ready', () => {
   createWindow();
   // only set the menu template when in production mode/
