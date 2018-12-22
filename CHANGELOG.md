@@ -1,3 +1,9 @@
+### 2.6.0 / 2018-12-22 ###
+
+* Fix notification on windows
+* Friendly image upload UX
+* Chat message performance improvement
+
 ### 2.5.4 / 2018-09-30 ###
 
 * Fix endless "message sending..." glitch
