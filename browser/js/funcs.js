@@ -131,8 +131,12 @@ function addSubmitHandler (chat_) {
 }
 
 function sendAttachment(filePath, chat_) {
+  // @todo: pass this as argument instead
+  window.notifiedChatId = chat_.id
+  notify('Your file is being uploaded', true)
+
   var recipients = chat_.accounts.map((account) => account.id)
-  ipcRenderer.send('upload', { filePath, recipients, isNewChat: !chat_.id })
+  ipcRenderer.send('upload', { filePath, recipients, isNewChat: !chat_.id, chatId: chat_.id })
 }
 
 function addAttachmentSender(chat_) {
@@ -141,6 +145,7 @@ function addAttachmentSender(chat_) {
     fileInput.click();
     fileInput.onchange = () => {
       sendAttachment(fileInput.files[0].path, chat_);
+      fileInput.value = '';
     }
   }
 }
@@ -160,6 +165,7 @@ function addNotification (el, chat_) {
       markAsRead(chat_.id, el);
     } else {
       el.classList.add('notification');
+      // @todo pass this as an argument instead
       window.notifiedChatId = el.getAttribute("id");
       if (isNew && window.shouldNotify && !window.isWindowFocused) {
         notify(`new message from ${getUsernames(chat_)}`);
@@ -168,8 +174,10 @@ function addNotification (el, chat_) {
   }
 }
 
-function notify (message) {
-  ipcRenderer.send('increase-badge-count');
+function notify(message, noBadgeCountIncrease) {
+  if (!noBadgeCountIncrease) {
+    ipcRenderer.send('increase-badge-count');
+  }
   const notification = new Notification('IG:dm Desktop', {
     body: message
   });

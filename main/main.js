@@ -218,9 +218,8 @@ electron.ipcMain.on('message', (_, data) => {
 
 electron.ipcMain.on('upload', (_, data) => {
   instagram.uploadFile(session, data.filePath, data.recipients)
-    .then((chat) => {
-      if (data.isNewChat) getChat(null, chat[0].id)
-    })
+    .then((chat) => getChat(null, chat.threads.thread_id))
+    .catch(() => mainWindow.webContents.send('upload-error', data.chatId))
 })
 
 electron.ipcMain.on('searchUsers', (_, search) => {

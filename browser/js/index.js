@@ -62,6 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
     renderUnfollowers(users);
   });
 
+  ipcRenderer.on('upload-error', (_, chatId) => {
+    window.notifiedChatId = chatId;
+    notify('Image upload failed. :( Please ensure your image is in .jpg format.', true);
+  })
+
   document.querySelector('button.open-emoji').onclick = () => {
     const onEmojiSelected = (emoji) => {
       document.querySelector(MSG_INPUT_SELECTOR).value += emoji;
