@@ -64,18 +64,22 @@ function createCheckpointWindow() {
   return checkpointWindow
 }
 
+let chatListTimeoutObj;
 function getChatList () {
   if (!session) {
     return
   }
   instagram.getChatList(session).then((chats) => {
     mainWindow.webContents.send('chatList', chats)
-
-    setTimeout(getChatList, pollingInterval);
+    
+    if (chatListTimeoutObj) {
+      clearTimeout(chatListTimeoutObj)
+    }
+    chatListTimeoutObj = setTimeout(getChatList, pollingInterval);
   }).catch(() => setTimeout(getChatList, RATE_LIMIT_DELAY))
 }
 
-let timeoutObj;
+let chatTimeoutObj;
 let messagesThread;
 function getChat (evt, id) {
   if (!session) {
@@ -88,10 +92,10 @@ function getChat (evt, id) {
 
   instagram.getChat(session, id).then((chat) => {
     mainWindow.webContents.send('chat', chat);
-    if (timeoutObj) {
-      clearTimeout(timeoutObj)
+    if (chatTimeoutObj) {
+      clearTimeout(chatTimeoutObj)
     }
-    timeoutObj = setTimeout(getChat, pollingInterval, {}, id);
+    chatTimeoutObj = setTimeout(getChat, pollingInterval, {}, id);
   }).catch(() => setTimeout(getChat, RATE_LIMIT_DELAY, evt, id))
 }
 
@@ -200,9 +204,15 @@ electron.ipcMain.on('getOlderMessages', (_, id) => {
 
 electron.ipcMain.on('message', (_, data) => {
   if (data.isNewChat) {
-    instagram.sendNewChatMessage(session, data.message, data.users).then((chat) => getChat(null, chat[0].id))
+    instagram.sendNewChatMessage(session, data.message, data.users).then((chat) => {
+      getChat(null, chat[0].id)
+      getChatList()
+    })
   } else {
-    instagram.sendMessage(session, data.message, data.chatId)
+    instagram.sendMessage(session, data.message, data.chatId).then(() => {
+      getChat(null, data.chatId)
+      getChatList()
+    })
   }
 })
 
