@@ -7,7 +7,8 @@ const CHAT_WINDOW_SELECTOR = '.chat .messages';
 const URL_REGEX = new RegExp(/(http:\/\/|https:\/\/)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/, 'i');
 
 window.chats = [];
-window.chatsHash = {};
+window.chatListHash = {};
+window.chatCache = {};
 window.unreadChats = {};
 window.chat = {};
 window.olderMessages = [];
