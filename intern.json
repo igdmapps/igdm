@@ -1,0 +1,6 @@
+{
+    "suites": "tests/*.js",
+    "environments": [
+        "node"
+    ]
+}

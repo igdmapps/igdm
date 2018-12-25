@@ -39,6 +39,7 @@
     "gulp": "^4.0.0",
     "gulp-htmlmin": "^4.0.0",
     "gulp-pug": "^3.3.0",
+    "intern": "^4.3.3",
     "jstransformer-markdown-it": "^2.0.0"
   },
   "build": {
@@ -76,5 +77,8 @@
       "publish": "github",
       "maintainer": "Ifedapo Olarewaju <ifedapoolarewaju@gmail.com>"
     }
+  },
+  "scripts": {
+    "test": "intern"
   }
 }
