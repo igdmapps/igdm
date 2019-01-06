@@ -2,5 +2,12 @@
     "suites": "tests/*.js",
     "environments": [
         "node"
-    ]
+    ],
+    "coverage": [
+        "main/**/*.js",
+        "main/*.js",
+        "browser/js/*.js",
+        "!main/autoupdater.js"
+    ],
+    "reporters+": ["lcov", "runner"]
 }
