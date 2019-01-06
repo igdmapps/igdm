@@ -1,3 +1,7 @@
+### 2.6.1 / 2018-12-26 ###
+
+* Fix Segfault issue on Linux
+
 ### 2.6.0 / 2018-12-22 ###
 
 * Fix notification on windows
