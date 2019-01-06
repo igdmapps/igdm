@@ -6,7 +6,8 @@
   "scripts": {
     "start": "gulp build && electron .",
     "pack": "gulp build && build --dir",
-    "dist": "gulp build && build -mwl --x64"
+    "dist": "gulp build && build -mwl --x64",
+    "test": "intern"
   },
   "repository": {
     "type": "git",
@@ -36,11 +37,15 @@
     "electron-builder": "^20.16.4",
     "electron-builder-lib": "^20.16.4",
     "electron-builder-squirrel-windows": "^20.15.0",
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "gulp": "^4.0.0",
     "gulp-htmlmin": "^4.0.0",
     "gulp-pug": "^3.3.0",
     "intern": "^4.3.3",
-    "jstransformer-markdown-it": "^2.0.0"
+    "jstransformer-markdown-it": "^2.0.0",
+    "testdouble": "^3.9.1"
   },
   "build": {
     "publish": [
@@ -77,8 +82,5 @@
       "publish": "github",
       "maintainer": "Ifedapo Olarewaju <ifedapoolarewaju@gmail.com>"
     }
-  },
-  "scripts": {
-    "test": "intern"
   }
 }
