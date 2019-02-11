@@ -6,7 +6,8 @@
   "scripts": {
     "start": "gulp build && electron .",
     "pack": "gulp build && build --dir",
-    "dist": "gulp build && build -mwl --x64"
+    "dist": "gulp build && build -mwl --x64",
+    "test": "intern"
   },
   "repository": {
     "type": "git",
@@ -39,7 +40,9 @@
     "gulp": "^4.0.0",
     "gulp-htmlmin": "^4.0.0",
     "gulp-pug": "^3.3.0",
-    "jstransformer-markdown-it": "^2.0.0"
+    "intern": "^4.3.3",
+    "jstransformer-markdown-it": "^2.0.0",
+    "testdouble": "^3.9.1"
   },
   "build": {
     "publish": [
