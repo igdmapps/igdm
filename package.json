@@ -27,7 +27,7 @@
     "electron-log": "2.2.17",
     "electron-updater": "^3.0.3",
     "fb": "^2.0.0",
-    "instagram-private-api": "github:ifedapoolarewaju/instagram-private-api#cd4955751a4b4e111bcb20633c53db2ed15a8671",
+    "instagram-private-api": "github:ifedapoolarewaju/instagram-private-api#576d1e932c949e8cf4188d7c1651f91fc32a00a5",
     "node-notifier": "^5.1.2",
     "nojs": "^0.1.1"
   },
