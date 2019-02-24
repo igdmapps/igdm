@@ -1,3 +1,7 @@
+### 2.6.2 / 2019-02-24 ###
+
+* Fix link parsing in messages
+
 ### 2.6.1 / 2018-12-26 ###
 
 * Fix Segfault issue on Linux
