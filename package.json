@@ -27,13 +27,13 @@
     "electron-log": "2.2.17",
     "electron-updater": "^3.0.3",
     "fb": "^2.0.0",
-    "instagram-private-api": "github:ifedapoolarewaju/instagram-private-api#576d1e932c949e8cf4188d7c1651f91fc32a00a5",
+    "instagram-private-api": "github:ifedapoolarewaju/instagram-private-api#07e4d07e1c5b523d84496e95bd02a0ea1db933f4",
     "node-notifier": "^5.1.2",
     "nojs": "^0.1.1"
   },
   "devDependencies": {
     "electron": "2.0.12",
-    "electron-builder": "20.28.4",
+    "electron-builder": "^20.39.0",
     "electron-builder-lib": "20.23.1",
     "electron-builder-squirrel-windows": "20.29.0",
     "gulp": "^4.0.0",
