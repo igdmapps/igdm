@@ -54,6 +54,12 @@ const template = [
         click() { openExternal('http://paypal.me/SolomonOmojola') }
       },
       {
+        label: 'Tweet about IGdm',
+        click() {
+          openExternal('https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Figdm.me%2F&ref_src=twsrc%5Etfw&text=Continue%20Instagram%20DMs%20on%20your%20computer&tw_p=tweetbutton&url=https%3A%2F%2Figdm.me%2F')
+        }
+      },
+      {
         label: 'Try IGdm Pro',
         click() { openExternal('https://pro.igdm.me') }
       }
