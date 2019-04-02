@@ -1,6 +1,6 @@
 {
   "name": "IGdm",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "description": "Desktop application for Instagram DMs",
   "main": "main/main.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "bluebird": "3.5.2",
     "bootstrap": "4.1.3",
     "electron-log": "2.2.17",
-    "electron-updater": "^3.0.3",
+    "electron-updater": "^4.0.0",
     "fb": "^2.0.0",
     "instagram-private-api": "github:ifedapoolarewaju/instagram-private-api#07e4d07e1c5b523d84496e95bd02a0ea1db933f4",
     "node-notifier": "^5.1.2",

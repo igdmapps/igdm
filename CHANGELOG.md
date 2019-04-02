@@ -1,3 +1,7 @@
+### 2.6.3 / 2019-04-02 ###
+
+* Fix login challenge issue
+
 ### 2.6.2 / 2019-02-24 ###
 
 * Fix link parsing in messages
