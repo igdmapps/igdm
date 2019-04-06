@@ -1,3 +1,9 @@
+### 2.6.4 / 2019-06-04 ###
+
+* fix marking "seen" from triggering error
+* fix chat switching glitch
+* fix raven media (story like posts sent from phone)
+
 ### 2.6.3 / 2019-04-02 ###
 
 * Fix login challenge issue
