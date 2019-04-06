@@ -73,8 +73,13 @@ function loadOlderMsgsOnScrollTop() {
     if (e.target.scrollTop < 10 && !window.gettingOlderMessages) {
       ipcRenderer.send('getOlderMessages', window.currentChatId);
       window.gettingOlderMessages = true;
+      window.olderMessagesChatId = window.currentChatId;
     }
   }
+}
+
+function canRenderOlderMessages() {
+  return window.olderMessagesChatId === window.currentChatId;
 }
 
 function getMsgPreview (chat_) {

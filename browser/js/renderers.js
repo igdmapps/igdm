@@ -115,8 +115,9 @@ function renderMessageAsRavenImage (container, message) {
     container.addEventListener('click', () => {
       showInViewer(dom(`<img src="${url}">`));
     })
+  } else {
+    renderMessageAsText(container, '<unsupported message format>', true);
   }
-
 }
 
 function renderMessageAsLike (container) {
@@ -240,8 +241,10 @@ function renderChat (chat_) {
   msgContainer.innerHTML = '';
   renderChatHeader(chat_);
   var messages = chat_.items.slice().reverse();
-  // load older messages if they exist too
-  messages = window.olderMessages.slice().reverse().concat(messages);
+  if (canRenderOlderMessages()) {
+    // load older messages if they exist too
+    messages = window.olderMessages.slice().reverse().concat(messages);
+  }
   messages.forEach((message) => {
     var div = renderMessage(message, getMsgDirection(message),
       message._params.created, message._params.type

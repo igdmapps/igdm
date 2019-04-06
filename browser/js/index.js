@@ -48,8 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   ipcRenderer.on('olderMessages', (_, messages) => {
-    window.olderMessages = window.olderMessages.concat(messages)
-    renderOlderMessages(messages);
+    if (canRenderOlderMessages()) {
+      window.olderMessages = window.olderMessages.concat(messages);
+      renderOlderMessages(messages);
+    }
     // reset the value only after all is done. So don't move this up
     window.gettingOlderMessages = false;
   });
