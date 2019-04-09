@@ -23,16 +23,13 @@ function renderMessage (message, direction, time, type) {
 
   if (direction === 'inward') {
     var accountId = message._params.accountId;
-    // var senderUsername;
-
     getUsername(accountId).then((senderUsername) => {
-      // divContent.appendChild(dom(`<p class="message-sender">${senderUsername}</p>`));
       divContent.insertBefore(dom(`<p class="message-sender">${senderUsername}</p>`), divContent.firstChild);
     });
   }
   div.appendChild(divContent);
   
-  return div;
+  return div
 }
 
 function renderMessageAsPost (container, message) {
