@@ -1,8 +1,12 @@
+### 2.6.5 / 2019-09-04 ###
+
+* Fix messages loading from users no longer in a chat [#877](issues/877)
+
 ### 2.6.4 / 2019-06-04 ###
 
-* fix marking "seen" from triggering error
-* fix chat switching glitch
-* fix raven media (story like posts sent from phone)
+* Fix marking "seen" from triggering error
+* Fix chat switching glitch
+* Fix raven media (story like posts sent from phone)
 
 ### 2.6.3 / 2019-04-02 ###
 
@@ -69,7 +73,7 @@
 ### 2.3.0 / 2017-12-04 ###
 
 * Render stories when they are replied to (thank you @cce)
-* close modal view on esc button
+* Close modal view on esc button
 * fix unneeded new thread creation when DMing a group [#22](issues/22)
 * You can now upload photos in the DM [#3](issues/3)
 
