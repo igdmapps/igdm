@@ -12,24 +12,27 @@ function renderMessage (message, direction, time, type) {
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
   var divContent = dom('<div class="content"></div>');
 
-  if (direction === 'inward') {
-    var senderUsername = window.chat.accounts.find((account) => {
-      return account.id == message._params.accountId
-    })._params.username;
-    divContent.appendChild(dom(`<p class="message-sender">${senderUsername}</p>`));
-  }
-
   if (!type && typeof message === 'string') type = 'text';
 
   if (renderers[type]) renderers[type](divContent, message);
-  else renderMessageAsText(divContent, '<unsupported message format>', true);
+  else renderMessageAsText(divContent, '<' + type + ' is an unsupported message format>', true);
 
   divContent.appendChild(dom(
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
   );
+
+  if (direction === 'inward') {
+    var accountId = message._params.accountId;
+    // var senderUsername;
+
+    getUsername(accountId).then((senderUsername) => {
+      // divContent.appendChild(dom(`<p class="message-sender">${senderUsername}</p>`));
+      divContent.insertBefore(dom(`<p class="message-sender">${senderUsername}</p>`), divContent.firstChild);
+    });
+  }
   div.appendChild(divContent);
   
-  return div
+  return div;
 }
 
 function renderMessageAsPost (container, message) {
@@ -263,14 +266,19 @@ function renderChat (chat_) {
 function renderOlderMessages (messages) {
   const msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   const domPostion = msgContainer.firstChild;
-  messages.forEach((message) => {
-    var div = renderMessage(message, getMsgDirection(message),
-      message._params.created, message._params.type
-    );
-    msgContainer.prepend(div);
-  });
-  // scroll back to dom position before the older messages were rendered
-  domPostion.scrollIntoView();
+  if(messages.length) {
+    messages.forEach((message) => {
+      var div = renderMessage(message, getMsgDirection(message),
+        message._params.created, message._params.type
+      );
+      msgContainer.prepend(div);
+    });
+    // scroll back to dom position before the older messages were rendered
+    if (!loadingAllMessages) {
+      domPostion.scrollIntoView();
+    }
+  } else loadingAllMessages = false;
+  
 }
 
 function renderMessageSeenText (container, chat_) {

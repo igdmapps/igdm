@@ -239,3 +239,40 @@ function setProfilePic () {
   const settingsButton = document.querySelector('.settings');
   settingsButton.style.backgroundImage = `url(${url})`;
 }
+
+function loadAllMessages () {
+  if (!window.gettingOlderMessages) {
+    loadingAllMessages = true;
+    ipcRenderer.send('getOlderMessages', window.currentChatId);
+    window.gettingOlderMessages = true;
+    window.olderMessagesChatId = window.currentChatId;
+  }
+}
+
+function getUserById (userId) {
+  return new Promise ((resolve) => {
+    ipcRenderer.send('getUserById', userId);
+    ipcRenderer.on('senderUser', (evt, user) => {
+      resolve(user);
+    });
+  });
+}
+
+function getUsername (userId) {
+  return new Promise ((resolve) => {
+    var username;
+    for (var i = 0; i < window.chat.accounts.length; ++i) { // when a user is no longer in group his username will not appear in window.chat.accounts
+      if (userId == window.chat.accounts[i].id) {
+          username = window.chat.accounts[i]._params.username;
+          break; // don't hate me
+      }
+    }
+    if (!username) {
+      getUserById(userId).then((user) => {
+        resolve(user._params.username);
+      });
+    } else {
+      resolve(username);
+    }
+  });
+}
