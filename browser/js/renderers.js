@@ -6,7 +6,8 @@ function renderMessage (message, direction, time, type) {
     media: renderMessageAsImage,
     raven_media: renderMessageAsRavenImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
-    link: renderMessageAsLink
+    link: renderMessageAsLink,
+    placeholder: renderMEssageAsPlaceholder
   }
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
   var divContent = dom('<div class="content"></div>');
@@ -21,7 +22,11 @@ function renderMessage (message, direction, time, type) {
   if (!type && typeof message === 'string') type = 'text';
 
   if (renderers[type]) renderers[type](divContent, message);
-  else renderMessageAsText(divContent, '<unsupported message format>', true);
+  else {
+    renderMessageAsText(divContent, '<unsupported message format>', true);
+    console.log(type);
+    console.log(message);
+  }
 
   divContent.appendChild(dom(
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
@@ -116,6 +121,7 @@ function renderMessageAsRavenImage (container, message) {
     })
   } else {
     renderMessageAsText(container, '<unsupported message format>', true);
+    console.log(message);
   }
 }
 
@@ -147,6 +153,15 @@ function renderMessageAsLink (container, message) {
     const url = /^(http|https):\/\//.test(link.url) ? link.url : `http://${link.url}`;
     openInBrowser(url);
   }
+}
+
+function renderMEssageAsPlaceholder (container, message) {
+  var title = message.placeholder._params.title + '\n';
+  var text = message.placeholder._params.message;
+  var small = document.createElement("small");
+  small.innerHTML = text;
+  container.appendChild(document.createTextNode(title));
+  container.appendChild(small);
 }
 
 function renderContextMenu (text) {

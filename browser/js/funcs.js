@@ -29,7 +29,7 @@ function dom(content) {
 
 function getUsernames (chat_, shouldTruncate) { // rename as getCurrentUsernames
   var usernames = chat_.accounts.map((acc) => acc._params.username).join(', ');
-  return usernames; // add leftUsers !!! addThem but not on the list of current users => new function needed
+  return usernames;
 }
 
 function getAllUsers (chat_, shouldTruncate) {
