@@ -215,7 +215,7 @@ function registerChatUser (chat_) {
 function getIsSeenText (chat_) {
   var text = '';
   if (!chat_.items || !chat_.items.length || chat_.items[0]._params.accountId != window.loggedInUserId) {
-    return '';
+    return text;
   }
 
   var seenBy = chat_.accounts.filter((account) => {
@@ -223,9 +223,9 @@ function getIsSeenText (chat_) {
       chat_._params.itemsSeenAt[account.id] &&
       chat_._params.itemsSeenAt[account.id].itemId === chat_.items[0].id
     )
-  })
-
-  if (seenBy.length === chat_.accounts.length) { // leftUsers can trigger it
+  });
+  
+  if (seenBy.length === chat_.accounts.length) {
     text = 'seen'
   } else if (seenBy.length) {
     text = `👁 ${getCurrentUsernames({accounts: seenBy})}`
