@@ -6,14 +6,14 @@ function renderMessage (message, direction, time, type) {
     media: renderMessageAsImage,
     raven_media: renderMessageAsRavenImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
-    link: renderMessageAsLink
+    link: renderMessageAsLink,
+    placeholder: renderMEssageAsPlaceholder
   }
-
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
   var divContent = dom('<div class="content"></div>');
 
   if (direction === 'inward') {
-    var senderUsername = window.chat.accounts.find((account) => {
+    var senderUsername = getAllUsers(window.chat).find((account) => {
       return account.id == message._params.accountId
     })._params.username;
     divContent.appendChild(dom(`<p class="message-sender">${senderUsername}</p>`));
@@ -22,7 +22,9 @@ function renderMessage (message, direction, time, type) {
   if (!type && typeof message === 'string') type = 'text';
 
   if (renderers[type]) renderers[type](divContent, message);
-  else renderMessageAsText(divContent, '<unsupported message format>', true);
+  else {
+    renderMessageAsText(divContent, '<unsupported message format>', true);
+  }
 
   divContent.appendChild(dom(
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
@@ -150,6 +152,15 @@ function renderMessageAsLink (container, message) {
   }
 }
 
+function renderMEssageAsPlaceholder (container, message) {
+  var title = message.placeholder._params.title + '\n';
+  var text = message.placeholder._params.message;
+  var small = document.createElement("small");
+  small.innerHTML = text;
+  container.appendChild(document.createTextNode(title));
+  container.appendChild(small);
+}
+
 function renderContextMenu (text) {
   const menu = new Menu();
   const menuItem = new MenuItem({
@@ -160,11 +171,11 @@ function renderContextMenu (text) {
   menu.popup({});
 }
 
-function renderChatListItem (username, msgPreview, thumbnail, id) {
+function renderChatListItem (title, msgPreview, thumbnail, id) {
   var li = document.createElement('li');
   li.classList.add('col-12', 'p-3');
   li.appendChild(dom(`<div><img class="thumb" src="${thumbnail}"></div>`));
-  li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${username}</b><br>${msgPreview}</div>`));
+  li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${title}</b><br>${msgPreview}</div>`));
   if (id) li.setAttribute("id", `chatlist-${id}`);
 
   return li;
@@ -193,7 +204,7 @@ function renderChatList (chatList) {
   ul.innerHTML = "";
   chatList.forEach((chat_) => {
     var msgPreview = getMsgPreview(chat_);
-    var usernames = getUsernames(chat_, true);
+    var usernames = getChatTitle(chat_);
     let thumbnail = '';
     if (chat_.accounts[0]) {
       thumbnail = chat_.accounts[0]._params.picture;
@@ -221,16 +232,20 @@ function renderChatList (chatList) {
 }
 
 function renderChatHeader (chat_) {
-  let usernames = getUsernames(chat_);
-  let b = dom(`<b>${usernames}</b>`);
+  let title = getChatTitle(chat_);
+  let usernames = getCurrentUsernames(chat_);
+  let header;
 
   if (chat_.accounts.length === 1) {
+    header = dom(`<b>${title}</b>`);
     // open user profile in browser
-    b.onclick = () => openInBrowser(`https://instagram.com/${usernames}`)
+    header.onclick = () => openInBrowser(`https://instagram.com/${title}`)
+  } else {
+    header = dom(`<span><b>${title}: </b><small>${usernames}</small></span>`);
   }
   let chatTitleContainer = document.querySelector('.chat-title');
   chatTitleContainer.innerHTML = '';
-  chatTitleContainer.appendChild(b);
+  chatTitleContainer.appendChild(header);
 }
 
 function renderChat (chat_) {
@@ -263,14 +278,19 @@ function renderChat (chat_) {
 function renderOlderMessages (messages) {
   const msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   const domPostion = msgContainer.firstChild;
-  messages.forEach((message) => {
-    var div = renderMessage(message, getMsgDirection(message),
-      message._params.created, message._params.type
-    );
-    msgContainer.prepend(div);
-  });
-  // scroll back to dom position before the older messages were rendered
-  domPostion.scrollIntoView();
+  if(messages.length) {
+    messages.forEach((message) => {
+      var div = renderMessage(message, getMsgDirection(message),
+        message._params.created, message._params.type
+      );
+      msgContainer.prepend(div);
+    });
+    // scroll back to dom position before the older messages were rendered
+    if (!loadingAllMessages) {
+      domPostion.scrollIntoView();
+    }
+  } else loadingAllMessages = false;
+  
 }
 
 function renderMessageSeenText (container, chat_) {

@@ -54,6 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // reset the value only after all is done. So don't move this up
     window.gettingOlderMessages = false;
+    if(loadingAllMessages) {
+      loadAllMessages();
+    }
   });
 
   ipcRenderer.on('searchResult', (evt, users) => {
@@ -138,4 +141,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   getLoggedInUser();
   getChatList();
+
+  // To download all messages at once clicking one button
+  var header = document.getElementsByClassName("header d-flex p-3")[0];
+  var button = document.createElement("button"); /*
+  header.appendChild(button);
+  button.setAttribute("onclick", "loadAllMessages()");
+  button.setAttribute("class", "btn");
+  button.appendChild(document.createTextNode("Download all messages at once"));
+//*/
 });

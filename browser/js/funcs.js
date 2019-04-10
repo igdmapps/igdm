@@ -27,9 +27,23 @@ function dom(content) {
   return template.content.firstChild;
 }
 
-function getUsernames (chat_, shouldTruncate) {
+function getCurrentUsernames (chat_, shouldTruncate) {
   var usernames = chat_.accounts.map((acc) => acc._params.username).join(', ');
   return usernames;
+}
+
+function getChatTitle (chat_) {
+  if (chat_.accounts.length === 1) {
+    return chat_.accounts[0]._params.username;
+  } else {
+    return chat_._params.title;
+  }
+}
+
+function getAllUsers (chat_, shouldTruncate) {
+  var users = chat_.accounts;
+  users = users.concat(chat_.leftUsers);
+  return users;
 }
 
 function isCurrentChat (chat_) {
@@ -173,7 +187,7 @@ function addNotification (el, chat_) {
       // @todo pass this as an argument instead
       window.notifiedChatId = el.getAttribute("id");
       if (isNew && window.shouldNotify && !window.isWindowFocused) {
-        notify(`new message from ${getUsernames(chat_)}`);
+        notify(`new message from ${getChatTitle(chat_)}`);
       }
     }
   }
@@ -201,7 +215,7 @@ function registerChatUser (chat_) {
 function getIsSeenText (chat_) {
   var text = '';
   if (!chat_.items || !chat_.items.length || chat_.items[0]._params.accountId != window.loggedInUserId) {
-    return '';
+    return text;
   }
 
   var seenBy = chat_.accounts.filter((account) => {
@@ -209,12 +223,12 @@ function getIsSeenText (chat_) {
       chat_._params.itemsSeenAt[account.id] &&
       chat_._params.itemsSeenAt[account.id].itemId === chat_.items[0].id
     )
-  })
-
+  });
+  
   if (seenBy.length === chat_.accounts.length) {
     text = 'seen'
   } else if (seenBy.length) {
-    text = `👁 ${getUsernames({accounts: seenBy})}`
+    text = `👁 ${getCurrentUsernames({accounts: seenBy})}`
   }
   return text;
 }
@@ -238,4 +252,13 @@ function setProfilePic () {
   const url = window.loggedInUser._params.profilePicUrl;
   const settingsButton = document.querySelector('.settings');
   settingsButton.style.backgroundImage = `url(${url})`;
+}
+
+function loadAllMessages () {
+  if (!window.gettingOlderMessages) {
+    loadingAllMessages = true;
+    ipcRenderer.send('getOlderMessages', window.currentChatId);
+    window.gettingOlderMessages = true;
+    window.olderMessagesChatId = window.currentChatId;
+  }
 }
