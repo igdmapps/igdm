@@ -207,7 +207,7 @@ function renderChatList (chatList) {
   ul.innerHTML = "";
   chatList.forEach((chat_) => {
     var msgPreview = getMsgPreview(chat_);
-    var usernames = getUsernames(chat_, true);
+    var usernames = getUsernames(chat_, true); // use group name
     let thumbnail = '';
     if (chat_.accounts[0]) {
       thumbnail = chat_.accounts[0]._params.picture;
@@ -235,7 +235,7 @@ function renderChatList (chatList) {
 }
 
 function renderChatHeader (chat_) {
-  let usernames = getUsernames(chat_);
+  let usernames = getUsernames(chat_); // use group name
   let b = dom(`<b>${usernames}</b>`);
 
   if (chat_.accounts.length === 1) {

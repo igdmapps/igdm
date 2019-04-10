@@ -179,7 +179,7 @@ function addNotification (el, chat_) {
       // @todo pass this as an argument instead
       window.notifiedChatId = el.getAttribute("id");
       if (isNew && window.shouldNotify && !window.isWindowFocused) {
-        notify(`new message from ${getUsernames(chat_)}`);
+        notify(`new message from ${getUsernames(chat_)}`); // use group name
       }
     }
   }
@@ -217,7 +217,7 @@ function getIsSeenText (chat_) {
     )
   })
 
-  if (seenBy.length === chat_.accounts.length) {
+  if (seenBy.length === chat_.accounts.length) { // leftUsers can trigger it
     text = 'seen'
   } else if (seenBy.length) {
     text = `👁 ${getUsernames({accounts: seenBy})}`
