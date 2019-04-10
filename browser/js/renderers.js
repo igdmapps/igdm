@@ -119,8 +119,6 @@ function renderMessageAsRavenImage (container, message) {
     })
   } else {
     renderMessageAsText(container, '<unsupported message format>', true);
-    console.log("renderMessageAsRavenImage() => <unsupported message format>: chack message._params.visualMedia and message._params.visualMedia.media.image_versions2");
-    console.log(message);
   }
 }
 
