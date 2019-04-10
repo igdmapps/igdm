@@ -27,9 +27,15 @@ function dom(content) {
   return template.content.firstChild;
 }
 
-function getUsernames (chat_, shouldTruncate) {
+function getUsernames (chat_, shouldTruncate) { // rename as getCurrentUsernames
   var usernames = chat_.accounts.map((acc) => acc._params.username).join(', ');
-  return usernames;
+  return usernames; // add leftUsers !!! addThem but not on the list of current users => new function needed
+}
+
+function getAllUsers (chat_, shouldTruncate) {
+  var users = chat_.accounts;
+  users = users.concat(chat_.leftUsers);
+  return users;
 }
 
 function isCurrentChat (chat_) {
@@ -247,32 +253,4 @@ function loadAllMessages () {
     window.gettingOlderMessages = true;
     window.olderMessagesChatId = window.currentChatId;
   }
-}
-
-function getUserById (userId) {
-  return new Promise ((resolve) => {
-    ipcRenderer.send('getUserById', userId);
-    ipcRenderer.on('senderUser', (evt, user) => {
-      resolve(user);
-    });
-  });
-}
-
-function getUsername (userId) {
-  return new Promise ((resolve) => {
-    var username;
-    for (var i = 0; i < window.chat.accounts.length; ++i) { // when a user is no longer in group his username will not appear in window.chat.accounts
-      if (userId == window.chat.accounts[i].id) {
-          username = window.chat.accounts[i]._params.username;
-          break; // don't hate me
-      }
-    }
-    if (!username) {
-      getUserById(userId).then((user) => {
-        resolve(user._params.username);
-      });
-    } else {
-      resolve(username);
-    }
-  });
 }

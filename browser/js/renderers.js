@@ -8,25 +8,24 @@ function renderMessage (message, direction, time, type) {
     reel_share: renderMessageAsUserStory, // replying to a user's story
     link: renderMessageAsLink
   }
-
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
   var divContent = dom('<div class="content"></div>');
+
+  if (direction === 'inward') {
+    var senderUsername = getAllUsers(window.chat).find((account) => {
+      return account.id == message._params.accountId
+    })._params.username;
+    divContent.appendChild(dom(`<p class="message-sender">${senderUsername}</p>`));
+  }
 
   if (!type && typeof message === 'string') type = 'text';
 
   if (renderers[type]) renderers[type](divContent, message);
-  else renderMessageAsText(divContent, '<' + type + ' is an unsupported message format>', true);
+  else renderMessageAsText(divContent, '<unsupported message format>', true);
 
   divContent.appendChild(dom(
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
   );
-
-  if (direction === 'inward') {
-    var accountId = message._params.accountId;
-    getUsername(accountId).then((senderUsername) => {
-      divContent.insertBefore(dom(`<p class="message-sender">${senderUsername}</p>`), divContent.firstChild);
-    });
-  }
   div.appendChild(divContent);
   
   return div
@@ -230,7 +229,7 @@ function renderChatHeader (chat_) {
   }
   let chatTitleContainer = document.querySelector('.chat-title');
   chatTitleContainer.innerHTML = '';
-  chatTitleContainer.appendChild(b);
+  chatTitleContainer.appendChild(b); // add group name if usernames.lenght > 1
 }
 
 function renderChat (chat_) {
