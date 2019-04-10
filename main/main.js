@@ -248,9 +248,3 @@ electron.ipcMain.on('getUnfollowers', (_) => {
 electron.ipcMain.on('unfollow', (_, userId) => {
   instagram.unfollow(session, userId)
 })
-
-electron.ipcMain.on('getUserById', (_, userId) => {
-  instagram.getUserById(session, userId).then((user) => {
-    mainWindow.webContents.send('senderUser', user);
-  })
-})

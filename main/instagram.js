@@ -161,9 +161,3 @@ exports.getLoggedInUser = function (session) {
     });
   });
 }
-
-exports.getUserById = function (session, id) {
-  return new Promise((resolve, reject) => {
-      Client.Account.getById(session, id).then(resolve).catch(reject);
-  });
-}
