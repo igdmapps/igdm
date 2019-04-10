@@ -27,9 +27,17 @@ function dom(content) {
   return template.content.firstChild;
 }
 
-function getUsernames (chat_, shouldTruncate) { // rename as getCurrentUsernames
+function getCurrentUsernames (chat_, shouldTruncate) {
   var usernames = chat_.accounts.map((acc) => acc._params.username).join(', ');
   return usernames;
+}
+
+function getChatTitle (chat_) {
+  if (chat_.accounts.length === 1) {
+    return chat_.accounts[0]._params.username;
+  } else {
+    return chat_._params.title;
+  }
 }
 
 function getAllUsers (chat_, shouldTruncate) {
@@ -179,7 +187,7 @@ function addNotification (el, chat_) {
       // @todo pass this as an argument instead
       window.notifiedChatId = el.getAttribute("id");
       if (isNew && window.shouldNotify && !window.isWindowFocused) {
-        notify(`new message from ${getUsernames(chat_)}`); // use group name
+        notify(`new message from ${getChatTitle(chat_)}`);
       }
     }
   }
@@ -220,7 +228,7 @@ function getIsSeenText (chat_) {
   if (seenBy.length === chat_.accounts.length) { // leftUsers can trigger it
     text = 'seen'
   } else if (seenBy.length) {
-    text = `👁 ${getUsernames({accounts: seenBy})}`
+    text = `👁 ${getCurrentUsernames({accounts: seenBy})}`
   }
   return text;
 }

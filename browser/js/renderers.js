@@ -174,11 +174,11 @@ function renderContextMenu (text) {
   menu.popup({});
 }
 
-function renderChatListItem (username, msgPreview, thumbnail, id) {
+function renderChatListItem (title, msgPreview, thumbnail, id) {
   var li = document.createElement('li');
   li.classList.add('col-12', 'p-3');
   li.appendChild(dom(`<div><img class="thumb" src="${thumbnail}"></div>`));
-  li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${username}</b><br>${msgPreview}</div>`));
+  li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${title}</b><br>${msgPreview}</div>`));
   if (id) li.setAttribute("id", `chatlist-${id}`);
 
   return li;
@@ -207,7 +207,7 @@ function renderChatList (chatList) {
   ul.innerHTML = "";
   chatList.forEach((chat_) => {
     var msgPreview = getMsgPreview(chat_);
-    var usernames = getUsernames(chat_, true); // use group name
+    var usernames = getChatTitle(chat_);
     let thumbnail = '';
     if (chat_.accounts[0]) {
       thumbnail = chat_.accounts[0]._params.picture;
@@ -235,16 +235,20 @@ function renderChatList (chatList) {
 }
 
 function renderChatHeader (chat_) {
-  let usernames = getUsernames(chat_); // use group name
-  let b = dom(`<b>${usernames}</b>`);
+  let title = getChatTitle(chat_);
+  let usernames = getCurrentUsernames(chat_);
+  let header;
 
   if (chat_.accounts.length === 1) {
+    header = dom(`<b>${title}</b>`);
     // open user profile in browser
-    b.onclick = () => openInBrowser(`https://instagram.com/${usernames}`)
+    header.onclick = () => openInBrowser(`https://instagram.com/${title}`)
+  } else {
+    header = dom(`<span><b>${title}: </b><small>${usernames}</small></span>`);
   }
   let chatTitleContainer = document.querySelector('.chat-title');
   chatTitleContainer.innerHTML = '';
-  chatTitleContainer.appendChild(b); // add group name if usernames.lenght > 1
+  chatTitleContainer.appendChild(header);
 }
 
 function renderChat (chat_) {
