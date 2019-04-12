@@ -105,7 +105,7 @@ function createTray() {
         mainWindow.show();
       }
     } },
-    { label: 'Light Icon', type : 'checkbox', checked : false, click: function(item) {
+    { label: 'Light Icon', type : 'checkbox', checked : utils.isTrayIconLight(), click: function(item) {
       if (item.checked) {
         utils.setTrayImageLight();
       } else {

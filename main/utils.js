@@ -67,9 +67,13 @@ const getDevice = (username) => {
 }
 
 //on windows it is recommended to use ICO icons to get best visual effects
-let trayImage = 'image_name'; //TODO
+let trayImage = 'icon.ico';
 if (process.platform != 'win32') {
-  trayImage = 'image_name'; //TODO
+  trayImage = 'background.png';
+}
+
+const isTrayIconLight = () => {
+  return config.get('trayImageTheme') == 'light';
 }
 
 const setTrayImageLight = () => {
@@ -82,14 +86,15 @@ const setTrayImageDark = () => {
 
 const getTrayImagePath = () => {
   let trayImageTheme = config.get('trayImageTheme');
-  if (trayImageTheme === 'light') {
-    return path.join(__dirname, 'path_to_image' + 'l_' + trayImage); //TODO
+  if (trayImageTheme == 'light') {
+    return path.join(__dirname, '/../browser/img/' + 'l_' + trayImage);
   }
-  return path.join(__dirname, 'path_to_image' + trayImage); //TODO
+  return path.join(__dirname, '/../browser/img/' + trayImage);
 }
 
 module.exports = {
   canUseFileStorage, guessUsername,
   getCookieStorage, clearCookieFiles, getDevice,
-  setTrayImageLight, setTrayImageDark, getTrayImagePath
+  setTrayImageLight, setTrayImageDark, getTrayImagePath,
+  isTrayIconLight
 }
