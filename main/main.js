@@ -8,15 +8,12 @@ const path = require('path');
 const url = require('url');
 const instagram = require('./instagram');
 const autoUpdater = require('./autoupdater');
-
-// on windows it is recommended to use ICO icons to get best visual effects
-let trayImage = 'icon.ico';
+const utils = require('./utils');
 
 if (process.platform != 'win32') {
   // fixes electron's timeout inconsistency
   // not doing this on windows because the fix doesn't work for windows.
   require('./timeout-shim').fix();
-  trayImage = 'background.png';
 }
 
 
@@ -55,6 +52,8 @@ function createWindow () {
     if (!app.isQuiting) {
       event.preventDefault();
       mainWindow.hide();
+    } else {
+      mainWidnow = null;
     }
   })
 
@@ -96,24 +95,27 @@ function getChatList () {
 }
 
 function createTray() {
-  tray = new Tray('//'); //TODO replace insert path to image
-  tray.on('click', (event, bounds, position) => {
-    mainWindow.show();
-  });
+  let tray = new Tray(utils.getTrayImagePath());
+
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Show App', click: function() {
-      mainWindow.show();
+    { label: 'Toggle Show', click: function(menuItem, BrowserWindow, event) {
+      if (mainWindow.isVisible()) {
+        mainWindow.hide();
+      } else {
+        mainWindow.show();
+      }
     } },
     { label: 'Light Icon', type : 'checkbox', checked : false, click: function(item) {
       if (item.checked) {
-        trayImage = 'l_' + trayImage;
+        utils.setTrayImageLight();
       } else {
-        trayImage = trayImage.substring(2);
+        utils.setTrayImageDark();
       }
-      tray.setImage('//'); //TODO insert path to image
+      tray.setImage(utils.getTrayImagePath());
     } },
     { label: 'Quit', click: function() {
       app.isQuiting = true;
+      tray.destroy();
       app.quit();
     } }
   ]);

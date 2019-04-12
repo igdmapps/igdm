@@ -2,6 +2,7 @@ const fs = require('fs');
 const Client = require('instagram-private-api').V1;
 const app = require('electron').app;
 const path = require('path');
+const config = require('electron-json-config');
 
 const buildAndGetStoragePath = () => {
   const storagePath = path.join(app.getPath('userData'), 'session-cookie')
@@ -65,7 +66,30 @@ const getDevice = (username) => {
   return device;
 }
 
+//on windows it is recommended to use ICO icons to get best visual effects
+let trayImage = 'image_name'; //TODO
+if (process.platform != 'win32') {
+  trayImage = 'image_name'; //TODO
+}
+
+const setTrayImageLight = () => {
+  config.set('trayImageTheme', 'light');
+}
+
+const setTrayImageDark = () => {
+  config.set('trayImageTheme', 'dark');
+}
+
+const getTrayImagePath = () => {
+  let trayImageTheme = config.get('trayImageTheme');
+  if (trayImageTheme === 'light') {
+    return path.join(__dirname, 'path_to_image' + 'l_' + trayImage); //TODO
+  }
+  return path.join(__dirname, 'path_to_image' + trayImage); //TODO
+}
+
 module.exports = {
   canUseFileStorage, guessUsername,
-  getCookieStorage, clearCookieFiles, getDevice
+  getCookieStorage, clearCookieFiles, getDevice,
+  setTrayImageLight, setTrayImageDark, getTrayImagePath
 }
