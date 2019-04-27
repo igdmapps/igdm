@@ -1,4 +1,8 @@
-### 2.6.4 / 2019-06-04 ###
+### 2.6.5 / 2019-04-27 ###
+
+* fix "No Configs given" issue
+
+### 2.6.4 / 2019-04-06 ###
 
 * fix marking "seen" from triggering error
 * fix chat switching glitch
