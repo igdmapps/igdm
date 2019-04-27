@@ -1,18 +1,21 @@
 const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
+const Tray = electron.Tray;
 const menuTemplate = require('./menutemplate');
 const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 const instagram = require('./instagram');
 const autoUpdater = require('./autoupdater');
+const utils = require('./utils');
 
-// fixes electron's timeout inconsistency
-// not doing this on windows because the fix doesn't work for windows.
 if (process.platform != 'win32') {
+  // fixes electron's timeout inconsistency
+  // not doing this on windows because the fix doesn't work for windows.
   require('./timeout-shim').fix();
 }
+
 
 const RATE_LIMIT_DELAY = 60000;
 let pollingInterval = 10000;
@@ -45,7 +48,19 @@ function createWindow () {
     }))
   })
 
-  mainWindow.on('closed', () => mainWindow = null)
+  mainWindow.on('close', function (event) {
+    if (!app.isQuiting) {
+      event.preventDefault();
+      mainWindow.hide();
+    } else {
+      mainWidnow = null;
+    }
+  })
+
+  mainWindow.on('minimize', function (event) {
+    event.preventDefault();
+    mainWindow.hide();
+  })
 }
 
 function createCheckpointWindow() {
@@ -71,12 +86,41 @@ function getChatList () {
   }
   instagram.getChatList(session).then((chats) => {
     mainWindow.webContents.send('chatList', chats)
-    
+
     if (chatListTimeoutObj) {
       clearTimeout(chatListTimeoutObj)
     }
     chatListTimeoutObj = setTimeout(getChatList, pollingInterval);
   }).catch(() => setTimeout(getChatList, RATE_LIMIT_DELAY))
+}
+
+function createTray() {
+  let tray = new Tray(utils.getTrayImagePath());
+
+  const contextMenu = Menu.buildFromTemplate([
+    { label: 'Toggle Show', click: function(menuItem, BrowserWindow, event) {
+      if (mainWindow.isVisible()) {
+        mainWindow.hide();
+      } else {
+        mainWindow.show();
+      }
+    } },
+    { label: 'Light Icon', type : 'checkbox', checked : utils.isTrayIconLight(), click: function(item) {
+      if (item.checked) {
+        utils.setTrayImageLight();
+      } else {
+        utils.setTrayImageDark();
+      }
+      tray.setImage(utils.getTrayImagePath());
+    } },
+    { label: 'Quit', click: function() {
+      app.isQuiting = true;
+      tray.destroy();
+      app.quit();
+    } }
+  ]);
+
+  tray.setContextMenu(contextMenu);
 }
 
 let chatTimeoutObj;
@@ -118,11 +162,12 @@ app.setAppUserModelId('com.ifedapoolarewaju.desktop.igdm')
 
 app.on('ready', () => {
   createWindow();
+  createTray();
   // only set the menu template when in production mode/
   // this also leaves the dev console enabled when in dev mode.
   if (!process.defaultApp) {
     const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu); 
+    Menu.setApplicationMenu(menu);
   }
   autoUpdater.init();
 })

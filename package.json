@@ -4,9 +4,8 @@
   "description": "Desktop application for Instagram DMs",
   "main": "main/main.js",
   "scripts": {
-    "start": "gulp build && electron .",
-    "pack": "gulp build && build --dir",
-    "dist": "gulp build && build -mwl --x64"
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -29,7 +28,8 @@
     "fb": "^2.0.0",
     "instagram-private-api": "github:ifedapoolarewaju/instagram-private-api#735afb870c5230430caec7286d04afae4af8820f",
     "node-notifier": "^5.1.2",
-    "nojs": "^0.1.1"
+    "nojs": "^0.1.1",
+    "electron-json-config": "^1.5.3"
   },
   "devDependencies": {
     "electron": "2.0.12",
@@ -39,7 +39,8 @@
     "gulp": "^4.0.0",
     "gulp-htmlmin": "^4.0.0",
     "gulp-pug": "^3.3.0",
-    "jstransformer-markdown-it": "^2.0.0"
+    "jstransformer-markdown-it": "^2.0.0",
+    "electron-json-config": "^1.5.3"
   },
   "build": {
     "publish": [
@@ -51,28 +52,9 @@
     ],
     "appId": "com.ifedapoolarewaju.desktop.igdm",
     "copyright": "ifedapo Olarewaju 2018",
-    "mac": {
-      "target": [
-        "dmg",
-        "zip"
-      ],
-      "publish": "github",
-      "category": "public.app-category.social-networking"
-    },
-    "win": {
-      "target": [
-        "nsis",
-        "portable"
-      ],
-      "publish": "github",
-      "publisherName": "ifedapoolarewaju"
-    },
     "linux": {
       "target": [
-        "snap",
-        "AppImage",
-        "zip",
-        "deb"
+        "AppImage"
       ],
       "publish": "github",
       "maintainer": "Ifedapo Olarewaju <ifedapoolarewaju@gmail.com>"
