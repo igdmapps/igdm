@@ -100,8 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#seen-flagger').onclick = (e) => {
     window.shouldSendSeenFlags = !window.shouldSendSeenFlags;
     e.target.innerText = window.shouldSendSeenFlags
-      ? `DON'T SEND "SEEN" RECEIPTS`
-      : `SEND "SEEN" RECEIPTS`;
+      ? `Send "SEEN" receipts - currently Enabled`
+      : `Send "SEEN" receipts - currently Disabled`;
   }
 
   document.querySelector('#notifier-settings').onclick = (e) => {
