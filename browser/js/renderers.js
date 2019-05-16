@@ -27,9 +27,27 @@ function renderMessage (message, direction, time, type) {
   divContent.appendChild(dom(
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
   );
+  renderMessageReactions(divContent, message._params.reactions);
   div.appendChild(divContent);
   
   return div
+}
+
+function renderMessageReactions(container, reactions) {
+  if (!reactions) return;
+
+  var div = dom('<div class="reactions-likes"><img src="img/love.png"></div>')
+  reactions.likes.forEach((like) => {
+    div.appendChild(dom(`<img data-user-id="${like.sender_id}">`));
+    getDisplayPictureUrl(like.sender_id);
+  });
+  container.appendChild(div);
+}
+
+function renderDisplayPicture(displayPicture) {
+  document.querySelectorAll(`img[data-user-id="${displayPicture.userId}"]`).forEach((img) => {
+    img.src = displayPicture.url;
+  });
 }
 
 function renderMessageAsPost (container, message) {
