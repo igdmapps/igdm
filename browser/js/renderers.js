@@ -6,7 +6,8 @@ function renderMessage (message, direction, time, type) {
     media: renderMessageAsImage,
     raven_media: renderMessageAsRavenImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
-    link: renderMessageAsLink
+    link: renderMessageAsLink,
+    animated_media: renderMessageAsAnimatedMedia
   }
 
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
@@ -148,6 +149,18 @@ function renderMessageAsLink (container, message) {
     const url = /^(http|https):\/\//.test(link.url) ? link.url : `http://${link.url}`;
     openInBrowser(url);
   }
+}
+
+function renderMessageAsAnimatedMedia (container, message) {
+  var { url } = message._params.animatedMedia.images.fixed_height;
+  var img = dom(`<img src="${url}">`);
+  img.onload = conditionedScrollToBottom();
+  container.appendChild(img);
+  container.classList.add('ig-media');
+
+  container.addEventListener('click', () => {
+    showInViewer(dom(`<img src="${url}">`));
+  })
 }
 
 function renderContextMenu (text) {
