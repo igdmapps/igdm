@@ -165,5 +165,5 @@ exports.getLoggedInUser = function (session) {
 exports.getUser = function (session, userId) {
   return new Promise((resolve, reject) => {
     Client.Account.getById(session, userId).then(resolve).catch(reject);
-  })
+  });
 }

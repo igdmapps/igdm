@@ -27,7 +27,8 @@ function renderMessage (message, direction, time, type) {
   divContent.appendChild(dom(
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
   );
-  renderMessageReactions(divContent, message._params.reactions);
+
+  if (message._params) renderMessageReactions(divContent, message._params.reactions);
   div.appendChild(divContent);
   
   return div
