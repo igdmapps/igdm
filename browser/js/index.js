@@ -22,6 +22,10 @@ function unfollow (userId) {
   ipcRenderer.send('unfollow', userId);
 }
 
+function getDisplayPictureUrl (userId) {
+  ipcRenderer.send('getDisplayPictureUrl', userId);
+}
+
 // This code runs once the DOM is loaded (just in case you missed it).
 document.addEventListener('DOMContentLoaded', () => {
   ipcRenderer.on('loggedInUser', (evt, user) => {
@@ -68,6 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.notifiedChatId = chatId;
     notify('Image upload failed. :( Please ensure your image is in .jpg format.', true);
   })
+
+  ipcRenderer.on('getDisplayPictureUrl', (evt, displayPicture) => {
+    renderDisplayPicture(displayPicture);
+  });
 
   document.querySelector('button.open-emoji').onclick = () => {
     const onEmojiSelected = (emoji) => {

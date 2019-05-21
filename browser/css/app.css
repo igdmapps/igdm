@@ -178,6 +178,19 @@ button, button:focus {
   color: #666;
 }
 
+.chat .message .content .reactions-likes {
+  text-align: right;
+}
+
+.chat .message .content.ig-media .reactions-likes {
+  padding: 0 0.5rem 0.5rem;
+}
+
+.chat .message .content .reactions-likes img {
+  height: 1.4rem;
+  border-radius: 50%;
+}
+
 .message.outward .content {
   background: linear-gradient(to top right, #0371e7, #1888ff);
   color: #efefef;
