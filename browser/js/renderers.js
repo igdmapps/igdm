@@ -6,7 +6,8 @@ function renderMessage (message, direction, time, type) {
     media: renderMessageAsImage,
     raven_media: renderMessageAsRavenImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
-    link: renderMessageAsLink
+    link: renderMessageAsLink,
+    animated_media: renderMessageAsAnimatedMedia
   }
 
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
@@ -27,9 +28,28 @@ function renderMessage (message, direction, time, type) {
   divContent.appendChild(dom(
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
   );
+
+  if (message._params) renderMessageReactions(divContent, message._params.reactions);
   div.appendChild(divContent);
   
   return div
+}
+
+function renderMessageReactions(container, reactions) {
+  if (!reactions) return;
+
+  var div = dom('<div class="reactions-likes"><img src="img/love.png"></div>')
+  reactions.likes.forEach((like) => {
+    div.appendChild(dom(`<img data-user-id="${like.sender_id}">`));
+    getDisplayPictureUrl(like.sender_id);
+  });
+  container.appendChild(div);
+}
+
+function renderDisplayPicture(displayPicture) {
+  document.querySelectorAll(`img[data-user-id="${displayPicture.userId}"]`).forEach((img) => {
+    img.src = displayPicture.url;
+  });
 }
 
 function renderMessageAsPost (container, message) {
@@ -148,6 +168,18 @@ function renderMessageAsLink (container, message) {
     const url = /^(http|https):\/\//.test(link.url) ? link.url : `http://${link.url}`;
     openInBrowser(url);
   }
+}
+
+function renderMessageAsAnimatedMedia (container, message) {
+  var { url } = message._params.animatedMedia.images.fixed_height;
+  var img = dom(`<img src="${url}">`);
+  img.onload = conditionedScrollToBottom();
+  container.appendChild(img);
+  container.classList.add('ig-media');
+
+  container.addEventListener('click', () => {
+    showInViewer(dom(`<img src="${url}">`));
+  })
 }
 
 function renderContextMenu (text) {

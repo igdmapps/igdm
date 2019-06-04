@@ -22,6 +22,10 @@ function unfollow (userId) {
   ipcRenderer.send('unfollow', userId);
 }
 
+function getDisplayPictureUrl (userId) {
+  ipcRenderer.send('getDisplayPictureUrl', userId);
+}
+
 // This code runs once the DOM is loaded (just in case you missed it).
 document.addEventListener('DOMContentLoaded', () => {
   ipcRenderer.on('loggedInUser', (evt, user) => {
@@ -69,6 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
     notify('Image upload failed. :( Please ensure your image is in .jpg format.', true);
   })
 
+  ipcRenderer.on('getDisplayPictureUrl', (evt, displayPicture) => {
+    renderDisplayPicture(displayPicture);
+  });
+
   document.querySelector('button.open-emoji').onclick = () => {
     const onEmojiSelected = (emoji) => {
       document.querySelector(MSG_INPUT_SELECTOR).value += emoji;
@@ -100,8 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#seen-flagger').onclick = (e) => {
     window.shouldSendSeenFlags = !window.shouldSendSeenFlags;
     e.target.innerText = window.shouldSendSeenFlags
-      ? `DON'T SEND "SEEN" RECEIPTS`
-      : `SEND "SEEN" RECEIPTS`;
+      ? `Send "SEEN" receipts - currently Enabled`
+      : `Send "SEEN" receipts - currently Disabled`;
   }
 
   document.querySelector('#notifier-settings').onclick = (e) => {
