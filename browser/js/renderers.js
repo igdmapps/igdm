@@ -7,7 +7,8 @@ function renderMessage (message, direction, time, type) {
     raven_media: renderMessageAsRavenImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
     link: renderMessageAsLink,
-    animated_media: renderMessageAsAnimatedMedia
+    animated_media: renderMessageAsAnimatedMedia,
+    actionLog: renderMessageAsActionLog
   }
 
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
@@ -31,8 +32,12 @@ function renderMessage (message, direction, time, type) {
 
   if (message._params) renderMessageReactions(divContent, message._params.reactions);
   div.appendChild(divContent);
-  
+
   return div
+}
+
+function renderMessageAsActionLog(container, message) {
+  renderMessageAsText(container, message._params.actionLog.description);
 }
 
 function renderMessageReactions(container, reactions) {
