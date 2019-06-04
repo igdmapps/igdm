@@ -1,6 +1,8 @@
 block titleDeterminer
   if pageTitle
     - var title = 'IG:dm - ' + pageTitle
+  else if fullPageTitle
+    - var title = fullPageTitle
   else
     - var title = 'IG:dm - Instagram Direct Messages on Desktop'
   if pageDesc
@@ -40,8 +42,9 @@ html(lang='en')
       link(rel='stylesheet',          href='/css/global.css')
   body
     block header
-      a.forkus(href='https://github.com/ifedapoolarewaju/igdm', target='_blank')
-        img(src='/img/github-fork-us.svg', alt='Fork us on GitHub')
+      block fork
+        a.forkus(href='https://github.com/ifedapoolarewaju/igdm', target='_blank')
+          img(src='/img/github-fork-us.svg', alt='Fork us on GitHub')
       unless promo
         - var promo = ''
       .promoBanner(class=promo)
@@ -61,12 +64,13 @@ html(lang='en')
               span.navbar-toggler-icon
             .collapse.navbar-collapse(id="navbarContent")
               ul.navbar-nav.mr-auto
-                +link('/changelog', 'Changelog')
-                +link('/blog', 'Blog')
-                +link('https://github.com/ifedapoolarewaju/igdm', 'GitHub')(target='_blank')
-                +link('https://www.producthunt.com/posts/igdm', 'ProductHunt')(target='_blank')
-                block adLink
-                +link('https://pro.igdm.me', 'Try IGdm Pro')(target='_blank')
+                block navlinks
+                  +link('/changelog', 'Changelog')
+                  +link('/blog', 'Blog')
+                  +link('https://github.com/ifedapoolarewaju/igdm', 'GitHub')(target='_blank')
+                  +link('https://www.producthunt.com/posts/igdm', 'ProductHunt')(target='_blank')
+                  +link('https://pro.igdm.me', 'Try IGdm Pro')(target='_blank')
+                  +link('/igstories', 'Try IGStories')
     .container
       block content
     block footer
