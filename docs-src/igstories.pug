@@ -6,6 +6,7 @@ prepend titleDeterminer
 
 append head
   link(rel='stylesheet', href='/css/index.css')
+  link(rel='stylesheet', href='/css/igstories.css')
 
 prepend header
   - var navtype = 'transparent navbar-dark'
@@ -43,11 +44,11 @@ block content
     h1.text-center Features
     .screenshots.row.mt-5.text-center
       a.col-md-6.mb-4(href='img/igstories-anon.png', target='_blank')
-        | Watch Stories Anonymously
-        img.mt-3.img-fluid(src='img/igstories-anon.png')
+        p Watch Stories Anonymously
+        img.mt-3.img-fluid(src='img/igstories-anon.png', width="300px")
       a.col-md-6.mb-4(href='img/igstories-watch.png', target='_blank')
-        | Search any user and watch their stories
-        img.mt-3.img-fluid(src='img/igstories-watch.png')
+        p Save Story videos on your computer
+        img.mt-3.img-fluid(src='img/igstories-watch.png', width="300px")
 
   section.donations.mt-5.text-center
     h2 Donations
