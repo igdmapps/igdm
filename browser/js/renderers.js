@@ -7,7 +7,8 @@ function renderMessage (message, direction, time, type) {
     raven_media: renderMessageAsRavenImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
     link: renderMessageAsLink,
-    animated_media: renderMessageAsAnimatedMedia
+    animated_media: renderMessageAsAnimatedMedia,
+    voice_media: renderMessageAsVoiceMedia,
   }
 
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
@@ -303,6 +304,12 @@ function renderOlderMessages (messages) {
   });
   // scroll back to dom position before the older messages were rendered
   domPostion.scrollIntoView();
+}
+
+function renderMessageAsVoiceMedia(container, message) {
+  var src = message._params.voiceMedia.media.audio.audio_src;
+  var audio = dom(`<audio controls src="${src}"/>`);
+  container.appendChild(audio);
 }
 
 function renderMessageSeenText (container, chat_) {
