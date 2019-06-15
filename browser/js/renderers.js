@@ -8,6 +8,7 @@ function renderMessage (message, direction, time, type) {
     reel_share: renderMessageAsUserStory, // replying to a user's story
     link: renderMessageAsLink,
     animated_media: renderMessageAsAnimatedMedia,
+    actionLog: renderMessageAsActionLog,
     voice_media: renderMessageAsVoiceMedia,
   }
 
@@ -32,8 +33,12 @@ function renderMessage (message, direction, time, type) {
 
   if (message._params) renderMessageReactions(divContent, message._params.reactions);
   div.appendChild(divContent);
-  
+
   return div
+}
+
+function renderMessageAsActionLog(container, message) {
+  renderMessageAsText(container, message._params.actionLog.description);
 }
 
 function renderMessageReactions(container, reactions) {
