@@ -1,0 +1,78 @@
+extends _layout
+
+prepend titleDeterminer
+  - var pageDesc = 'A desktop application to watch Instagram Stories Anonymously. Download for Windows, Mac and Linux'
+  - var fullPageTitle = 'IG:Stories - Watch Instagram Stories Anonymously'
+
+append head
+  link(rel='stylesheet', href='/css/index.css')
+  link(rel='stylesheet', href='/css/igstories.css')
+
+prepend header
+  - var navtype = 'transparent navbar-dark'
+  - var promo = 'active'
+
+block fork
+  a.forkus(href='https://github.com/ifedapoolarewaju/igstories', target='_blank')
+    img(src='/img/github-fork-us.svg', alt='Fork us on GitHub')
+
+block navlinks
+  +link('/blog', 'Blog')
+  +link('https://github.com/ifedapoolarewaju/igstories', 'GitHub')(target='_blank')
+
+append navigation
+  .container.promo.pb-5.pt-2.mb-5.text-center
+    h1.text-center.display-4.col-md-auto IG:Stories
+    h3.text-center.col-12.col-md-8.m-auto Watch Instagram Stories Anonymously
+    .download.col-md-auto.mt-5
+      h5
+        | Download the latest 
+        span 1.0.0
+      div.mt-2(class="btn-group" role="group" aria-label="Download buttons")
+        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igstories/releases/download/v1.0.0/IGStories-Setup-1.0.0.exe')
+          i.mdi.mdi-windows
+          span.ml-2 Windows
+        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igstories/releases/download/v1.0.0/IGStories-1.0.0.dmg')
+          i.mdi.mdi-apple 
+          span.ml-2 macOS
+        a.btn.btn-outline-light(role="button" href='https://github.com/ifedapoolarewaju/igstories/releases/download/v1.0.0/IGStories-1.0.0-x86_64.AppImage')
+          i.mdi.mdi-linux
+          span.ml-2 Linux
+
+block content
+  section.features.mt-5
+    h1.text-center Features
+    .screenshots.row.mt-5.text-center
+      a.col-md-6.mb-4(href='img/igstories-anon.png', target='_blank')
+        p Watch Stories Anonymously
+        img.mt-3.img-fluid(src='img/igstories-anon.png', width="300px")
+      a.col-md-6.mb-4(href='img/igstories-watch.png', target='_blank')
+        p Save Story videos on your computer
+        img.mt-3.img-fluid(src='img/igstories-watch.png', width="300px")
+
+  section.donations.mt-5.text-center
+    h2 Donations
+    | IG:Stories
+    | is an open source project that can be used for free by anyone, donations
+    | and incentives are wholeheartedly welcome.
+    p
+      a.btn.btn-link.btn-outline-light(role="button" href='http://paypal.me/SolomonOmojola' target="_blank") Donate via PayPal
+    | You can also donate via BITCOIN to the following Bitcoin address.
+    .donations
+      code 3NM9EubVwdvNm9qiTgLC8DHsRtTHvoyaD6
+
+append footer
+  script.
+    document.querySelectorAll('.download a').forEach(function (el){
+      el.addEventListener('click', function(event) {
+        event.preventDefault()
+        ga('send', 'event', {
+          eventCategory: 'Outbound Link',
+          eventAction: 'click',
+          eventLabel: el.href,
+          transport: 'beacon'
+        });
+
+        window.location = el.href;
+      })
+    }) 
