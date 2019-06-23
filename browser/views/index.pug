@@ -1,13 +1,12 @@
 extends _layout
 
 append head
-  link(rel='stylesheet', type='text/css', href='css/app.css')
-
+  link(rel='stylesheet',type='text/css',href='css/app.css')
 block body
   body(no-js='', on-click-remove-class='.dropdown active')
     .container_fluid.app
       .header.d-flex.p-3
-        button.col-md-auto.settings(no-js='', on-mouseenter-add-class='.dropdown-menu active')
+        button(no-js='', on-mouseenter-add-class='.dropdown-menu active')
         .dropdown-menu(no-js='', on-mouseleave-remove-class='.dropdown-menu active')
           #seen-flagger.dropdown-item(title="You'd know when recipients read your message, but they won't know when you read theirs")
             | Don't send 'Seen' receipts
@@ -16,7 +15,8 @@ block body
           #unfollowers.dropdown-item Users not following back
           #logout.dropdown-item Log out
         .search-header.col-md-auto
-          input.form-control(type='text', name='search', placeholder='Search Instagram users')
+          input.form-control(type='text', name='search', placeholder='Search',id='searchBox')
+        button(type='button' id='darkMode') Dark Mode
       .appBody
         .chat-list.col-4
           .listStrapper.row
@@ -50,3 +50,4 @@ block body
   script(type='text/javascript', src='js/funcs.js')
   script(type='text/javascript', src='js/renderers.js')
   script(type='text/javascript', src='js/index.js')
+  script(type='text/javascript',src='js/darkMode.js')

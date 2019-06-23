@@ -443,6 +443,7 @@ button, button:focus {
   display: block;
   top: 4.5rem;
   left: 1rem;
+  background-color: whiteSmoke;
 }
 
 .dropdown-item:hover {

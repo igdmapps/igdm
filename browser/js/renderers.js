@@ -227,7 +227,7 @@ function renderSearchResult (users) {
 }
 
 function renderChatList (chatList) {
-  var ul = document.querySelector('.chat-list ul');
+  var ul = document.querySelector('.chat-list ul'); 
   ul.innerHTML = "";
   chatList.forEach((chat_) => {
     var msgPreview = getMsgPreview(chat_);
@@ -237,7 +237,6 @@ function renderChatList (chatList) {
       thumbnail = chat_.accounts[0]._params.picture;
     }
     var li = renderChatListItem(usernames, msgPreview, thumbnail, chat_.id);
-
     registerChatUser(chat_);
     if (isActive(chat_)) setActive(li);
     // don't move this down!
