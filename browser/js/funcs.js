@@ -32,6 +32,10 @@ function getUsernames (chat_, shouldTruncate) {
   return usernames;
 }
 
+function getChatTitle(chat_) {
+  return chat_._params.threadTitle;
+}
+
 function isCurrentChat (chat_) {
   if (window.currentChatId === DUMMY_CHAT_ID) {
     return !window.chatListHash[chat_.id];
@@ -173,7 +177,7 @@ function addNotification (el, chat_) {
       // @todo pass this as an argument instead
       window.notifiedChatId = el.getAttribute("id");
       if (isNew && window.shouldNotify && !window.isWindowFocused) {
-        notify(`new message from ${getUsernames(chat_)}`);
+        notify(`new message from ${getChatTitle(chat_)}`);
       }
     }
   }
