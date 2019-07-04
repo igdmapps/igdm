@@ -1,9 +1,13 @@
 div.psa {
     width: 100%;
-    height: 40px;
+    min-height: 40px;
     background: white;
     text-align: center;
-    padding: 10px 5px;
+    padding: 5px 5px;
+    font-size: 12px;
+}
+
+div.psa a.btn.btn-primary {
     font-size: 12px;
 }
 
