@@ -26,6 +26,17 @@ function getDisplayPictureUrl (userId) {
   ipcRenderer.send('getDisplayPictureUrl', userId);
 }
 
+//Disable Drag and Drop on Electrum
+document.addEventListener('dragover',function(event){
+  event.preventDefault();
+  return false;
+},false);
+
+document.addEventListener('drop',function(event){
+  event.preventDefault();
+  return false;
+},false);
+
 // This code runs once the DOM is loaded (just in case you missed it).
 document.addEventListener('DOMContentLoaded', () => {
   ipcRenderer.on('loggedInUser', (evt, user) => {
