@@ -1,3 +1,13 @@
+### 2.7.0 / 2019-08-21 ###
+
+* disable drag and drop
+* use group and chat titles
+* render Message As ActionLog
+* add support for audio media
+* render message reactions (message likes)
+* render GIFs
+* less confusing "send 'seen' receipts" indicator
+
 ### 2.6.5 / 2019-04-27 ###
 
 * fix "No Configs given" issue
