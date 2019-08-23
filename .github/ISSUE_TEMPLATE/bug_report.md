@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+**Please ensure that the issue you are about to report has not previously been reported by anyone else. You can [search existing issues here](https://github.com/ifedapoolarewaju/igdm/issues) **
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
