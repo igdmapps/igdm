@@ -2,6 +2,10 @@ function openInBrowser (url) {
   electron.shell.openExternal(url);
 }
 
+function copyToCliboard (text) {
+  electron.clipboard.writeText(text);
+}
+
 function format (number) {
   return number > 9 ? "" + number: "0" + number;
 }

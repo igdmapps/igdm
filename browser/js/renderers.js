@@ -128,6 +128,7 @@ function renderMessageAsImage (container, message) {
   container.addEventListener('click', () => {
     showInViewer(dom(`<img src="${url}">`));
   })
+  container.oncontextmenu = () => renderImageContextMenu(url);
 }
 
 function renderMessageAsRavenImage (container, message) {
@@ -141,6 +142,7 @@ function renderMessageAsRavenImage (container, message) {
     container.addEventListener('click', () => {
       showInViewer(dom(`<img src="${url}">`));
     })
+    container.oncontextmenu = () => renderImageContextMenu(url);
   } else {
     renderMessageAsText(container, '<unsupported message format>', true);
   }
@@ -193,6 +195,16 @@ function renderContextMenu (text) {
   const menuItem = new MenuItem({
     label: 'Quote Message',
     click: () => quoteText(text)
+  });
+  menu.append(menuItem);
+  menu.popup({});
+}
+
+function renderImageContextMenu (url) {
+  const menu = new Menu();
+  const menuItem = new MenuItem({
+    label: 'Copy URL to clipboard',
+    click: () => copyToCliboard(url)
   });
   menu.append(menuItem);
   menu.popup({});
