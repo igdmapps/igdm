@@ -259,7 +259,7 @@ function renderChatList (chatList) {
 }
 
 function renderChatHeader (chat_) {
-  let chatTitle = getChatTitle(chat_);
+  let chatTitle = (chat_.id ? getChatTitle(chat_) : getUsernames(chat_)); // if chat_.id is not defined, it is a new contact
   let b = dom(`<b>${chatTitle}</b>`);
 
   if (chat_.accounts.length === 1) {
