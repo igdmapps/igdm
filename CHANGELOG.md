@@ -1,3 +1,10 @@
+### 2.7.1 / 2019-09-11 ###
+
+* Better URL parsing (again)
+* Fix not able to contact new people
+* add ability to copy image URL to clipboard
+
+
 ### 2.7.0 / 2019-08-21 ###
 
 * disable drag and drop
