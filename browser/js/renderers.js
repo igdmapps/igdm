@@ -10,6 +10,7 @@ function renderMessage (message, direction, time, type) {
     animated_media: renderMessageAsAnimatedMedia,
     actionLog: renderMessageAsActionLog,
     voice_media: renderMessageAsVoiceMedia,
+    placeholder: renderPlaceholderAsText,
   }
 
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
@@ -156,6 +157,15 @@ function renderMessageAsText (container, message, noContext) {
   var text = typeof message === 'string' ? message : message._params.text;
   container.appendChild(document.createTextNode(text));
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
+}
+
+function renderPlaceholderAsText (container, message) {
+  if (!message.placeholder._params.is_linked) {
+    renderMessageAsText (container, message.placeholder._params.message);
+  } else {
+    // TODO: parse links and usernames in the message
+    renderMessageAsText (container, message.placeholder._params.message);
+  }
 }
 
 function renderMessageAsLink (container, message) {
