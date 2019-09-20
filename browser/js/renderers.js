@@ -159,13 +159,22 @@ function renderMessageAsText (container, message, noContext) {
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
 }
 
+function linkUsernames (text) {
+  return text.replace (/@([\w.]+)/g, '<a class="link-in-message" onclick="openInBrowser(\'https://instagram.com/$1\')">@$1</a>');
+}
+
 function renderPlaceholderAsText (container, message) {
+  var text = "";
   if (!message.placeholder._params.is_linked) {
-    renderMessageAsText (container, message.placeholder._params.message);
+    text = message.placeholder._params.message;
   } else {
-    // TODO: parse links and usernames in the message
-    renderMessageAsText (container, message.placeholder._params.message);
+    text = linkUsernames (message.placeholder._params.message);
   }
+  var placeholderDom = dom("<p>" + text + "</p>");
+  placeholderDom.classList.add('placeholder');
+
+  container.appendChild(placeholderDom);
+  container.classList.add('ig-media');
 }
 
 function renderMessageAsLink (container, message) {
