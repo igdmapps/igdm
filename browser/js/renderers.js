@@ -160,17 +160,17 @@ function renderMessageAsText (container, message, noContext) {
 }
 
 function linkUsernames (text) {
-  return text.replace (/@([\w.]+)/g, '<a class="link-in-message" onclick="openInBrowser(\'https://instagram.com/$1\')">@$1</a>');
+  return text.replace(/@([\w.]+)/g, '<a class="link-in-message" onclick="openInBrowser(\'https://instagram.com/$1\')">@$1</a>');
 }
 
 function renderPlaceholderAsText (container, message) {
-  var text = "";
+  var html = "";
   if (!message.placeholder._params.is_linked) {
-    text = message.placeholder._params.message;
+    html = message.placeholder._params.message;
   } else {
-    text = linkUsernames (message.placeholder._params.message);
+    html = linkUsernames(message.placeholder._params.message);
   }
-  var placeholderDom = dom("<p>" + text + "</p>");
+  var placeholderDom = dom("<p>" + html + "</p>");
   placeholderDom.classList.add('placeholder');
 
   container.appendChild(placeholderDom);
