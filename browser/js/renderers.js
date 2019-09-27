@@ -25,7 +25,7 @@ function renderMessage (message, direction, time, type) {
   if (!type && typeof message === 'string') type = 'text';
 
   if (renderers[type]) renderers[type](divContent, message);
-  else renderMessageAsText(divContent, '<unsupported message format>', true);
+  else renderMessageAsText(divContent, `<unsupported message format: ${type}>`, true);
 
   divContent.appendChild(dom(
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
