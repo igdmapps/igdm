@@ -174,7 +174,6 @@ function renderPlaceholderAsText (container, message) {
   placeholderDom.classList.add('placeholder');
 
   container.appendChild(placeholderDom);
-  container.classList.add('ig-media');
 }
 
 function renderMessageAsLink (container, message) {
