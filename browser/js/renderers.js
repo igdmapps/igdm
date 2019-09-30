@@ -10,6 +10,7 @@ function renderMessage (message, direction, time, type) {
     animated_media: renderMessageAsAnimatedMedia,
     actionLog: renderMessageAsActionLog,
     voice_media: renderMessageAsVoiceMedia,
+    placeholder: renderPlaceholderAsText,
   }
 
   var div = dom(`<div class="message clearfix ${direction}"></div>`);
@@ -156,6 +157,23 @@ function renderMessageAsText (container, message, noContext) {
   var text = typeof message === 'string' ? message : message._params.text;
   container.appendChild(document.createTextNode(text));
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
+}
+
+function linkUsernames (text) {
+  return text.replace(/@([\w.]+)/g, '<a class="link-in-message" onclick="openInBrowser(\'https://instagram.com/$1\')">@$1</a>');
+}
+
+function renderPlaceholderAsText (container, message) {
+  var html = "";
+  if (!message.placeholder._params.is_linked) {
+    html = message.placeholder._params.message;
+  } else {
+    html = linkUsernames(message.placeholder._params.message);
+  }
+  var placeholderDom = dom("<p>" + html + "</p>");
+  placeholderDom.classList.add('placeholder');
+
+  container.appendChild(placeholderDom);
 }
 
 function renderMessageAsLink (container, message) {

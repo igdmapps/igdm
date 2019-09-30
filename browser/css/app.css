@@ -228,6 +228,12 @@ button, button:focus {
   color: rgb(22, 139, 249);
 }
 
+.message.inward .content .placeholder, .message.outward .content .placeholder {
+  color: #aaa;
+  font-style: italic;
+  padding: 0.5rem 0.75rem;
+}
+
 .message-time {
   font-size: 0.65rem;
   text-align: right;
