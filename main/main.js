@@ -48,20 +48,20 @@ function createWindow () {
   mainWindow.on('closed', () => mainWindow = null)
 }
 
-function createCheckpointWindow() {
-  const checkpointWindow = new BrowserWindow({
+function createPopupWindow(type) {
+  const popupWindow = new BrowserWindow({
     width: 300,
     height: 300,
     resizable: false,
     icon: `${__dirname}/../browser/img/icon.png`,
   })
-  checkpointWindow.setTitle('IG:dm - Instagram verification code')
-  checkpointWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../browser/checkpoint.html'),
+  popupWindow.setTitle(`IG:dm - Instagram verification code`)
+  popupWindow.loadURL(url.format({
+    pathname: path.join(__dirname, `../browser/${type}.html`),
     protocol: 'file:',
     slashes: true
   }))
-  return checkpointWindow
+  return popupWindow
 }
 
 let chatListTimeoutObj;
@@ -103,14 +103,35 @@ function handleCheckpoint (checkpointError) {
   return new Promise((resolve, reject) => {
     instagram.startCheckpoint(checkpointError)
       .then((challenge) => {
-        const cpWindow = createCheckpointWindow()
-        electron.ipcMain.on('checkpointCode', (evt, data) => {
-          electron.ipcMain.removeAllListeners('checkpointCode')
+        const cpWindow = createPopupWindow('checkpoint')
+        electron.ipcMain.on('popupCode', (evt, data) => {
+          electron.ipcMain.removeAllListeners('popupCode')
           cpWindow.close()
           challenge.code(data.code).then(resolve).catch(reject)
         })
       }).catch(reject)
   })
+}
+
+function handleTwoFactor (error) {
+    return new Promise((resolve, reject) => {
+        const tfWindow = createPopupWindow('twofactor')
+        const username = error.json.two_factor_info.username
+        const twoFactorIdentifier = error.json.two_factor_info.two_factor_identifier
+        const trustThisDevice = '1'
+        const verificationMethod = '1'
+        electron.ipcMain.on('popupCode', (evt, data) =>{
+          electron.ipcMain.removeAllListeners('popupCode')
+          tfWindow.close()
+          instagram.twoFactorLogin(
+            username,
+            data.code, 
+            twoFactorIdentifier, 
+            trustThisDevice, 
+            verificationMethod
+            ).then(resolve).catch(reject)
+        })
+    })
 }
 
 // fixes this issue https://github.com/electron/electron/issues/10864
@@ -134,7 +155,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  // only call createWindow afeter mainWindow is set to null at
+  // only call createWindow after mainWindow is set to null at
   // mainWindow.on('closed')
   if (mainWindow === null) createWindow()
 })
@@ -162,6 +183,10 @@ electron.ipcMain.on('login', (evt, data) => {
         handleCheckpoint(error)
           .then(() => login(true))
           .catch(() => mainWindow.webContents.send('loginError', getErrorMsg(error)))
+      } else if (instagram.isTwoFactorError(error)) {
+        handleTwoFactor(error)
+          .then(() => login(true))
+          .catch((tferror) => mainWindow.webContents.send('loginError', getErrorMsg(tferror)))
       } else {
         mainWindow.webContents.send('loginError', getErrorMsg(error));
       }
@@ -172,8 +197,6 @@ electron.ipcMain.on('login', (evt, data) => {
     let message = 'An unknown error occurred.';
     if (error.message) {
       message = error.message;
-    } else if (error.hasOwnProperty('json') && !!error.json.two_factor_required) {
-      message = 'You have two factor authentication enabled. Two factor authentication is not yet supported.';
     }
     return message
   }
