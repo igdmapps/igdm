@@ -125,8 +125,23 @@ button, button:focus {
   color: #fff;
 }
 
+.chat-list li.notification .username span {
+  font-weight: bold;
+  background: rgb(22, 139, 249);
+  padding: 5px;
+  border-radius: 5px;
+  line-height: 1.5rem;
+}
+
 .chat-list .listStrapper div {
   display: inline-block;
+}
+
+.chat-list .listStrapper .outward {
+  opacity: 0.5;
+}
+
+.chat-list .listStrapper .inward {
 }
 
 .chat-title {

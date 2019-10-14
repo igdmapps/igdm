@@ -168,9 +168,13 @@ function addNotification (el, chat_) {
     return
   }
 
-  const isNew = (window.chatListHash[chat_.id] &&
-    window.chatListHash[chat_.id].items[0].id !== chat_.items[0].id
-  );
+  const isNew = (
+    ( window.chatListHash[chat_.id] &&
+      window.chatListHash[chat_.id].items[0].id !== chat_.items[0].id) ||
+    ( chat_._params.lastSeenAt &&
+      chat_._params.lastSeenAt[window.loggedInUserId] &&
+      chat_.items[0].id != chat_._params.lastSeenAt[window.loggedInUserId].item_id
+    ));
   if (isNew) unreadChats[chat_.id] = chat_;
 
   if (unreadChats[chat_.id]) {
