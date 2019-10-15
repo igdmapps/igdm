@@ -114,7 +114,6 @@ button, button:focus {
 .chat-list li.notification:after {
   content: ' ';
   position: absolute;
-  right: 30px;
   width: 15px;
   height: 15px;
   padding: 3px;
@@ -123,6 +122,13 @@ button, button:focus {
   border-radius: 50%;
   background: rgb(22, 139, 249);
   color: #fff;
+}
+
+@media (min-width: 576px)
+{
+  .chat-list li.notification:after {
+    right: 30px;
+  }
 }
 
 .chat-list li.notification .username span {
