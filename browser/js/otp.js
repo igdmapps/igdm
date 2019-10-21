@@ -8,6 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     button.innerText = 'Submitting code...'
     button.classList.add('loggingIn', 'disabled');
     const code = document.querySelector('input[name=code]').value;
-    ipcRenderer.send('popupCode', {code})
+    ipcRenderer.send('otpCode', {code})
   }
 })

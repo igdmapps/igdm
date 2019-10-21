@@ -48,20 +48,20 @@ function createWindow () {
   mainWindow.on('closed', () => mainWindow = null)
 }
 
-function createPopupWindow(type) {
-  const popupWindow = new BrowserWindow({
+function createOtpWindow(type) {
+  const otpWindow = new BrowserWindow({
     width: 300,
     height: 300,
     resizable: false,
     icon: `${__dirname}/../browser/img/icon.png`,
   })
-  popupWindow.setTitle(`IG:dm - Instagram verification code`)
-  popupWindow.loadURL(url.format({
+  otpWindow.setTitle('IG:dm - Instagram verification code')
+  otpWindow.loadURL(url.format({
     pathname: path.join(__dirname, `../browser/${type}.html`),
     protocol: 'file:',
     slashes: true
   }))
-  return popupWindow
+  return otpWindow
 }
 
 let chatListTimeoutObj;
@@ -103,9 +103,9 @@ function handleCheckpoint (checkpointError) {
   return new Promise((resolve, reject) => {
     instagram.startCheckpoint(checkpointError)
       .then((challenge) => {
-        const cpWindow = createPopupWindow('checkpoint')
-        electron.ipcMain.on('popupCode', (evt, data) => {
-          electron.ipcMain.removeAllListeners('popupCode')
+        const cpWindow = createOtpWindow('checkpoint')
+        electron.ipcMain.on('otpCode', (evt, data) => {
+          electron.ipcMain.removeAllListeners('otpCode')
           cpWindow.close()
           challenge.code(data.code).then(resolve).catch(reject)
         })
@@ -115,13 +115,13 @@ function handleCheckpoint (checkpointError) {
 
 function handleTwoFactor (error) {
     return new Promise((resolve, reject) => {
-        const tfWindow = createPopupWindow('twofactor')
+        const tfWindow = createOtpWindow('twofactor')
         const username = error.json.two_factor_info.username
         const twoFactorIdentifier = error.json.two_factor_info.two_factor_identifier
         const trustThisDevice = '1'
         const verificationMethod = '1'
-        electron.ipcMain.on('popupCode', (evt, data) =>{
-          electron.ipcMain.removeAllListeners('popupCode')
+        electron.ipcMain.on('otpCode', (evt, data) =>{
+          electron.ipcMain.removeAllListeners('otpCode')
           tfWindow.close()
           instagram.twoFactorLogin(
             username,
