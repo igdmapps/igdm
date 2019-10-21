@@ -232,9 +232,7 @@ function renderChatListItem(chatTitle, msgPreview, thumbnail, id, direction) {
   var li = document.createElement('li');
   li.classList.add('col-12', 'p-3');
 
-  var msgPreviewClass = "";
-  if (direction == "inward") msgPreviewClass = 'inward';
-  else if (direction == "outward") msgPreviewClass = 'outward';
+  const msgPreviewClass = (direction == "outward") ? 'outward' : 'inward';
 
   li.appendChild(dom(`<div><img class="thumb" src="${thumbnail}"></div>`));
   li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${chatTitle}</b><br><span class="${msgPreviewClass}">${msgPreview}</span></div>`));
