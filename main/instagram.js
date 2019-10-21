@@ -29,12 +29,40 @@ exports.login = function (username, password, keepLastSession) {
   })
 }
 
+exports.twoFactorLogin = function(username, code, twoFactorIdentifier, trustThisDevice, verificationMethod) {
+  return new Promise((resolve, reject) => {
+    const device = utils.getDevice(username);
+    const storage = utils.getCookieStorage(`${username}.json`);
+    const session = new Client.Session(device, storage);
+    const request = new Client.Request(session);
+    request.setMethod('POST')
+              .setUrl(Client.CONSTANTS.API_ENDPOINT + "accounts/two_factor_login/")
+              .generateUUID()
+              .setData({
+                  username: username,
+                  verification_code: code,
+                  two_factor_identifier: twoFactorIdentifier,
+                  trust_this_device: trustThisDevice,
+                  verification_method: verificationMethod,
+              })
+              .signPayload()
+              .send()
+              .then(() => session.loginFlow())
+              .then(() => resolve(session))
+              .catch(reject)
+  })
+}
+
 exports.logout = function () {
   utils.clearCookieFiles();
 }
 
 exports.isCheckpointError = (error) => {
   return (error instanceof Client.Exceptions.CheckpointError)
+}
+
+exports.isTwoFactorError = (error) => {
+  return (error.hasOwnProperty('json') && !!error.json.two_factor_required)
 }
 
 exports.startCheckpoint = (error) => {
