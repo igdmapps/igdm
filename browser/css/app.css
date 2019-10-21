@@ -147,9 +147,6 @@ button, button:focus {
   opacity: 0.5;
 }
 
-.chat-list .listStrapper .inward {
-}
-
 .chat-title {
   min-height: 0;
   border-bottom: 1px #EFEFEF solid;
