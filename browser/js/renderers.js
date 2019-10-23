@@ -228,11 +228,14 @@ function renderImageContextMenu (url) {
   menu.popup({});
 }
 
-function renderChatListItem(chatTitle, msgPreview, thumbnail, id) {
+function renderChatListItem(chatTitle, msgPreview, thumbnail, id, direction) {
   var li = document.createElement('li');
   li.classList.add('col-12', 'p-3');
+
+  const msgPreviewClass = (direction == "outward") ? 'outward' : 'inward';
+
   li.appendChild(dom(`<div><img class="thumb" src="${thumbnail}"></div>`));
-  li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${chatTitle}</b><br>${msgPreview}</div>`));
+  li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${chatTitle}</b><br><span class="${msgPreviewClass}">${msgPreview}</span></div>`));
   if (id) li.setAttribute("id", `chatlist-${id}`);
 
   return li;
@@ -262,11 +265,12 @@ function renderChatList (chatList) {
   chatList.forEach((chat_) => {
     var msgPreview = getMsgPreview(chat_);
     var chatTitle = getChatTitle(chat_);
+    const direction = getMsgDirection(chat_.items[0]);
     let thumbnail = '';
     if (chat_.accounts[0]) {
       thumbnail = chat_.accounts[0]._params.picture;
     }
-    var li = renderChatListItem(chatTitle, msgPreview, thumbnail, chat_.id);
+    var li = renderChatListItem(chatTitle, msgPreview, thumbnail, chat_.id, direction);
 
     registerChatUser(chat_);
     if (isActive(chat_)) setActive(li);

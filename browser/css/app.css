@@ -114,7 +114,6 @@ button, button:focus {
 .chat-list li.notification:after {
   content: ' ';
   position: absolute;
-  right: 30px;
   width: 15px;
   height: 15px;
   padding: 3px;
@@ -125,8 +124,27 @@ button, button:focus {
   color: #fff;
 }
 
+@media (min-width: 576px)
+{
+  .chat-list li.notification:after {
+    right: 30px;
+  }
+}
+
+.chat-list li.notification .username span {
+  font-weight: bold;
+  background: rgb(22, 139, 249);
+  padding: 5px;
+  border-radius: 5px;
+  line-height: 1.5rem;
+}
+
 .chat-list .listStrapper div {
   display: inline-block;
+}
+
+.chat-list .listStrapper .outward {
+  opacity: 0.5;
 }
 
 .chat-title {
