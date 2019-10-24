@@ -133,9 +133,7 @@ button, button:focus {
 
 .chat-list li.notification .username span {
   font-weight: bold;
-  background: rgb(22, 139, 249);
-  padding: 5px;
-  border-radius: 5px;
+  color: rgb(22, 139, 249);
   line-height: 1.5rem;
 }
 
