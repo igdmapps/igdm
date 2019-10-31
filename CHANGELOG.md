@@ -1,3 +1,9 @@
+### 2.8.0 / 2019-10-31 ###
+
+* 2FA Support
+* Better ux for chatList
+
+
 ### 2.7.1 / 2019-09-11 ###
 
 * Better URL parsing (again)
