@@ -92,4 +92,16 @@ append footer
 
         window.location = el.href;
       })
+    })
+    document.querySelectorAll('.psa a').forEach(function (el){
+      el.addEventListener('click', function(event) {
+        event.preventDefault()
+        ga('send', 'event', {
+          eventCategory: 'Sponsored Outbound Link',
+          eventAction: 'click',
+          eventLabel: el.href,
+          transport: 'beacon'
+        });
+        window.open(el.href , '_blank');
+      })
     }) 
