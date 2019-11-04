@@ -60,7 +60,7 @@
       </section>
       <section class="issues mt-5 text-center">
         <h2>Want more features?</h2>
-        <h4><a class="btn btn-primary" href="https://pro.igdm.me" target="_blank">Try &nbsp;<b>IGdm Pro</b></a></h4>
+        <h4><a class="btn btn-primary prominent2" href="https://pro.igdm.me" target="_blank">Try &nbsp;<b>IGdm Pro</b></a></h4>
       </section>
       <section class="issues mt-5 text-center">
         <h2>Issues running IG:dm on your computer?</h2><span>Please see <a href="http://igdm.me/blog/igdm-on-windows-linux" target="_blank">common issues and fixes </a>for running IG:dm on your desktop.</span>
@@ -115,7 +115,31 @@
           });
           window.open(el.href , '_blank');
         })
-      }) 
+      })
+      document.querySelectorAll('a.prominent-link').forEach(function (el){
+        el.addEventListener('click', function(event) {
+          event.preventDefault()
+          ga('send', 'event', {
+            eventCategory: 'IGdm Pro Nav',
+            eventAction: 'click',
+            eventLabel: el.href,
+            transport: 'beacon'
+          });
+          window.open(el.href , '_blank');
+        })
+      })
+      document.querySelectorAll('a.prominent2').forEach(function (el){
+        el.addEventListener('click', function(event) {
+          event.preventDefault()
+          ga('send', 'event', {
+            eventCategory: 'IGdm Pro CTA',
+            eventAction: 'click',
+            eventLabel: el.href,
+            transport: 'beacon'
+          });
+          window.open(el.href , '_blank');
+        })
+      })
     </script>
   </body>
 </html>

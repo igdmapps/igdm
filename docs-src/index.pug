@@ -59,7 +59,7 @@ block content
   section.issues.mt-5.text-center
     h2 Want more features?
     h4
-      a.btn.btn-primary(href='https://pro.igdm.me', target='_blank')
+      a.btn.btn-primary.prominent2(href='https://pro.igdm.me', target='_blank')
         | Try &nbsp;
         b IGdm Pro
 
@@ -107,4 +107,28 @@ append footer
         });
         window.open(el.href , '_blank');
       })
-    }) 
+    })
+    document.querySelectorAll('a.prominent-link').forEach(function (el){
+      el.addEventListener('click', function(event) {
+        event.preventDefault()
+        ga('send', 'event', {
+          eventCategory: 'IGdm Pro Nav',
+          eventAction: 'click',
+          eventLabel: el.href,
+          transport: 'beacon'
+        });
+        window.open(el.href , '_blank');
+      })
+    })
+    document.querySelectorAll('a.prominent2').forEach(function (el){
+      el.addEventListener('click', function(event) {
+        event.preventDefault()
+        ga('send', 'event', {
+          eventCategory: 'IGdm Pro CTA',
+          eventAction: 'click',
+          eventLabel: el.href,
+          transport: 'beacon'
+        });
+        window.open(el.href , '_blank');
+      })
+    })
