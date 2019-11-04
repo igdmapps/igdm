@@ -42,6 +42,10 @@ div.psa a.btn.btn-primary {
     color: rgba(255, 255, 255, 0.75);
 }
 
+.downloadCount:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
 .screenshots a {
     color: #666;
 }

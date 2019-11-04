@@ -63,6 +63,16 @@ h1, .h1, h2, .h2 {
   padding: 0.25rem 0;
 }
 
+.navbar-dark .navbar-nav .nav-link.prominent-link {
+  color: rgba(255,255,255, 1);
+  opacity: 1;
+  font-weight: bold;
+}
+
+.navbar-dark .navbar-nav .nav-link.prominent-link:hover {
+  opacity: 0.8;
+}
+
 .forkus {
   position: fixed;
   bottom: 2rem;

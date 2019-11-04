@@ -43,7 +43,7 @@ html(lang='en')
   body
     block header
       block fork
-        a.forkus(href='https://github.com/ifedapoolarewaju/igdm', target='_blank')
+        a.forkus(href='https://github.com/igdmapps/igdm', target='_blank')
           img(src='/img/github-fork-us.svg', alt='Fork us on GitHub')
       unless promo
         - var promo = ''
@@ -67,10 +67,9 @@ html(lang='en')
                 block navlinks
                   +link('/changelog', 'Changelog')
                   +link('/blog', 'Blog')
-                  +link('https://github.com/ifedapoolarewaju/igdm', 'GitHub')(target='_blank')
                   +link('https://www.producthunt.com/posts/igdm', 'ProductHunt')(target='_blank')
-                  +link('https://pro.igdm.me', 'Try IGdm Pro')(target='_blank')
                   +link('/igstories', 'Try IGStories')
+                  +link('https://pro.igdm.me', 'Try IGdm Pro')(target='_blank', class='prominent-link')
     .container
       block content
     block footer
