@@ -1,3 +1,11 @@
+### 2.8.1 / 2019-11-05 ###
+
+* Show user thumbnail in chat header
+* Cache older messages per convo
+* Better UX when loading chat
+* Make media messages look less overwhelming
+
+
 ### 2.8.0 / 2019-10-31 ###
 
 * 2FA Support
