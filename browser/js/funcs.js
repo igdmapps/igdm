@@ -40,6 +40,10 @@ function getChatTitle(chat_) {
   return chat_._params.threadTitle;
 }
 
+function getChatThumbnail (chat_) {
+  return chat_.accounts[0]._params.picture;
+}
+
 function isCurrentChat (chat_) {
   if (window.currentChatId === DUMMY_CHAT_ID) {
     return !window.chatListHash[chat_.id];

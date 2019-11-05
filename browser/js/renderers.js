@@ -297,7 +297,8 @@ function renderChatList (chatList) {
 
 function renderChatHeader (chat_) {
   let chatTitle = (chat_.id ? getChatTitle(chat_) : getUsernames(chat_)); // if chat_.id is not defined, it is a new contact
-  let b = dom(`<b>${chatTitle}</b>`);
+  let b = dom(`<b class="ml-2 mt-2">${chatTitle}</b>`);
+  const thumbnail = dom(`<span><img class="thumb" src="${getChatThumbnail(chat_)}"></span>`);
 
   if (chat_.accounts.length === 1) {
     // open user profile in browser
@@ -308,6 +309,7 @@ function renderChatHeader (chat_) {
   }
   let chatTitleContainer = document.querySelector('.chat-title');
   chatTitleContainer.innerHTML = '';
+  chatTitleContainer.appendChild(thumbnail);
   chatTitleContainer.appendChild(b);
 }
 
