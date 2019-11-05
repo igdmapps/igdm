@@ -19,6 +19,6 @@ window.loggedInUser = null;
 window.shouldSendSeenFlags = true;
 window.isWindowFocused = true;
 window.shouldNotify = true;
-window.olderMessages = [];
+window.olderMessages = {};
 window.gettingOlderMessages = false;
 window.olderMessagesChatId = null;

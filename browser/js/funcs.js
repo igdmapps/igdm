@@ -79,15 +79,16 @@ function loadOlderMsgsOnScrollTop(chatId) {
   let msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   msgContainer.onscroll = (e) => {
     if (e.target.scrollTop < 200 && !window.gettingOlderMessages && window.currentChatId == chatId) {
-      ipcRenderer.send('getOlderMessages', window.currentChatId);
+      ipcRenderer.send('getOlderMessages', chatId);
       window.gettingOlderMessages = true;
       window.olderMessagesChatId = window.currentChatId;
     }
   }
 }
 
-function canRenderOlderMessages() {
-  return window.olderMessagesChatId === window.currentChatId;
+function canRenderOlderMessages(chatId) {
+  chatId = chatId || window.olderMessagesChatId;
+  return chatId === window.currentChatId;
 }
 
 function getMsgPreview (chat_) {

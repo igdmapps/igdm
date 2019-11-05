@@ -64,9 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isNewMessage && isCurrentChat(chat_) && !window.gettingOlderMessages) renderChat(chat_);
   });
 
-  ipcRenderer.on('olderMessages', (_, messages) => {
-    if (canRenderOlderMessages()) {
-      window.olderMessages = window.olderMessages.concat(messages);
+  ipcRenderer.on('olderMessages', (_, {chatId, messages}) => {
+    const previous = window.olderMessages[chatId] || [];
+    window.olderMessages[chatId] = previous.concat(messages);
+    if (canRenderOlderMessages(chatId)) {
       renderOlderMessages(messages);
     }
     // reset the value only after all is done. So don't move this up

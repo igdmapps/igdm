@@ -224,7 +224,7 @@ electron.ipcMain.on('getOlderMessages', (_, id) => {
   instagram.getOlderMessages(session, messagesThread, id)
     .then((data) => {
       messagesThread = data.thread
-      mainWindow.webContents.send('olderMessages', data.messages)
+      mainWindow.webContents.send('olderMessages', {chatId: id, messages: data.messages})
     })
 })
 
