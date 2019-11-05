@@ -75,10 +75,10 @@ function conditionedScrollToBottom () {
   }
 }
 
-function loadOlderMsgsOnScrollTop() {
+function loadOlderMsgsOnScrollTop(chatId) {
   let msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   msgContainer.onscroll = (e) => {
-    if (e.target.scrollTop < 10 && !window.gettingOlderMessages) {
+    if (e.target.scrollTop < 200 && !window.gettingOlderMessages && window.currentChatId == chatId) {
       ipcRenderer.send('getOlderMessages', window.currentChatId);
       window.gettingOlderMessages = true;
       window.olderMessagesChatId = window.currentChatId;
@@ -250,4 +250,13 @@ function setProfilePic () {
   const url = window.loggedInUser._params.profilePicUrl;
   const settingsButton = document.querySelector('.settings');
   settingsButton.style.backgroundImage = `url(${url})`;
+}
+
+function getLoadingGif () {
+  const loadingGIF = dom(
+    `<div class="center">
+      <img src="img/loading.gif" width="50px" />
+    </div>`);
+
+  return loadingGIF;
 }

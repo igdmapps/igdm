@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isNewMessage = (
       !window.chat.items || !window.chat.items.length ||
       !chat_.items.length || window.chat.items[0].id != chat_.items[0].id ||
+      window.chat.items.length != chat_.items.length ||
       getIsSeenText(chat_) != getIsSeenText(window.chat) ||
       chat_.items[0].id != chat_._params.lastSeenAt[window.loggedInUserId].item_id
     )

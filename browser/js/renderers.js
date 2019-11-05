@@ -285,6 +285,9 @@ function renderChatList (chatList) {
       // to avoid visible latency
       if (window.chatCache[chat_.id]) {
         renderChat(window.chatCache[chat_.id]);
+      } else {
+        window.currentChatId = chat_.id;
+        renderChat(chat_, true);
       }
       getChat(chat_.id);
     }
@@ -308,12 +311,15 @@ function renderChatHeader (chat_) {
   chatTitleContainer.appendChild(b);
 }
 
-function renderChat (chat_) {
+function renderChat (chat_, loadingMore) {
   window.chat = chat_;
   window.chatCache[chat_.id] = chat_;
 
   var msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   msgContainer.innerHTML = '';
+  if (loadingMore) {
+    msgContainer.appendChild(getLoadingGif());
+  }
   renderChatHeader(chat_);
   var messages = chat_.items.slice().reverse();
   if (canRenderOlderMessages()) {
@@ -328,7 +334,9 @@ function renderChat (chat_) {
   })
   renderMessageSeenText(msgContainer, chat_);
   scrollToChatBottom();
-  loadOlderMsgsOnScrollTop();
+  if (!loadingMore) {
+    loadOlderMsgsOnScrollTop(chat_.id);
+  }
 
   addSubmitHandler(chat_);
   addAttachmentSender(chat_);
