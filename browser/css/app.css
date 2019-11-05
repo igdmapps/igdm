@@ -231,7 +231,7 @@ button, button:focus {
 .message.inward .content.ig-media, .message.outward .content.ig-media {
   background: #fff;
   color: #666;
-  max-width: 75%;
+  max-width: 320px;
   padding: 0;
   overflow: hidden;
 }
