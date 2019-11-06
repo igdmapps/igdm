@@ -54,6 +54,19 @@ h1, .h1, h2, .h2 {
   font-weight: 600;
 }
 
+div.psa {
+  width: 100%;
+  min-height: 40px;
+  background: white;
+  text-align: center;
+  padding: 5px 5px;
+  font-size: 12px;
+}
+
+div.psa a.btn.btn-primary {
+  font-size: 12px;
+}
+
 .promoBanner {
   position: relative;
 }

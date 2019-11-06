@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="/css/index.css">
   </head>
   <body>
-    <div class="psa"><b>Sponsored:&nbsp;</b><span>Want free Instagram followers? Use Socialfollow® for &nbsp;</span><b>FREE &nbsp;</b><span>and grow your Instagram today! &nbsp;</span><a class="btn btn-primary" href="https://socialfollow.co/?utm_source=igdm&amp;utm_medium=banner" target="_blank"><b>Grow your Instagram NOW</b></a></div><a class="forkus" href="https://github.com/igdmapps/igdm" target="_blank"><img src="/img/github-fork-us.svg" alt="Fork us on GitHub"></a>
+    <div class="psa home"><b>Sponsored:&nbsp;</b><span>Want free Instagram followers? Use Socialfollow® for &nbsp;</span><b>FREE &nbsp;</b><span>and grow your Instagram today! &nbsp;</span><a class="btn btn-primary" href="https://socialfollow.co/?utm_source=igdm&amp;utm_medium=banner" target="_blank"><b>Grow your Instagram NOW</b></a></div><a class="forkus" href="https://github.com/igdmapps/igdm" target="_blank"><img src="/img/github-fork-us.svg" alt="Fork us on GitHub"></a>
     <div class="promoBanner active">
       <div class="backgroundSkew"></div>
       <nav class="navbar navbar-expand-md container transparent navbar-dark"><a class="navbar-brand" href="/"><img class="d-inline-block align-top" src="/img/icon.png" width="32" height="32" alt="PrismarineJS"></a>
@@ -89,6 +89,19 @@
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-96853108-1', 'auto');
       ga('send', 'pageview');
+      
+      document.querySelectorAll('.psa.lykdat a').forEach(function (el){
+        el.addEventListener('click', function(event) {
+          event.preventDefault()
+          ga('send', 'event', {
+            eventCategory: 'Lykdat Sponsored',
+            eventAction: 'click',
+            eventLabel: el.href,
+            transport: 'beacon'
+          });
+          window.open(el.href , '_blank');
+        })
+      })
     </script>
     <script>
       document.querySelectorAll('.download a').forEach(function (el){
@@ -104,7 +117,7 @@
           window.location = el.href;
         })
       })
-      document.querySelectorAll('.psa a').forEach(function (el){
+      document.querySelectorAll('.psa.home a').forEach(function (el){
         el.addEventListener('click', function(event) {
           event.preventDefault()
           ga('send', 'event', {

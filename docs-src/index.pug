@@ -10,7 +10,8 @@ prepend header
   - var navtype = 'transparent navbar-dark'
   - var promo = 'active'
 
-  .psa
+block psa
+  .psa.home
     b Sponsored:&nbsp;
     span Want free Instagram followers? Use Socialfollow® for &nbsp;
     b FREE &nbsp;
@@ -96,7 +97,7 @@ append footer
         window.location = el.href;
       })
     })
-    document.querySelectorAll('.psa a').forEach(function (el){
+    document.querySelectorAll('.psa.home a').forEach(function (el){
       el.addEventListener('click', function(event) {
         event.preventDefault()
         ga('send', 'event', {

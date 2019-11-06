@@ -34,7 +34,8 @@
       });
     </script>
   </head>
-  <body><a class="forkus" href="https://github.com/igdmapps/igdm" target="_blank"><img src="/img/github-fork-us.svg" alt="Fork us on GitHub"></a>
+  <body>
+    <div class="psa lykdat"><b>Sponsored:&nbsp;</b><span>Don't know where to buy the outfits you see in Photos? Use &nbsp;</span><b>LykDat &nbsp;</b><span>to find them! &nbsp;</span><a class="btn btn-primary" href="https://lykdat.com/?utm_source=igdm&amp;utm_medium=banner" target="_blank"><b>Shop the look NOW</b></a></div><a class="forkus" href="https://github.com/igdmapps/igdm" target="_blank"><img src="/img/github-fork-us.svg" alt="Fork us on GitHub"></a>
     <div class="promoBanner still">
       <div class="backgroundSkew"></div>
       <nav class="navbar navbar-expand-md container navbar-dark"><a class="navbar-brand" href="/"><img class="d-inline-block align-top" src="/img/icon.png" width="32" height="32" alt="PrismarineJS"></a>
@@ -73,6 +74,19 @@
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-96853108-1', 'auto');
       ga('send', 'pageview');
+      
+      document.querySelectorAll('.psa.lykdat a').forEach(function (el){
+        el.addEventListener('click', function(event) {
+          event.preventDefault()
+          ga('send', 'event', {
+            eventCategory: 'Lykdat Sponsored',
+            eventAction: 'click',
+            eventLabel: el.href,
+            transport: 'beacon'
+          });
+          window.open(el.href , '_blank');
+        })
+      })
     </script>
   </body>
 </html>
