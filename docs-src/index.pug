@@ -25,8 +25,6 @@ append navigation
     h3.text-center.col-12.col-md-8.m-auto Continue your Instagram direct messages from your phone to your desktop.
     .download.col-md-auto.mt-5
       h5
-        | 2-Factor Authentication is now supported!
-      h5
         | Download the latest 
         span v2.8.0
       div.mt-2(class="btn-group" role="group" aria-label="Download buttons")
@@ -43,18 +41,45 @@ append navigation
 
 block content
   section.features.mt-5
-    h1.text-center Features
+    h2.text-center.mb-5 Features
+    .row.mt-3.justify-content-center
+      .col-md-4
+        h5 Continue conversations
+        p.text-muted You will be able to continue your conversations from where you left off on the mobile app.
+      .col-md-4
+        h5 2-Factor Authentication
+        p.text-muted IGdm has login support for accounts with two-factor authentication enabled.
+    .row.mt-3.justify-content-center
+      .col-md-4
+        h5 Disable Read Receipts
+        p.text-muted IGdm provides a setting that allows you prevent users from receiving read receipts.
+      .col-md-4
+        h5 Unfollowers
+        p.text-muted View the list of users that are not following you back.
+    .row.mt-3.justify-content-center
+      .col-md-4
+        h5 Quote Messages
+        p.text-muted IGdm provides a custom and convenient style of quoting chat messages within a conversation
+      .col-md-4
+        h5 Save Videos and Images
+        p.text-muted You can save videos and images in the instagram posts that a shared with you in a chat.
+    .row.mt-3.justify-content-center
+      .col-md-4
+        h5 Search for users
+        p.text-muted You can search for any user and start a conversation with that user.
+      .col-md-4
+
     .screenshots.row.mt-5.text-center
-      a.col-md-6.mb-4(href='img/startchat.gif', target='_blank')
+      a.col-md-4.mb-4(href='img/startchat.gif', target='_blank')
         | Search for users and start a conversation
         img.mt-3.img-fluid(src='img/startchat.gif')
-      a.col-md-6.mb-4(href='img/unfollowers.gif', target='_blank')
+      a.col-md-4.mb-4(href='img/unfollowers.gif', target='_blank')
         | View a list of users not following you back
         img.mt-3.img-fluid(src='img/unfollowers.gif')
-      a.col-md-6.mb-4(href='img/quotemessage.gif', target='_blank')
+      a.col-md-4.mb-4(href='img/quotemessage.gif', target='_blank')
         | Quote a chat message
         img.mt-3.img-fluid(src='img/quotemessage.gif')
-      a.col-md-6(href='img/viewimage.gif', target='_blank')
+      a.col-md-4(href='img/viewimage.gif', target='_blank')
         | View chat images
         img.mt-3.img-fluid(src='img/viewimage.gif')
   section.issues.mt-5.text-center
@@ -64,23 +89,23 @@ block content
         | Try &nbsp;
         b IGdm Pro
 
-  section.issues.mt-5.text-center
-    h2 Issues running IG:dm on your computer?
-    span
-      | Please see 
-      a(href='http://igdm.me/blog/igdm-on-windows-linux', target='_blank') common issues and fixes 
-      | for running IG:dm on your desktop.
-
-  section.donations.mt-5.text-center
-    h2 Donations
-    | IG:dm
-    | is an open source project that can be used for free by anyone, donations
-    | and incentives are wholeheartedly welcome.
-    p
+  section.row.mt-5.justify-content-center
+    .col-md-5
+      h4 Issues running IG:dm on your computer?
+      span
+        | Please see 
+        a(href='http://igdm.me/blog/igdm-on-windows-linux', target='_blank') common issues and fixes 
+        | for running IG:dm on your desktop.
+    .col-md-1
+    .col-md-5
+      h4 Donations
+      | IG:dm
+      | is an open source project that can be used for free by anyone, donations
+      | and incentives are wholeheartedly welcome.
       a.btn.btn-link.btn-outline-light(role="button" href='http://paypal.me/SolomonOmojola' target="_blank") Donate via PayPal
-    | You can also donate via BITCOIN to the following Bitcoin address.
-    .donations
-      code 3NM9EubVwdvNm9qiTgLC8DHsRtTHvoyaD6
+      p You can also donate via BITCOIN to the following Bitcoin address.
+      div
+        code 3NM9EubVwdvNm9qiTgLC8DHsRtTHvoyaD6
 
 append footer
   script.
