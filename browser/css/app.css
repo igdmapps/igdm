@@ -191,7 +191,7 @@ button, button:focus {
 
 .chat .message .content .post-caption, .chat .message .content a {
   font-size: 1rem;
-  color: #666;
+  padding: 0;
 }
 
 .chat .message .content .reactions-likes {
@@ -229,10 +229,7 @@ button, button:focus {
 }
 
 .message.inward .content.ig-media, .message.outward .content.ig-media {
-  background: #fff;
-  color: #666;
-  max-width: 320px;
-  padding: 0;
+  max-width: 75%;
   overflow: hidden;
 }
 
@@ -240,9 +237,11 @@ button, button:focus {
   color: white;
 }
 
-.message.inward .content a.link-in-message {
-  color: rgb(22, 139, 249);
+.message.inward .content a.link-in-message, .link-in-message-summary {
+  line-height: 1.2;
+  font-size: 0.8rem;
 }
+
 
 .message.inward .content .placeholder, .message.outward .content .placeholder {
   color: #aaa;
@@ -457,10 +456,6 @@ button, button:focus {
   position: relative;
 }
 
-.ig-media .message-time {
-  display: none;
-}
-
 .dropdown-menu.active {
   display: block;
   top: 4.5rem;
@@ -491,8 +486,9 @@ button, button:focus {
 
 
 .chat .message .content .post-caption, .chat .message .content .link-in-message {
-  padding: 0.5rem 0.75rem;
+  padding: 0.5rem 0;
   margin-bottom: 0.25rem;
+  display: block;
 }
 
 /**********************************
@@ -531,7 +527,7 @@ EMOJIS
 .emojis:not(.hide) {
   animation-name: slideIn;
   animation-duration: 0.2s;
-  animation-timing-function: ease-out; 
+  animation-timing-function: ease-out;
 }
 
 .emojis.hide {
