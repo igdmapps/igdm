@@ -531,7 +531,7 @@ EMOJIS
 .emojis:not(.hide) {
   animation-name: slideIn;
   animation-duration: 0.2s;
-  animation-timing-function: ease-out; 
+  animation-timing-function: ease-out;
 }
 
 .emojis.hide {

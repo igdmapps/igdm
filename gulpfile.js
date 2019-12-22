@@ -2,6 +2,7 @@
 
 var gulp = require('gulp');
 var pug = require('gulp-pug');
+var electron = require('electron-connect').server.create();
 
 gulp.task('html', function () {
   return gulp.src(['./browser/views/**/*.pug', '!./browser/views/**/_*.pug'])
@@ -21,9 +22,17 @@ gulp.task('website-html', function () {
     }));
 });
 
-gulp.task('watch', function(){
-  gulp.watch('./browser/views/**/*.pug', ['html']);
-  gulp.watch('./docs-src/**/*.pug', ['website-html']);
-})
-
 gulp.task('build', gulp.series('html'));
+
+gulp.task('default', function () {
+    // Start browser process
+    electron.start();
+    // Restart browser process
+    gulp.watch('./main/main.js', electron.restart);
+    gulp.watch('./browser/js/**/*.js', electron.restart);
+    gulp.watch('./browser/css/**/*.css', electron.restart);
+    gulp.watch('./browser/views/**/*.pug', electron.restart);
+    gulp.watch('./docs-src/**/*.pug', electron.restart);
+    // Reload renderer process
+    gulp.watch(['./browser/index.html'], electron.reload);
+});
