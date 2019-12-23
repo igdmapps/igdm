@@ -36,6 +36,7 @@
     "electron-builder": "^20.44.4",
     "electron-builder-lib": "20.23.1",
     "electron-builder-squirrel-windows": "20.29.0",
+    "electron-connect": "^0.6.3",
     "gulp": "^4.0.2",
     "gulp-htmlmin": "^4.0.0",
     "gulp-pug": "^3.3.0",
