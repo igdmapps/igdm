@@ -46,7 +46,7 @@ function createWindow () {
     }))
   })
   // If we're in development mode then create an Electron Connect client for live reload.
-  if (!process.defaultApp) {
+  if (process.defaultApp) {
     client.create(mainWindow);
   }
   mainWindow.on('closed', () => mainWindow = null)
