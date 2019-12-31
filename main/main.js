@@ -7,6 +7,7 @@ const path = require('path');
 const url = require('url');
 const instagram = require('./instagram');
 const autoUpdater = require('./autoupdater');
+const client = require('electron-connect').client;
 
 // fixes electron's timeout inconsistency
 // not doing this on windows because the fix doesn't work for windows.
@@ -44,7 +45,10 @@ function createWindow () {
       slashes: true
     }))
   })
-
+  // If we're in development mode then create an Electron Connect client for live reload.
+  if (process.defaultApp) {
+    client.create(mainWindow);
+  }
   mainWindow.on('closed', () => mainWindow = null)
 }
 
@@ -71,7 +75,7 @@ function getChatList () {
   }
   instagram.getChatList(session).then((chats) => {
     mainWindow.webContents.send('chatList', chats)
-    
+
     if (chatListTimeoutObj) {
       clearTimeout(chatListTimeoutObj)
     }
@@ -125,9 +129,9 @@ function handleTwoFactor (error) {
           tfWindow.close()
           instagram.twoFactorLogin(
             username,
-            data.code, 
-            twoFactorIdentifier, 
-            trustThisDevice, 
+            data.code,
+            twoFactorIdentifier,
+            trustThisDevice,
             verificationMethod
             ).then(resolve).catch(reject)
         })
@@ -143,7 +147,7 @@ app.on('ready', () => {
   // this also leaves the dev console enabled when in dev mode.
   if (!process.defaultApp) {
     const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu); 
+    Menu.setApplicationMenu(menu);
   }
   autoUpdater.init();
 })
