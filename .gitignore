@@ -39,6 +39,7 @@ jspm_packages
 dist
 .DS_Store
 .vscode/
+.idea/
 
 # Extras
 browser/index.html

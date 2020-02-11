@@ -30,7 +30,7 @@ block body
           .messageBox.row.p-3
             .new-message
               form
-                textarea(placeholder='Start a message' id="messageText")
+                textarea(placeholder='Start a message' maxlength="1000" id="messageText")
             button.send-attachment
               img(src='img/attachment.png', width='20px')
             input.file-input.hide(type='file', accept='image/jpeg,image/jpg')

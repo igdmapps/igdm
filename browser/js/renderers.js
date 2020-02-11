@@ -179,15 +179,19 @@ function renderPlaceholderAsText (container, message) {
 function renderMessageAsLink (container, message) {
   const { link } = message.link._params;
   const text = message.link._params.text;
+  container.innerHTML += text;
   if (link.image && link.image.url) {
-    var img = dom(`<img src="${link.image.url}">`);
+    var img = dom(`<img src="${link.image.url}" />`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
   }
-  // replace all contained links with anchor tags
-  container.innerHTML += text.replace(URL_REGEX, (url) => {
-    return `<a class="link-in-message">${url}</a>`;
-  });
+  // Check if this is a YouTube link.
+  if ( link.image && link.image.url && link.title && link.summary ) {
+    container.innerHTML += `<a class="link-in-message" src="${link.url}">${link.title}</a><p class="link-in-message-summary">${link.summary}</p>`;
+  } else {
+    // replace all contained links with anchor tags
+    container.innerHTML += `<a class="link-in-message" src="${link.url}">${link.url}</a>`;
+  }
   container.classList.add('ig-media');
   container.onclick = () => {
     // for links that don't have protocol included
