@@ -117,6 +117,15 @@ function markAsRead (id, li) {
   li.classList.remove('notification');
 }
 
+function resetMessageTextArea(){
+  var input = document.querySelector(MSG_INPUT_SELECTOR);
+  input.value = '';
+
+  var event = document.createEvent('Event');
+  event.initEvent('input', true, true);
+  input.dispatchEvent(event);
+}
+
 function sendMessage (message, accounts, chatId) {
   const isNewChat = !chatId;
   var users = accounts.map((account) => account.id);
@@ -128,7 +137,7 @@ function submitMessage (chat_) {
   var message = input.value;
   if (message.trim()) {
     sendMessage(message, chat_.accounts, chat_.id);
-    input.value = '';
+    resetMessageTextArea();
     var div = renderMessage(message, 'outward');
     var msgContainer = document.querySelector('.chat .messages');
 
