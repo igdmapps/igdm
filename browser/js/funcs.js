@@ -265,3 +265,14 @@ function getLoadingGif () {
 
   return loadingGIF;
 }
+
+function downloadFile(urlOfFile) {
+  var element = document.createElement('a');
+  element.setAttribute('href', urlOfFile);
+  element.setAttribute('download', true);
+  element.style.display = 'none';
+
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}

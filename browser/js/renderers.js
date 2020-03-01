@@ -224,11 +224,16 @@ function renderContextMenu (text) {
 
 function renderImageContextMenu (url) {
   const menu = new Menu();
-  const menuItem = new MenuItem({
+  const copyImageUrl = new MenuItem({
     label: 'Copy URL to clipboard',
     click: () => copyToCliboard(url)
   });
-  menu.append(menuItem);
+  const saveItem = new MenuItem({
+    label: 'Save image as...',
+    click: () => downloadFile(url)
+  });
+  menu.append(copyImageUrl);
+  menu.append(saveItem);
   menu.popup({});
 }
 
