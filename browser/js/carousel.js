@@ -1,6 +1,6 @@
-window.carouselInit = (element, images) => {
+window.carouselInit = (element, media) => {
   const carousel = dom('<div class="carousel"></div>');
-  let activeImage = 0;
+  let activeMedia = 0;
   const leftButton = dom('<button class="carousel-left"></button>');
   const rightButton = dom('<button class="carousel-right"></button>');
   element.appendChild(carousel);
@@ -8,15 +8,16 @@ window.carouselInit = (element, images) => {
   element.appendChild(rightButton);
 
   leftButton.onclick = () => {
-    activeImage--;
-    activeImage = activeImage < 0 ? images.length - 1 : activeImage;
-    carousel.innerHTML = `<img src="${images[activeImage]}">`;
+    activeMedia--;
+    activeMedia = activeMedia < 0 ? media.length - 1 : activeMedia;
+    carousel.innerHTML = getHTMLElement(media[activeMedia]);
   }
 
   rightButton.onclick = () => {
-    activeImage++;
-    activeImage = activeImage > images.length - 1 ? 0 : activeImage;
-    carousel.innerHTML = `<img src="${images[activeImage]}">`;
+    activeMedia++;
+    activeMedia = activeMedia > media.length - 1 ? 0 : activeMedia;
+    carousel.innerHTML = getHTMLElement(media[activeMedia]);
   }
-  carousel.innerHTML = `<img src="${images[activeImage]}">`;
+
+  carousel.innerHTML = getHTMLElement(media[activeMedia]);
 }

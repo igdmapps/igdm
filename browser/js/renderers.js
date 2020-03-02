@@ -83,7 +83,7 @@ function renderPost (post) {
                                 <source src="${post.videos[0].url}" type="video/mp4">
                               </video>`));
   } else if (post.carouselMedia && post.carouselMedia.length) {
-    window.carouselInit(postDom, post.images.map((el) => el[0].url))
+    window.carouselInit(postDom, post.carouselMedia.map((el) => el._params))
   } else {
     postDom.appendChild(dom(`<img src="${post.images[0].url}"/>`));
   }

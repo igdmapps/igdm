@@ -285,3 +285,15 @@ function downloadFile(urlOfFile) {
   element.click();
   document.body.removeChild(element);
 }
+
+function getHTMLElement(media) {
+  var mediaContent;
+  if (media.videos) {
+    mediaContent = `<video width="${media.videos[0].width}" controls>
+      <source src="${media.videos[0].url}" type="video/mp4">
+    </video>`;
+  } else {
+    mediaContent = `<img src="${media.images[0].url}">`;
+  }
+  return mediaContent;
+}
