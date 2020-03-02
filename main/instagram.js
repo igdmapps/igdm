@@ -82,6 +82,14 @@ exports.getChat = function (session, chatId) {
   });
 };
 
+exports.deleteChat = function (session, chatId) {
+  return new Promise((resolve, reject) => {
+    Client.Thread.getById(session, chatId).then((thread)=>{
+      thread.hide().then(resolve);
+    }).catch(reject);
+  });
+};
+
 exports.getOlderMessages = function (session, thread, chatId) {
   return new Promise((resolve, reject) => {
     const needsNewThread = !thread || thread.threadId !== chatId;
