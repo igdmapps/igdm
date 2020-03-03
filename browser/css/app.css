@@ -320,6 +320,9 @@ button, button:focus {
 .viewer button.close {
   background: transparent;
   opacity: 0.5;
+  position: fixed;
+  top: 5px;
+  right: 10px;
 }
 
 .viewer .post-caption {
