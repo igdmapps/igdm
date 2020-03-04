@@ -26,6 +26,12 @@ function getDisplayPictureUrl (userId) {
   ipcRenderer.send('getDisplayPictureUrl', userId);
 }
 
+function closeModalViewer() {
+  document.querySelector('.viewer').classList.remove('active');
+  var video = document.querySelector('.message-video');
+  video.parentNode.removeChild(video)
+}
+
 //Disable Drag and Drop on Electrum
 document.addEventListener('dragover',function(event){
   event.preventDefault();
@@ -136,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // close modal viewer when esc is pressed
   document.onkeyup = (e) => {
     if (e.keyCode == 27) { // ESC keycode
-      document.querySelector('.viewer').classList.remove('active');
+      closeModalViewer()
     }
   }
 

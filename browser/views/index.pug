@@ -40,7 +40,7 @@ block body
               .emojis-header
               .emojis-body
       .viewer
-        button.close(no-js='', on-click-remove-class='.viewer active')
+        button.close(no-js='', onclick='closeModalViewer()')
           img(width='25px', src='img/close.png', alt='close icon')
         .content
   script(type='text/javascript', src='../node_modules/nojs/dist/no.min.js')
