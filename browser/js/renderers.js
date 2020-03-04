@@ -1,5 +1,5 @@
 function renderMessage (message, direction, time, type) {
-  var renderers = {
+  let renderers = {
     mediaShare: renderMessageAsPost,
     text: renderMessageAsText,
     like: renderMessageAsLike,
@@ -11,14 +11,14 @@ function renderMessage (message, direction, time, type) {
     actionLog: renderMessageAsActionLog,
     voice_media: renderMessageAsVoiceMedia,
     placeholder: renderPlaceholderAsText,
-  }
+  };
 
-  var div = dom(`<div class="message clearfix ${direction}"></div>`);
-  var divContent = dom('<div class="content"></div>');
+  let div = dom(`<div class="message clearfix ${direction}"></div>`);
+  let divContent = dom('<div class="content"></div>');
 
   if (direction === 'inward') {
-    var senderUsername = window.chat.accounts.find((account) => {
-      return account.id == message._params.accountId
+    let senderUsername = window.chat.accounts.find((account) => {
+      return account.id == message._params.accountId;
     })._params.username;
     divContent.appendChild(dom(`<p class="message-sender">${senderUsername}</p>`));
   }
@@ -35,17 +35,17 @@ function renderMessage (message, direction, time, type) {
   if (message._params) renderMessageReactions(divContent, message._params.reactions);
   div.appendChild(divContent);
 
-  return div
+  return div;
 }
 
-function renderMessageAsActionLog(container, message) {
+function renderMessageAsActionLog (container, message) {
   renderMessageAsText(container, message._params.actionLog.description);
 }
 
-function renderMessageReactions(container, reactions) {
+function renderMessageReactions (container, reactions) {
   if (!reactions) return;
 
-  var div = dom('<div class="reactions-likes"><img src="img/love.png"></div>')
+  let div = dom('<div class="reactions-likes"><img src="img/love.png"></div>');
   reactions.likes.forEach((like) => {
     div.appendChild(dom(`<img data-user-id="${like.sender_id}">`));
     getDisplayPictureUrl(like.sender_id);
@@ -53,18 +53,18 @@ function renderMessageReactions(container, reactions) {
   container.appendChild(div);
 }
 
-function renderDisplayPicture(displayPicture) {
+function renderDisplayPicture (displayPicture) {
   document.querySelectorAll(`img[data-user-id="${displayPicture.userId}"]`).forEach((img) => {
     img.src = displayPicture.url;
   });
 }
 
 function renderMessageAsPost (container, message) {
-  var post = message.mediaShare._params;
+  let post = message.mediaShare._params;
 
   if (post.images) {
     // carousels have nested arrays before getting to image url
-    var img = dom(`<img src="${post.images[0].url || post.images[0][0].url}">`);
+    let img = dom(`<img src="${post.images[0].url || post.images[0][0].url}">`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
   }
@@ -73,7 +73,7 @@ function renderMessageAsPost (container, message) {
     container.appendChild(dom(`<p class="post-caption">${truncate(post.caption, 30)}</p>`));
   }
   container.classList.add('ig-media');
-  container.onclick = () => renderPost(post)
+  container.onclick = () => renderPost(post);
 }
 
 function renderPost (post) {
@@ -83,15 +83,15 @@ function renderPost (post) {
                                 <source src="${post.videos[0].url}" type="video/mp4">
                               </video>`));
   } else if (post.carouselMedia && post.carouselMedia.length) {
-    window.carouselInit(postDom, post.carouselMedia.map((el) => el._params))
+    window.carouselInit(postDom, post.carouselMedia.map((el) => el._params));
   } else {
     postDom.appendChild(dom(`<img src="${post.images[0].url}"/>`));
   }
   if (post.caption) {
     postDom.appendChild(dom(`<p class="post-caption">${post.caption}</p>`));
   }
-  const browserLink = dom('<button class="view-on-ig">View on Instagram</button>')
-  browserLink.onclick = () => openInBrowser(post.webLink)
+  const browserLink = dom('<button class="view-on-ig">View on Instagram</button>');
+  browserLink.onclick = () => openInBrowser(post.webLink);
   postDom.appendChild(browserLink);
   showInViewer(postDom);
 }
@@ -99,8 +99,8 @@ function renderPost (post) {
 function renderMessageAsUserStory (container, message) {
   container.classList.add('ig-media');
   if (message._params.reelShare.media.image_versions2) {
-    var url = message._params.reelShare.media.image_versions2.candidates[0].url
-    var img = dom(`<img src="${url}">`);
+    let url = message._params.reelShare.media.image_versions2.candidates[0].url;
+    let img = dom(`<img src="${url}">`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
 
@@ -111,7 +111,7 @@ function renderMessageAsUserStory (container, message) {
       } else {
         showInViewer(dom(`<img src="${url}">`));
       }
-    })
+    });
   }
 
   if (message._params.reelShare.text) {
@@ -120,29 +120,29 @@ function renderMessageAsUserStory (container, message) {
 }
 
 function renderMessageAsImage (container, message) {
-  var url = typeof message === 'string' ? message : message._params.media[0].url
-  var img = dom(`<img src="${url}">`);
+  let url = typeof message === 'string' ? message : message._params.media[0].url;
+  let img = dom(`<img src="${url}">`);
   img.onload = conditionedScrollToBottom();
   container.appendChild(img);
   container.classList.add('ig-media');
 
   container.addEventListener('click', () => {
     showInViewer(dom(`<img src="${url}">`));
-  })
+  });
   container.oncontextmenu = () => renderImageContextMenu(url);
 }
 
 function renderMessageAsRavenImage (container, message) {
   if (message._params.visualMedia && message._params.visualMedia.media.image_versions2) {
     container.classList.add('ig-media');
-    var url = message._params.visualMedia.media.image_versions2.candidates[0].url
-    var img = dom(`<img src="${url}">`);
+    let url = message._params.visualMedia.media.image_versions2.candidates[0].url;
+    let img = dom(`<img src="${url}">`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
 
     container.addEventListener('click', () => {
       showInViewer(dom(`<img src="${url}">`));
-    })
+    });
     container.oncontextmenu = () => renderImageContextMenu(url);
   } else {
     renderMessageAsText(container, '<unsupported message format>', true);
@@ -154,7 +154,7 @@ function renderMessageAsLike (container) {
 }
 
 function renderMessageAsText (container, message, noContext) {
-  var text = typeof message === 'string' ? message : message._params.text;
+  let text = typeof message === 'string' ? message : message._params.text;
   container.appendChild(document.createTextNode(text));
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
 }
@@ -164,13 +164,13 @@ function linkUsernames (text) {
 }
 
 function renderPlaceholderAsText (container, message) {
-  var html = "";
+  let html = '';
   if (!message.placeholder._params.is_linked) {
     html = message.placeholder._params.message;
   } else {
     html = linkUsernames(message.placeholder._params.message);
   }
-  var placeholderDom = dom("<p>" + html + "</p>");
+  let placeholderDom = dom('<p>' + html + '</p>');
   placeholderDom.classList.add('placeholder');
 
   container.appendChild(placeholderDom);
@@ -181,12 +181,12 @@ function renderMessageAsLink (container, message) {
   const text = message.link._params.text;
   container.innerHTML += text;
   if (link.image && link.image.url) {
-    var img = dom(`<img src="${link.image.url}" />`);
+    let img = dom(`<img src="${link.image.url}" />`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
   }
   // Check if this is a YouTube link.
-  if ( link.image && link.image.url && link.title && link.summary ) {
+  if (link.image && link.image.url && link.title && link.summary) {
     container.innerHTML += `<a class="link-in-message" src="${link.url}">${link.title}</a><p class="link-in-message-summary">${link.summary}</p>`;
   } else {
     // replace all contained links with anchor tags
@@ -197,19 +197,19 @@ function renderMessageAsLink (container, message) {
     // for links that don't have protocol included
     const url = /^(http|https):\/\//.test(link.url) ? link.url : `http://${link.url}`;
     openInBrowser(url);
-  }
+  };
 }
 
 function renderMessageAsAnimatedMedia (container, message) {
-  var { url } = message._params.animatedMedia.images.fixed_height;
-  var img = dom(`<img src="${url}">`);
+  let { url } = message._params.animatedMedia.images.fixed_height;
+  let img = dom(`<img src="${url}">`);
   img.onload = conditionedScrollToBottom();
   container.appendChild(img);
   container.classList.add('ig-media');
 
   container.addEventListener('click', () => {
     showInViewer(dom(`<img src="${url}">`));
-  })
+  });
 }
 
 function renderContextMenu (text) {
@@ -237,24 +237,24 @@ function renderImageContextMenu (url) {
   menu.popup({});
 }
 
-function renderChatListItem(chatTitle, msgPreview, thumbnail, id, direction) {
-  var li = document.createElement('li');
+function renderChatListItem (chatTitle, msgPreview, thumbnail, id, direction) {
+  let li = document.createElement('li');
   li.classList.add('col-12', 'p-3');
 
-  const msgPreviewClass = (direction == "outward") ? 'outward' : 'inward';
+  const msgPreviewClass = (direction == 'outward') ? 'outward' : 'inward';
 
   li.appendChild(dom(`<div><img class="thumb" src="${thumbnail}"></div>`));
   li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${chatTitle}</b><br><span class="${msgPreviewClass}">${msgPreview}</span></div>`));
-  if (id) li.setAttribute("id", `chatlist-${id}`);
+  if (id) li.setAttribute('id', `chatlist-${id}`);
 
   return li;
 }
 
 function renderSearchResult (users) {
-  var ul = document.querySelector('.chat-list ul');
-  ul.innerHTML = "";
+  let ul = document.querySelector('.chat-list ul');
+  ul.innerHTML = '';
   users.forEach((user) => {
-    var li = renderChatListItem(user._params.username, 'Send a message', user._params.picture);
+    let li = renderChatListItem(user._params.username, 'Send a message', user._params.picture);
     li.onclick = () => {
       setActive(li);
       if (window.chatUsers[user.id]) {
@@ -263,23 +263,23 @@ function renderSearchResult (users) {
         window.currentChatId = DUMMY_CHAT_ID;
         renderChat({items: [], accounts: [user]});
       }
-    }
+    };
     ul.appendChild(li);
-  })
+  });
 }
 
 function renderChatList (chatList) {
-  var ul = document.querySelector('.chat-list ul');
-  ul.innerHTML = "";
+  let ul = document.querySelector('.chat-list ul');
+  ul.innerHTML = '';
   chatList.forEach((chat_) => {
-    var msgPreview = getMsgPreview(chat_);
-    var chatTitle = getChatTitle(chat_);
+    let msgPreview = getMsgPreview(chat_);
+    let chatTitle = getChatTitle(chat_);
     const direction = getMsgDirection(chat_.items[0]);
     let thumbnail = '';
     if (chat_.accounts[0]) {
       thumbnail = chat_.accounts[0]._params.picture;
     }
-    var li = renderChatListItem(chatTitle, msgPreview, thumbnail, chat_.id, direction);
+    let li = renderChatListItem(chatTitle, msgPreview, thumbnail, chat_.id, direction);
 
     registerChatUser(chat_);
     if (isActive(chat_)) setActive(li);
@@ -299,9 +299,9 @@ function renderChatList (chatList) {
         renderChat(chat_, true);
       }
       getChat(chat_.id);
-    }
+    };
     ul.appendChild(li);
-  })
+  });
 }
 
 function renderChatHeader (chat_) {
@@ -326,21 +326,21 @@ function renderChat (chat_, loadingMore) {
   window.chat = chat_;
   window.chatCache[chat_.id] = chat_;
 
-  var msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
+  let msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   msgContainer.innerHTML = '';
   if (loadingMore) {
     msgContainer.appendChild(getLoadingGif());
   }
   renderChatHeader(chat_);
-  var messages = chat_.items.slice().reverse();
+  let messages = chat_.items.slice().reverse();
   // load older messages if they exist too
   messages = (window.olderMessages[chat_.id] || []).slice().reverse().concat(messages);
   messages.forEach((message) => {
-    var div = renderMessage(message, getMsgDirection(message),
+    let div = renderMessage(message, getMsgDirection(message),
       message._params.created, message._params.type
     );
     msgContainer.appendChild(div);
-  })
+  });
   renderMessageSeenText(msgContainer, chat_);
   scrollToChatBottom();
   if (!loadingMore) {
@@ -356,7 +356,7 @@ function renderOlderMessages (messages) {
   const msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   const domPostion = msgContainer.firstChild;
   messages.forEach((message) => {
-    var div = renderMessage(message, getMsgDirection(message),
+    let div = renderMessage(message, getMsgDirection(message),
       message._params.created, message._params.type
     );
     msgContainer.prepend(div);
@@ -365,9 +365,9 @@ function renderOlderMessages (messages) {
   domPostion.scrollIntoView();
 }
 
-function renderMessageAsVoiceMedia(container, message) {
-  var src = message._params.voiceMedia.media.audio.audio_src;
-  var audio = dom(`<audio controls src="${src}"/>`);
+function renderMessageAsVoiceMedia (container, message) {
+  let src = message._params.voiceMedia.media.audio.audio_src;
+  let audio = dom(`<audio controls src="${src}"/>`);
   container.appendChild(audio);
 }
 
@@ -376,22 +376,22 @@ function renderMessageSeenText (container, chat_) {
 }
 
 function renderUnfollowers (users) {
-  var ul = dom(`<ul class="unfollowers"></ul>`);
+  let ul = dom('<ul class="unfollowers"></ul>');
   users.forEach((user) => {
-    var li = dom(
+    let li = dom(
       `<li class="col-12 col-md-4 col-lg-3">
         <img class="thumb" src="${user._params.picture}">
         <div class="">${user._params.username}</div>
       </li>`
     );
-    var unfollowButton = dom(`<button class="unfollow-button">Unfollow</button>`);
+    let unfollowButton = dom('<button class="unfollow-button">Unfollow</button>');
     unfollowButton.onclick = () => {
       unfollow(user.id);
       li.remove();
-    }
+    };
     li.appendChild(unfollowButton);
     ul.appendChild(li);
-  })
+  });
 
   showInViewer(ul);
 }

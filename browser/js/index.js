@@ -4,7 +4,7 @@ function getLoggedInUser () {
 
 function getChat (id) {
   if (window.currentChatId !== id) {
-    window.olderMessages = []
+    window.olderMessages = [];
   }
   window.currentChatId = id;
   ipcRenderer.send('getChat', id);
@@ -27,15 +27,15 @@ function getDisplayPictureUrl (userId) {
 }
 
 //Disable Drag and Drop on Electrum
-document.addEventListener('dragover',function(event){
+document.addEventListener('dragover', function (event) {
   event.preventDefault();
   return false;
-},false);
+}, false);
 
-document.addEventListener('drop',function(event){
+document.addEventListener('drop', function (event) {
   event.preventDefault();
   return false;
-},false);
+}, false);
 
 // This code runs once the DOM is loaded (just in case you missed it).
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ipcRenderer.on('chatList', (evt, chats_) => {
     if (!window.chats.length || window.chats[0].items[0].id !== chats_[0].items[0].id) {
-      window.chats = chats_
-      renderChatList(window.chats)
+      window.chats = chats_;
+      renderChatList(window.chats);
     }
   });
 
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.chat.items.length != chat_.items.length ||
       getIsSeenText(chat_) != getIsSeenText(window.chat) ||
       chat_.items[0].id != chat_._params.lastSeenAt[window.loggedInUserId].item_id
-    )
+    );
 
     if (isNewMessage && isCurrentChat(chat_) && !window.gettingOlderMessages) renderChat(chat_);
   });
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ipcRenderer.on('upload-error', (_, chatId) => {
     window.notifiedChatId = chatId;
     notify('Image upload failed. :( Please ensure your image is in .jpg format.', true);
-  })
+  });
 
   ipcRenderer.on('getDisplayPictureUrl', (evt, displayPicture) => {
     renderDisplayPicture(displayPicture);
@@ -96,25 +96,25 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector(MSG_INPUT_SELECTOR).value += emoji;
       document.querySelector('.emojis').classList.add('hide');
       document.querySelector(MSG_INPUT_SELECTOR).focus();
-    }
+    };
     window.showEmojis(
       document.querySelector('.emojis-header'),
       document.querySelector('.emojis-body'),
       onEmojiSelected
-    )
-  }
+    );
+  };
 
   let searchForm = document.querySelector('.header input[name=search]');
   searchForm.onkeyup = (e) => {
     const value = searchForm.value;
-    const trimmedValue = value.trim() 
+    const trimmedValue = value.trim(); 
 
     if (trimmedValue.length > 3) {
-      ipcRenderer.send('searchUsers', searchForm.value)      
+      ipcRenderer.send('searchUsers', searchForm.value);      
     } else if (trimmedValue.length === 0) {
-      renderChatList(window.chats)
+      renderChatList(window.chats);
     }
-  }
+  };
 
   document.querySelector('#unfollowers').onclick = () => getUnfollowers();
   document.querySelector('#logout').onclick = () => ipcRenderer.send('logout');
@@ -122,33 +122,33 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#seen-flagger').onclick = (e) => {
     window.shouldSendSeenFlags = !window.shouldSendSeenFlags;
     e.target.innerText = window.shouldSendSeenFlags
-      ? `Send "SEEN" receipts - currently Enabled`
-      : `Send "SEEN" receipts - currently Disabled`;
-  }
+      ? 'Send "SEEN" receipts - currently Enabled'
+      : 'Send "SEEN" receipts - currently Disabled';
+  };
 
   document.querySelector('#notifier-settings').onclick = (e) => {
-      window.shouldNotify = !window.shouldNotify;
-      e.target.innerText = window.shouldNotify
-          ? `Disable Notifications`
-          : `Enable Notifications`;
-  }
+    window.shouldNotify = !window.shouldNotify;
+    e.target.innerText = window.shouldNotify
+      ? 'Disable Notifications'
+      : 'Enable Notifications';
+  };
 
   // close modal viewer when esc is pressed
   document.onkeyup = (e) => {
     if (e.keyCode == 27) { // ESC keycode
       document.querySelector('.viewer').classList.remove('active');
     }
-  }
+  };
 
   window.onblur = () => {
-    window.isWindowFocused = false
-  }
+    window.isWindowFocused = false;
+  };
 
   window.onfocus = () => {
-    window.isWindowFocused = true
-  }
+    window.isWindowFocused = true;
+  };
 
-  function OnInput() {
+  function OnInput () {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight - 30) + 'px';
   }
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tx = document.getElementById('messageText');
   const scrHeight = tx.scrollHeight - 6;
   tx.setAttribute('style', 'height:' + (scrHeight).toString() + 'px;overflow-y:hidden;');
-  tx.addEventListener("input", OnInput, false);
+  tx.addEventListener('input', OnInput, false);
 
   getLoggedInUser();
   getChatList();

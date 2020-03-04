@@ -4,22 +4,22 @@ const app = require('electron').app;
 const path = require('path');
 
 const buildAndGetStoragePath = () => {
-  const storagePath = path.join(app.getPath('userData'), 'session-cookie')
+  const storagePath = path.join(app.getPath('userData'), 'session-cookie');
   if (!fs.existsSync(storagePath)) {
     // make directory if it doesn't exist
-    fs.mkdirSync(storagePath)
+    fs.mkdirSync(storagePath);
   }
-  return storagePath
-}
+  return storagePath;
+};
 
 const canUseFileStorage = () => {
   try {
     fs.accessSync(`${app.getPath('userData')}/`, fs.W_OK);
-    return true
+    return true;
   } catch (error) {
-    return false
+    return false;
   }
-}
+};
 
 const guessUsername = () => {
   let username;
@@ -30,7 +30,7 @@ const guessUsername = () => {
     }
   }
   return username;
-}
+};
 
 const getCookieStorage = (filePath) => {
   let storage;
@@ -38,7 +38,7 @@ const getCookieStorage = (filePath) => {
 
   if (canUseFileStorage()) {
     if (!filePath && (username = guessUsername())) {
-      filePath = `${username}.json`
+      filePath = `${username}.json`;
     }
 
     if (filePath) storage = new Client.CookieFileStorage(`${buildAndGetStoragePath()}/${filePath}`);
@@ -47,25 +47,25 @@ const getCookieStorage = (filePath) => {
   }
 
   return storage;
-}
+};
 
 const clearCookieFiles = () => {
   // delete all session storage
   if (canUseFileStorage() && fs.existsSync(buildAndGetStoragePath())) {
     fs.readdirSync(`${buildAndGetStoragePath()}`).forEach((filename) => {
       fs.unlinkSync(`${buildAndGetStoragePath()}/${filename}`);
-    })
+    });
   }
-}
+};
 
 const getDevice = (username) => {
   let device;
   username = username || guessUsername();
   if (username) device = new Client.Device(username);
   return device;
-}
+};
 
 module.exports = {
   canUseFileStorage, guessUsername,
   getCookieStorage, clearCookieFiles, getDevice
-}
+};

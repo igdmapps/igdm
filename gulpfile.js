@@ -1,8 +1,8 @@
 'use strict';
 
-var gulp = require('gulp');
-var pug = require('gulp-pug');
-var electron = require('electron-connect').server.create();
+const gulp = require('gulp');
+const pug = require('gulp-pug');
+const electron = require('electron-connect').server.create();
 
 gulp.task('html', function () {
   return gulp.src(['./browser/views/**/*.pug', '!./browser/views/**/_*.pug'])

@@ -7,36 +7,36 @@ function copyToCliboard (text) {
 }
 
 function format (number) {
-  return number > 9 ? "" + number: "0" + number;
+  return number > 9 ? '' + number: '0' + number;
 }
 
 function formatTime (time) {
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   let date = new Date(time);
   let hours = format(date.getHours());
   let minutes = format(date.getMinutes());
   let day = format(date.getDate());
   let month = MONTHS[date.getMonth()];
-  return `${hours}:${minutes} - ${month} ${day}`
+  return `${hours}:${minutes} - ${month} ${day}`;
 }
 
 function truncate (text, length) {
   return text.length > length ? `${text.substr(0, length)} ...` : text;
 }
 
-function dom(content) {
-  var template = document.createElement('template');
+function dom (content) {
+  let template = document.createElement('template');
   template.innerHTML = content;
   return template.content.firstChild;
 }
 
 function getUsernames (chat_, shouldTruncate) {
-  var usernames = chat_.accounts.map((acc) => acc._params.username).join(', ');
+  let usernames = chat_.accounts.map((acc) => acc._params.username).join(', ');
   return usernames;
 }
 
-function getChatTitle(chat_) {
+function getChatTitle (chat_) {
   return chat_._params.threadTitle;
 }
 
@@ -75,11 +75,11 @@ function scrollToChatBottom () {
 
 function conditionedScrollToBottom () {
   if (!window.gettingOlderMessages) {
-    return scrollToChatBottom
+    return scrollToChatBottom;
   }
 }
 
-function loadOlderMsgsOnScrollTop(chatId) {
+function loadOlderMsgsOnScrollTop (chatId) {
   let msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   msgContainer.onscroll = (e) => {
     if (e.target.scrollTop < 200 && !window.gettingOlderMessages && window.currentChatId == chatId) {
@@ -87,16 +87,16 @@ function loadOlderMsgsOnScrollTop(chatId) {
       window.gettingOlderMessages = true;
       window.olderMessagesChatId = window.currentChatId;
     }
-  }
+  };
 }
 
-function canRenderOlderMessages(chatId) {
+function canRenderOlderMessages (chatId) {
   chatId = chatId || window.olderMessagesChatId;
   return chatId === window.currentChatId;
 }
 
 function getMsgPreview (chat_) {
-  var msgPreview = chat_.items[0]._params.text || 'Media message';
+  let msgPreview = chat_.items[0]._params.text || 'Media message';
   return truncate(msgPreview, 25);
 }
 
@@ -117,29 +117,29 @@ function markAsRead (id, li) {
   li.classList.remove('notification');
 }
 
-function resetMessageTextArea(){
-  var input = document.querySelector(MSG_INPUT_SELECTOR);
+function resetMessageTextArea () {
+  let input = document.querySelector(MSG_INPUT_SELECTOR);
   input.value = '';
 
-  var event = document.createEvent('Event');
+  let event = document.createEvent('Event');
   event.initEvent('input', true, true);
   input.dispatchEvent(event);
 }
 
 function sendMessage (message, accounts, chatId) {
   const isNewChat = !chatId;
-  var users = accounts.map((account) => account.id);
+  let users = accounts.map((account) => account.id);
   ipcRenderer.send('message', { message, isNewChat, users, chatId });
 }
 
 function submitMessage (chat_) {
-  var input = document.querySelector(MSG_INPUT_SELECTOR);
-  var message = input.value;
+  let input = document.querySelector(MSG_INPUT_SELECTOR);
+  let message = input.value;
   if (message.trim()) {
     sendMessage(message, chat_.accounts, chat_.id);
     resetMessageTextArea();
-    var div = renderMessage(message, 'outward');
-    var msgContainer = document.querySelector('.chat .messages');
+    let div = renderMessage(message, 'outward');
+    let msgContainer = document.querySelector('.chat .messages');
 
     msgContainer.appendChild(div);
     scrollToChatBottom();
@@ -154,38 +154,38 @@ function addSubmitHandler (chat_) {
       evt.preventDefault();
       submitMessage(chat_);
     }
-  }
+  };
 }
 
-function sendAttachment(filePath, chat_) {
+function sendAttachment (filePath, chat_) {
   // @todo: pass this as argument instead
-  window.notifiedChatId = chat_.id
-  notify('Your file is being uploaded', true)
+  window.notifiedChatId = chat_.id;
+  notify('Your file is being uploaded', true);
 
-  var recipients = chat_.accounts.map((account) => account.id)
-  ipcRenderer.send('upload', { filePath, recipients, isNewChat: !chat_.id, chatId: chat_.id })
+  let recipients = chat_.accounts.map((account) => account.id);
+  ipcRenderer.send('upload', { filePath, recipients, isNewChat: !chat_.id, chatId: chat_.id });
 }
 
-function addAttachmentSender(chat_) {
+function addAttachmentSender (chat_) {
   document.querySelector('.send-attachment').onclick = () => {
     const fileInput = document.querySelector('.file-input');
     fileInput.click();
     fileInput.onchange = () => {
       sendAttachment(fileInput.files[0].path, chat_);
       fileInput.value = '';
-    }
-  }
+    };
+  };
 }
 
 function addNotification (el, chat_) {
   if (chat_.items[0]._params.accountId == window.loggedInUserId) {
-    return
+    return;
   }
 
   const isNew = (
-    ( window.chatListHash[chat_.id] &&
+    (window.chatListHash[chat_.id] &&
       window.chatListHash[chat_.id].items[0].id !== chat_.items[0].id) ||
-    ( chat_._params.lastSeenAt &&
+    (chat_._params.lastSeenAt &&
       chat_._params.lastSeenAt[window.loggedInUserId] &&
       chat_.items[0].id != chat_._params.lastSeenAt[window.loggedInUserId].item_id
     ));
@@ -197,7 +197,7 @@ function addNotification (el, chat_) {
     } else {
       el.classList.add('notification');
       // @todo pass this as an argument instead
-      window.notifiedChatId = el.getAttribute("id");
+      window.notifiedChatId = el.getAttribute('id');
       if (isNew && window.shouldNotify && !window.isWindowFocused) {
         notify(`new message from ${getChatTitle(chat_)}`);
       }
@@ -205,7 +205,7 @@ function addNotification (el, chat_) {
   }
 }
 
-function notify(message, noBadgeCountIncrease) {
+function notify (message, noBadgeCountIncrease) {
   if (!noBadgeCountIncrease) {
     ipcRenderer.send('increase-badge-count');
   }
@@ -215,7 +215,7 @@ function notify(message, noBadgeCountIncrease) {
 
   notification.onclick = () => {
     document.querySelector(`#${window.notifiedChatId}`).click();
-  }
+  };
 }
 
 function registerChatUser (chat_) {
@@ -225,22 +225,22 @@ function registerChatUser (chat_) {
 }
 
 function getIsSeenText (chat_) {
-  var text = '';
+  let text = '';
   if (!chat_.items || !chat_.items.length || chat_.items[0]._params.accountId != window.loggedInUserId) {
     return '';
   }
 
-  var seenBy = chat_.accounts.filter((account) => {
+  let seenBy = chat_.accounts.filter((account) => {
     return (
       chat_._params.itemsSeenAt[account.id] &&
       chat_._params.itemsSeenAt[account.id].itemId === chat_.items[0].id
-    )
-  })
+    );
+  });
 
   if (seenBy.length === chat_.accounts.length) {
-    text = 'seen'
+    text = 'seen';
   } else if (seenBy.length) {
-    text = `👁 ${getUsernames({accounts: seenBy})}`
+    text = `👁 ${getUsernames({accounts: seenBy})}`;
   }
   return text;
 }
@@ -255,8 +255,8 @@ function showInViewer (dom) {
 }
 
 function quoteText (text) {
-  var input = document.querySelector(MSG_INPUT_SELECTOR);
-  input.value = `${text}\n==================\n${input.value}`
+  let input = document.querySelector(MSG_INPUT_SELECTOR);
+  input.value = `${text}\n==================\n${input.value}`;
   input.focus();
 }
 
@@ -275,8 +275,8 @@ function getLoadingGif () {
   return loadingGIF;
 }
 
-function downloadFile(urlOfFile) {
-  var element = document.createElement('a');
+function downloadFile (urlOfFile) {
+  let element = document.createElement('a');
   element.setAttribute('href', urlOfFile);
   element.setAttribute('download', true);
   element.style.display = 'none';
@@ -286,8 +286,8 @@ function downloadFile(urlOfFile) {
   document.body.removeChild(element);
 }
 
-function getHTMLElement(media) {
-  var mediaContent;
+function getHTMLElement (media) {
+  let mediaContent;
   if (media.videos) {
     mediaContent = `<video width="${media.videos[0].width}" controls>
       <source src="${media.videos[0].url}" type="video/mp4">
