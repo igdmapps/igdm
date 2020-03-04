@@ -29,7 +29,9 @@ function getDisplayPictureUrl (userId) {
 function closeModalViewer() {
   document.querySelector('.viewer').classList.remove('active');
   var video = document.querySelector('.message-video');
-  video.parentNode.removeChild(video)
+  if(video !== null) {
+    video.parentNode.removeChild(video)
+  }
 }
 
 //Disable Drag and Drop on Electrum
