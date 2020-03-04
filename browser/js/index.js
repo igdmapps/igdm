@@ -28,10 +28,7 @@ function getDisplayPictureUrl (userId) {
 
 function closeModalViewer() {
   document.querySelector('.viewer').classList.remove('active');
-  var video = document.querySelector('.message-video');
-  if(video !== null) {
-    video.parentNode.removeChild(video)
-  }
+  document.querySelectorAll('.viewer .content')[0].innerHTML = "";
 }
 
 //Disable Drag and Drop on Electrum

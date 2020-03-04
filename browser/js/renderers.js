@@ -79,7 +79,7 @@ function renderMessageAsPost (container, message) {
 function renderPost (post) {
   const postDom = dom('<div class="center"></div>');
   if (post.videos) {
-    postDom.appendChild(dom(`<video width="${post.videos[0].width}" controls class="message-video">
+    postDom.appendChild(dom(`<video width="${post.videos[0].width}" controls>
                                 <source src="${post.videos[0].url}" type="video/mp4">
                               </video>`));
   } else if (post.carouselMedia && post.carouselMedia.length) {
