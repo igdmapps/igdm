@@ -20,8 +20,8 @@ let pollingInterval = 10000;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
-let session
+let mainWindow;
+let session;
 
 function createWindow () {
   if (!mainWindow) {
@@ -31,115 +31,115 @@ function createWindow () {
       icon: `${__dirname}/../browser/img/icon.png`,
       minWidth: 500,
       minHeight: 400
-    })
+    });
   }
-  mainWindow.setTitle('IG:dm - Instagram Desktop Messenger')
+  mainWindow.setTitle('IG:dm - Instagram Desktop Messenger');
 
   instagram.checkAuth(session).then((result) => {
-    let view = result.isLoggedIn ? '../browser/index.html' : '../browser/login.html'
-    session = result.session || session
+    const view = result.isLoggedIn ? '../browser/index.html' : '../browser/login.html';
+    session = result.session || session;
 
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, view),
       protocol: 'file:',
       slashes: true
-    }))
-  })
+    }));
+  });
   // If we're in development mode then create an Electron Connect client for live reload.
   if (process.defaultApp) {
     client.create(mainWindow);
   }
-  mainWindow.on('closed', () => mainWindow = null)
+  mainWindow.on('closed', () => mainWindow = null);
 }
 
-function createOtpWindow(type) {
+function createOtpWindow (type) {
   const otpWindow = new BrowserWindow({
     width: 300,
     height: 300,
     resizable: false,
     icon: `${__dirname}/../browser/img/icon.png`,
-  })
-  otpWindow.setTitle('IG:dm - Instagram verification code')
+  });
+  otpWindow.setTitle('IG:dm - Instagram verification code');
   otpWindow.loadURL(url.format({
     pathname: path.join(__dirname, `../browser/${type}.html`),
     protocol: 'file:',
     slashes: true
-  }))
-  return otpWindow
+  }));
+  return otpWindow;
 }
 
 let chatListTimeoutObj;
 function getChatList () {
   if (!session) {
-    return
+    return;
   }
   instagram.getChatList(session).then((chats) => {
-    mainWindow.webContents.send('chatList', chats)
+    mainWindow.webContents.send('chatList', chats);
 
     if (chatListTimeoutObj) {
-      clearTimeout(chatListTimeoutObj)
+      clearTimeout(chatListTimeoutObj);
     }
     chatListTimeoutObj = setTimeout(getChatList, pollingInterval);
-  }).catch(() => setTimeout(getChatList, RATE_LIMIT_DELAY))
+  }).catch(() => setTimeout(getChatList, RATE_LIMIT_DELAY));
 }
 
 let chatTimeoutObj;
 let messagesThread;
 function getChat (evt, id) {
   if (!session) {
-    return
+    return;
   }
   // used to get older messages, see #getOlderMessages
   if (messagesThread && messagesThread.threadId != id) {
-    messagesThread = null
+    messagesThread = null;
   }
 
   instagram.getChat(session, id).then((chat) => {
     mainWindow.webContents.send('chat', chat);
     if (chatTimeoutObj) {
-      clearTimeout(chatTimeoutObj)
+      clearTimeout(chatTimeoutObj);
     }
     chatTimeoutObj = setTimeout(getChat, pollingInterval, {}, id);
-  }).catch(() => setTimeout(getChat, RATE_LIMIT_DELAY, evt, id))
+  }).catch(() => setTimeout(getChat, RATE_LIMIT_DELAY, evt, id));
 }
 
 function handleCheckpoint (checkpointError) {
   return new Promise((resolve, reject) => {
     instagram.startCheckpoint(checkpointError)
       .then((challenge) => {
-        const cpWindow = createOtpWindow('checkpoint')
+        const cpWindow = createOtpWindow('checkpoint');
         electron.ipcMain.on('otpCode', (evt, data) => {
-          electron.ipcMain.removeAllListeners('otpCode')
-          cpWindow.close()
-          challenge.code(data.code).then(resolve).catch(reject)
-        })
-      }).catch(reject)
-  })
+          electron.ipcMain.removeAllListeners('otpCode');
+          cpWindow.close();
+          challenge.code(data.code).then(resolve).catch(reject);
+        });
+      }).catch(reject);
+  });
 }
 
 function handleTwoFactor (error) {
-    return new Promise((resolve, reject) => {
-        const tfWindow = createOtpWindow('twofactor')
-        const username = error.json.two_factor_info.username
-        const twoFactorIdentifier = error.json.two_factor_info.two_factor_identifier
-        const trustThisDevice = '1'
-        const verificationMethod = '1'
-        electron.ipcMain.on('otpCode', (evt, data) =>{
-          electron.ipcMain.removeAllListeners('otpCode')
-          tfWindow.close()
-          instagram.twoFactorLogin(
-            username,
-            data.code,
-            twoFactorIdentifier,
-            trustThisDevice,
-            verificationMethod
-            ).then(resolve).catch(reject)
-        })
-    })
+  return new Promise((resolve, reject) => {
+    const tfWindow = createOtpWindow('twofactor');
+    const username = error.json.two_factor_info.username;
+    const twoFactorIdentifier = error.json.two_factor_info.two_factor_identifier;
+    const trustThisDevice = '1';
+    const verificationMethod = '1';
+    electron.ipcMain.on('otpCode', (evt, data) =>{
+      electron.ipcMain.removeAllListeners('otpCode');
+      tfWindow.close();
+      instagram.twoFactorLogin(
+        username,
+        data.code,
+        twoFactorIdentifier,
+        trustThisDevice,
+        verificationMethod
+      ).then(resolve).catch(reject);
+    });
+  });
 }
 
 // fixes this issue https://github.com/electron/electron/issues/10864
-app.setAppUserModelId('com.ifedapoolarewaju.desktop.igdm')
+app.setAppUserModelId('com.ifedapoolarewaju.desktop.igdm');
 
 app.on('ready', () => {
   createWindow();
@@ -150,131 +150,131 @@ app.on('ready', () => {
     Menu.setApplicationMenu(menu);
   }
   autoUpdater.init();
-})
+});
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit()
-})
+  if (process.platform !== 'darwin') app.quit();
+});
 
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   // only call createWindow after mainWindow is set to null at
   // mainWindow.on('closed')
-  if (mainWindow === null) createWindow()
-})
+  if (mainWindow === null) createWindow();
+});
 
 // reduce polling frequency when app is not active.
 app.on('browser-window-blur', () => {
   pollingInterval = 30000;
-})
+});
 
 app.on('browser-window-focus', () => {
   pollingInterval = 10000;
   app.setBadgeCount(0);
-})
+});
 
 electron.ipcMain.on('login', (evt, data) => {
-  if(data.username === "" || data.password === "") {
-    return mainWindow.webContents.send('loginError', "Please enter all required fields");
+  if (data.username === '' || data.password === '') {
+    return mainWindow.webContents.send('loginError', 'Please enter all required fields');
   }
   const login = (keepLastSession) => {
     instagram.login(data.username, data.password, keepLastSession).then((session_) => {
-      session = session_
-      createWindow()
+      session = session_;
+      createWindow();
     }).catch((error) => {
       if (instagram.isCheckpointError(error)) {
         handleCheckpoint(error)
           .then(() => login(true))
-          .catch(() => mainWindow.webContents.send('loginError', getErrorMsg(error)))
+          .catch(() => mainWindow.webContents.send('loginError', getErrorMsg(error)));
       } else if (instagram.isTwoFactorError(error)) {
         handleTwoFactor(error)
           .then(() => login(true))
-          .catch((tferror) => mainWindow.webContents.send('loginError', getErrorMsg(tferror)))
+          .catch((tferror) => mainWindow.webContents.send('loginError', getErrorMsg(tferror)));
       } else {
         mainWindow.webContents.send('loginError', getErrorMsg(error));
       }
-    })
-  }
+    });
+  };
 
   const getErrorMsg = (error) => {
     let message = 'An unknown error occurred.';
     if (error.message) {
       message = error.message;
     }
-    return message
-  }
+    return message;
+  };
 
-  login()
-})
+  login();
+});
 
 electron.ipcMain.on('logout', () => {
-  instagram.logout()
-  session = null
-  createWindow()
-})
+  instagram.logout();
+  session = null;
+  createWindow();
+});
 
 electron.ipcMain.on('getLoggedInUser', () => {
   instagram.getLoggedInUser(session).then((user) => {
     mainWindow.webContents.send('loggedInUser', user);
-  })
-})
+  });
+});
 
-electron.ipcMain.on('getChatList', getChatList)
+electron.ipcMain.on('getChatList', getChatList);
 
-electron.ipcMain.on('getChat', getChat)
+electron.ipcMain.on('getChat', getChat);
 
 electron.ipcMain.on('getOlderMessages', (_, id) => {
   instagram.getOlderMessages(session, messagesThread, id)
     .then((data) => {
-      messagesThread = data.thread
-      mainWindow.webContents.send('olderMessages', {chatId: id, messages: data.messages})
-    })
-})
+      messagesThread = data.thread;
+      mainWindow.webContents.send('olderMessages', {chatId: id, messages: data.messages});
+    });
+});
 
 electron.ipcMain.on('message', (_, data) => {
   if (data.isNewChat) {
     instagram.sendNewChatMessage(session, data.message, data.users).then((chat) => {
-      getChat(null, chat[0].id)
-      getChatList()
-    })
+      getChat(null, chat[0].id);
+      getChatList();
+    });
   } else {
     instagram.sendMessage(session, data.message, data.chatId).then(() => {
-      getChat(null, data.chatId)
-      getChatList()
-    })
+      getChat(null, data.chatId);
+      getChatList();
+    });
   }
-})
+});
 
 electron.ipcMain.on('upload', (_, data) => {
   instagram.uploadFile(session, data.filePath, data.recipients)
     .then((chat) => getChat(null, chat.threads.thread_id))
-    .catch(() => mainWindow.webContents.send('upload-error', data.chatId))
-})
+    .catch(() => mainWindow.webContents.send('upload-error', data.chatId));
+});
 
 electron.ipcMain.on('searchUsers', (_, search) => {
   instagram.searchUsers(session, search).then((users) => {
     mainWindow.webContents.send('searchResult', users);
-  })
-})
+  });
+});
 
 electron.ipcMain.on('markAsRead', (_, thread) => {
-  instagram.seen(session, thread)
-})
+  instagram.seen(session, thread);
+});
 
-electron.ipcMain.on('increase-badge-count', (_) => {
+electron.ipcMain.on('increase-badge-count', () => {
   app.setBadgeCount(app.getBadgeCount() + 1);
-})
+});
 
-electron.ipcMain.on('getUnfollowers', (_) => {
+electron.ipcMain.on('getUnfollowers', () => {
   instagram.getUnfollowers(session).then((users) => {
-    mainWindow.webContents.send('unfollowers', users)
-  })
-})
+    mainWindow.webContents.send('unfollowers', users);
+  });
+});
 
 electron.ipcMain.on('unfollow', (_, userId) => {
-  instagram.unfollow(session, userId)
-})
+  instagram.unfollow(session, userId);
+});
 
 electron.ipcMain.on('getDisplayPictureUrl', (_, userId) => {
   instagram.getUser(session, userId).then((user) => {

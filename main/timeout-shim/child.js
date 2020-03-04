@@ -1,5 +1,5 @@
 process.on('message', (obj = {}) => {
-  const { id, ms } = obj
+  const { id, ms } = obj;
 
   setTimeout(() => {
     try {
@@ -8,9 +8,9 @@ process.on('message', (obj = {}) => {
       process.send({
         id,
         ms,
-      })
+      });
     } catch (err) {
       // eslint-disable no-empty
     }
-  }, ms)
-})
+  }, ms);
+});

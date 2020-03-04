@@ -11,13 +11,13 @@ window.carouselInit = (element, media) => {
     activeMedia--;
     activeMedia = activeMedia < 0 ? media.length - 1 : activeMedia;
     carousel.innerHTML = getHTMLElement(media[activeMedia]);
-  }
+  };
 
   rightButton.onclick = () => {
     activeMedia++;
     activeMedia = activeMedia > media.length - 1 ? 0 : activeMedia;
     carousel.innerHTML = getHTMLElement(media[activeMedia]);
-  }
+  };
 
   carousel.innerHTML = getHTMLElement(media[activeMedia]);
-}
+};
