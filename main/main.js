@@ -1,7 +1,7 @@
 const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
-const menuTemplate = require('./menutemplate');
+const createMenuTemplate = require('./menutemplate');
 const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
@@ -146,8 +146,11 @@ app.on('ready', () => {
   // only set the menu template when in production mode/
   // this also leaves the dev console enabled when in dev mode.
   if (!process.defaultApp) {
-    const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu);
+    const templatePromise = createMenuTemplate();
+    templatePromise.then((template) => {
+      const menu = Menu.buildFromTemplate(template);
+      Menu.setApplicationMenu(menu);
+    });
   }
   autoUpdater.init();
 });

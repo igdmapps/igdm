@@ -26,9 +26,9 @@ function getDisplayPictureUrl (userId) {
   ipcRenderer.send('getDisplayPictureUrl', userId);
 }
 
-function closeModalViewer() {
+function closeModalViewer () {
   document.querySelector('.viewer').classList.remove('active');
-  document.querySelectorAll('.viewer .content')[0].innerHTML = "";
+  document.querySelectorAll('.viewer .content')[0].innerHTML = '';
 }
 
 //Disable Drag and Drop on Electrum
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // close modal viewer when esc is pressed
   document.onkeyup = (e) => {
     if (e.keyCode == 27) { // ESC keycode
-      closeModalViewer()
+      closeModalViewer();
     }
   };
 
