@@ -6,6 +6,7 @@ const url = require('url');
 const instagram = require('./instagram');
 const autoUpdater = require('./autoupdater');
 const client = require('electron-connect').client;
+const {autoUpdatePreference} = require('./userpreferences');
 
 // fixes electron's timeout inconsistency
 // not doing this on windows because the fix doesn't work for windows.
@@ -181,7 +182,9 @@ app.on('ready', () => {
       Menu.setApplicationMenu(menu);
     });
   }
-  autoUpdater.init();
+  if (autoUpdatePreference.autoUpdateStatus) {
+    autoUpdater.init();
+  }
 });
 
 app.on('window-all-closed', () => {

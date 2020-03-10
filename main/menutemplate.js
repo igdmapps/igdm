@@ -1,6 +1,7 @@
 const app = require('electron').app;
 const { openExternal } = require('electron').shell;
 const autoLaunch = require('./autolaunch');
+const { autoUpdatePreference } = require('./userpreferences');
 
 const template = [
   {
@@ -108,7 +109,7 @@ if (process.platform === 'darwin') {
 
 const createMenuTemplate = () => {
   return new Promise((resolve) => {
-    autoLaunch.autoLaunchStatus().then((status) => {
+    autoLaunch.autoLaunchStatus().then((autoLaunchStatus) => {
       template.push(
         {
           label: 'Configurations',
@@ -116,8 +117,14 @@ const createMenuTemplate = () => {
             {
               label: 'Auto-Launch',
               type: 'checkbox',
-              checked: status,
+              checked: autoLaunchStatus,
               click () { autoLaunch.toggleAutoLaunch(); }
+            },
+            {
+              label: 'Auto-Update',
+              type: 'checkbox',
+              checked: autoUpdatePreference.autoUpdateStatus,
+              click () { autoUpdatePreference.toggleAutoUpdate(); }
             }
           ]
         }
