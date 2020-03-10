@@ -146,8 +146,7 @@ app.on('ready', () => {
   // only set the menu template when in production mode/
   // this also leaves the dev console enabled when in dev mode.
   if (!process.defaultApp) {
-    const templatePromise = createMenuTemplate();
-    templatePromise.then((template) => {
+    createMenuTemplate().then((template) => {
       const menu = Menu.buildFromTemplate(template);
       Menu.setApplicationMenu(menu);
     });
