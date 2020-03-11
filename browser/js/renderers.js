@@ -237,6 +237,16 @@ function renderImageContextMenu (url) {
   menu.popup({});
 }
 
+function renderChatContextMenu (chatId, li) {
+  const menu = new Menu();
+  const deleteConversation = new MenuItem({
+    label: 'Delete this conversation',
+    click: () => confirmDeleteChat(chatId, li)
+  });
+  menu.append(deleteConversation);
+  menu.popup({});
+}
+
 function renderChatListItem (chatTitle, msgPreview, thumbnail, id, direction) {
   let li = document.createElement('li');
   li.classList.add('col-12', 'p-3');
@@ -300,6 +310,7 @@ function renderChatList (chatList) {
       }
       getChat(chat_.id);
     };
+    li.oncontextmenu = () => renderChatContextMenu(chat_.id, li);
     ul.appendChild(li);
   });
 }
@@ -316,7 +327,7 @@ function renderChatHeader (chat_) {
         `https://instagram.com/${getUsernames(chat_)}`
       );
   }
-  let chatTitleContainer = document.querySelector('.chat-title');
+  let chatTitleContainer = document.querySelector(CHAT_TITLE_SELECTOR);
   chatTitleContainer.innerHTML = '';
   chatTitleContainer.appendChild(thumbnail);
   chatTitleContainer.appendChild(b);
@@ -394,4 +405,11 @@ function renderUnfollowers (users) {
   });
 
   showInViewer(ul);
+}
+
+function renderEmptyChat () {
+  let chatArea = document.querySelector(CHAT_WINDOW_SELECTOR);
+  chatArea.innerHTML = '<div class="center cover"><img src="img/icon.png" width="300px"><p class="italic">Search and select a chat to start.</p></div>';
+  let chatTitle = document.querySelector(CHAT_TITLE_SELECTOR);
+  chatTitle.innerHTML = '';
 }

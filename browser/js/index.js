@@ -10,6 +10,10 @@ function getChat (id) {
   ipcRenderer.send('getChat', id);
 }
 
+function confirmDeleteChat (id, li) {
+  ipcRenderer.send('confirmDeleteChat', id);
+}
+
 function getChatList () {
   ipcRenderer.send('getChatList');
 }
@@ -51,10 +55,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   ipcRenderer.on('chatList', (evt, chats_) => {
-    if (!window.chats.length || window.chats[0].items[0].id !== chats_[0].items[0].id) {
+    const lengthMismatch = window.chats.length !== chats_.length;
+    if (!window.chats.length || lengthMismatch || window.chats[0].items[0].id !== chats_[0].items[0].id) {
       window.chats = chats_;
       renderChatList(window.chats);
     }
+  });
+
+  ipcRenderer.on('deletedChat', (evt, chatId) => {
+    animateChatDelete(chatId).then((delChatId)=>{
+      removeChatFromChats(delChatId);
+      getChatList();
+    });
   });
 
   ipcRenderer.on('chat', (evt, chat_) => {

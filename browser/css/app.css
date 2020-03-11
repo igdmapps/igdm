@@ -97,6 +97,22 @@ button, button:focus {
   flex-direction: row;
 }
 
+@keyframes removed-item-animation {
+  from {
+      opacity: 1;
+      transform: scale(1);
+  }
+
+  to {
+      opacity: 0;
+      transform: scale(0);
+  }
+}
+
+.chat-list ul li.delete-chat{
+  animation: removed-item-animation .6s cubic-bezier(.55,-0.04,.91,.94) forwards;
+}
+
 .chat-list li:hover, .chat-list li.active {
   background-color: #DFDFDF;
   background-image: linear-gradient(to left, #FCFCFC, #e9ecef);

@@ -157,6 +157,11 @@ function addSubmitHandler (chat_) {
   };
 }
 
+function removeSubmitHandler () {
+  const input = document.querySelector(MSG_INPUT_SELECTOR);
+  input.onkeypress = () => {};
+}
+
 function sendAttachment (filePath, chat_) {
   // @todo: pass this as argument instead
   window.notifiedChatId = chat_.id;
@@ -296,4 +301,35 @@ function getHTMLElement (media) {
     mediaContent = `<img src="${media.images[0].url}">`;
   }
   return mediaContent;
+}
+
+function animateChatDelete (chatId) {
+  return new Promise((resolve) => {
+    const element = document.getElementById(`chatlist-${chatId}`);
+    element.classList.add('delete-chat');
+    setTimeout(()=>{
+      element.style.display = 'none';
+      resolve(chatId);
+    }, 600);
+  });
+}
+
+function removeChatFromChats (chatId) {
+  if (window.currentChatId === chatId || window.currentChatId === DUMMY_CHAT_ID) {
+    resetChatScreen();
+  }
+
+  window.chats = window.chats.filter((chat)=>{
+    if (chat.id !== chatId) {
+      return true;
+    }
+    return false;
+  });
+}
+
+function resetChatScreen () {
+  renderEmptyChat();
+  removeSubmitHandler();
+  window.currentChatId = null;
+  window.chat = {};
 }

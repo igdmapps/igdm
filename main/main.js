@@ -1,8 +1,7 @@
 const electron = require('electron');
-const app = electron.app;
+const { app, Menu, BrowserWindow, dialog } = electron;
 const Menu = electron.Menu;
 const createMenuTemplate = require('./menutemplate');
-const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 const instagram = require('./instagram');
@@ -101,6 +100,38 @@ function getChat (evt, id) {
     }
     chatTimeoutObj = setTimeout(getChat, pollingInterval, {}, id);
   }).catch(() => setTimeout(getChat, RATE_LIMIT_DELAY, evt, id));
+}
+
+function openDialog (options, callbacks) {
+  dialog.showMessageBox(mainWindow, options, (selectedOption) => {
+    callbacks[selectedOption]();
+  });
+}
+
+function confirmDeleteChat (_, id) {
+  const buttons = {
+    'Delete' : () => { deleteChat(id); },
+    'Cancel' : () => {}
+  };
+  const options = {
+    type: 'warning',
+    buttons: Object.keys(buttons),
+    defaultId: 2,
+    title: 'Are you sure ?',
+    message: 'Delete this conversation ?',
+    detail: 'Deleting removes the conversation from your inbox, but no one else\'s inbox',
+  };
+  openDialog(options, Object.values(buttons));
+}
+
+
+function deleteChat (id) {
+  clearTimeout(chatListTimeoutObj);
+  instagram.deleteChat(session, id).then(()=> {
+    mainWindow.webContents.send('deletedChat', id);
+  }).catch(() => {
+    getChatList();
+  });
 }
 
 function handleCheckpoint (checkpointError) {
@@ -225,6 +256,8 @@ electron.ipcMain.on('getLoggedInUser', () => {
 electron.ipcMain.on('getChatList', getChatList);
 
 electron.ipcMain.on('getChat', getChat);
+
+electron.ipcMain.on('confirmDeleteChat', confirmDeleteChat);
 
 electron.ipcMain.on('getOlderMessages', (_, id) => {
   instagram.getOlderMessages(session, messagesThread, id)
