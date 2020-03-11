@@ -1,168 +1,200 @@
-const Client = require('instagram-private-api').V1;
+const { IgApiClient, IgCheckpointError, IgLoginTwoFactorRequiredError } = require('instagram-private-api');
 const utils = require('./utils');
+const { readFile } = require('fs');
+const { promisify } = require('util');
+const readFileAsync = promisify(readFile);
 
-exports.checkAuth = function (session) {
+const igClient = new IgApiClient();
+
+function storeLoggedInSession (username) {
   return new Promise((resolve) => {
-    if (!session) {
-      const device = utils.getDevice();
-      const storage = utils.getCookieStorage();
-      if (!device || !storage) {
-        return resolve({ isLoggedIn: false });
-      }
-      session = new Client.Session(device, storage);
-    }
+    igClient.state.serialize().then((cookies) => {
+      delete cookies.constants;
+      utils.storeCookies(username, cookies);
+      resolve();
+    });
+  });
+}
 
-    session.getAccountId()
-      .then(() => resolve({ isLoggedIn: true, session }))
-      .catch(Client.Exceptions.CookieNotValidError, () => resolve({ isLoggedIn: false }));
+function loadCookieInSession () {
+  return new Promise((resolve, reject) => {
+    const savedCookie = utils.getStoredCookie();
+    if (savedCookie) {
+      igClient.state.deserialize(savedCookie).then(() => {
+        resolve(true);
+      }).catch(reject);
+    } else {
+      reject('No session saved');
+    }
+  });
+}
+
+exports.hasActiveSession = function () {
+  return new Promise((resolve) => {
+    loadCookieInSession().then((isLoaded) => {
+      const userId = igClient.state.cookieUserId;
+      if (isLoaded && userId) {
+        igClient.user.info(userId).then((userInfo) => {
+          resolve({ isLoggedIn: true, userInfo });
+        });
+      }
+    }).catch(() => {
+      resolve({ isLoggedIn: false });
+    });
   });
 };
 
-exports.login = function (username, password, keepLastSession) {
-  if (!keepLastSession) {
-    utils.clearCookieFiles();
-  }
+exports.login = function (username, password) {
   return new Promise((resolve, reject) => {
-    const device = utils.getDevice(username);
-    const storage = utils.getCookieStorage(`${username}.json`);
-    Client.Session.create(device, storage, username, password).then(resolve).catch(reject);
+    igClient.state.generateDevice(username);
+    igClient.simulate.preLoginFlow().then(() => {
+      igClient.account.login(username, password).then((userData) => {
+        storeLoggedInSession(username).then(() => {
+          resolve(userData);
+        });
+      }).catch(reject);
+    });
   });
 };
 
 exports.twoFactorLogin = function (username, code, twoFactorIdentifier, trustThisDevice, verificationMethod) {
   return new Promise((resolve, reject) => {
-    const device = utils.getDevice(username);
-    const storage = utils.getCookieStorage(`${username}.json`);
-    const session = new Client.Session(device, storage);
-    const request = new Client.Request(session);
-    request.setMethod('POST')
-      .setUrl(Client.CONSTANTS.API_ENDPOINT + 'accounts/two_factor_login/')
-      .generateUUID()
-      .setData({
-        username: username,
-        verification_code: code,
-        two_factor_identifier: twoFactorIdentifier,
-        trust_this_device: trustThisDevice,
-        verification_method: verificationMethod,
-      })
-      .signPayload()
-      .send()
-      .then(() => session.loginFlow())
-      .then(() => resolve(session))
-      .catch(reject);
+    igClient.account.twoFactorLogin({
+      username,
+      verificationCode: code,
+      twoFactorIdentifier: twoFactorIdentifier,
+      verificationMethod,
+      trustThisDevice,
+    }).then((userData) => {
+      storeLoggedInSession(username).then(() => {
+        resolve(userData);
+      });
+    }).catch(reject);
   });
 };
 
 exports.logout = function () {
+  igClient.account.logout();
   utils.clearCookieFiles();
 };
 
 exports.isCheckpointError = (error) => {
-  return (error instanceof Client.Exceptions.CheckpointError);
+  return (error instanceof IgCheckpointError);
 };
 
 exports.isTwoFactorError = (error) => {
-  return (Object.prototype.hasOwnProperty.call(error, 'json') && !!error.json.two_factor_required);
+  return (error instanceof IgLoginTwoFactorRequiredError);
 };
 
-exports.startCheckpoint = (error) => {
-  return Client.Web.Challenge.resolve(error, 'email');
-};
-
-exports.getChatList = function (session) {
-  return new Promise((resolve, reject) => {
-    const feed = new Client.Feed.Inbox(session, 10);
-    feed.all().then(resolve).catch(reject);
+exports.startCheckpoint = () => {
+  return new Promise((resolve) => {
+    igClient.challenge.auto(true).then(() => {
+      resolve(igClient.challenge);
+    });
   });
 };
 
-exports.getChat = function (session, chatId) {
+exports.getChatList = function () {
+  const chatsFeed = igClient.feed.directInbox();
   return new Promise((resolve, reject) => {
-    Client.Thread.getById(session, chatId).then(resolve).catch(reject);
+    chatsFeed.items().then(resolve).catch(reject);
   });
 };
 
-exports.deleteChat = function (session, chatId) {
+exports.getChat = function (chatId) {
+  const thread = igClient.entity.directThread();
   return new Promise((resolve, reject) => {
-    Client.Thread.getById(session, chatId).then((thread)=>{
-      thread.hide().then(resolve);
+    const threadF = igClient.feed.directThread(thread);
+    threadF.cursor = undefined;
+    threadF.id = chatId;
+    threadF.request().then((response) => resolve(response.thread)).catch(reject);
+  });
+};
+
+let threadFeed;
+exports.getOlderMessages = function (thread, chatId) {
+  const needsNewThreadFeed = !thread || thread.thread_id !== chatId;
+
+  const getOlderMessages = (thread, resolve) => {
+    if (!needsNewThreadFeed && !threadFeed.isMoreAvailable()) {
+      //there aren't any older messages
+      resolve({ thread, messages: [] });
+    } else {
+      threadFeed.items().then((messages) => {
+        resolve({ thread, messages });
+      });
+    }
+  };
+
+  return new Promise((resolve) => {
+    if (needsNewThreadFeed) {
+      const feed = igClient.feed.directInbox();
+      feed.items().then((directChats) => {
+        const thread = directChats.find(chat => chat.thread_id === chatId);
+        threadFeed = igClient.feed.directThread(thread);
+        getOlderMessages(thread, resolve);
+      });
+    } else {
+      getOlderMessages(thread, resolve);
+    }
+  });
+};
+
+exports.deleteChat = function (chatId) {
+  return new Promise((resolve, reject) => {
+    const thread = igClient.entity.directThread(chatId);
+    thread.hide(chatId).then(resolve).catch(reject);
+  });
+};
+
+exports.sendNewChatMessage = function (message, recipients) {
+  return new Promise((resolve, reject) => {
+    const directThread = igClient.entity.directThread(recipients);
+    directThread.broadcastText(message).then(resolve).catch(reject);
+  });
+};
+
+exports.sendMessage = function (message, chatId) {
+  return new Promise((resolve, reject) => {
+    const directThread = igClient.entity.directThread(chatId);
+    directThread.broadcastText(message).then(resolve).catch(reject);
+  });
+};
+
+exports.searchUsers = function (search) {
+  return new Promise((resolve, reject) => {
+    igClient.user.search(search).then(resolve).catch(reject);
+  });
+};
+
+exports.uploadFile = function (filePath, recipients) {
+  return new Promise((resolve, reject) => {
+    const directThread = igClient.entity.directThread(recipients);
+    readFileAsync(filePath).then((buffer) => {
+      directThread.broadcastPhoto({
+        file: buffer,
+      }).then(resolve).catch(reject);
     }).catch(reject);
   });
 };
 
-exports.getOlderMessages = function (session, thread, chatId) {
-  return new Promise((resolve, reject) => {
-    const needsNewThread = !thread || thread.threadId !== chatId;
-    if (needsNewThread) {
-      thread = new Client.Feed.ThreadItems(session, chatId);
-    }
-
-    if (!needsNewThread && !thread.isMoreAvailable()) {
-      // there aren't any older messages
-      resolve({thread, messages: []});
-    }
-
-    thread.get().then((messages) => {
-      if (needsNewThread) {
-        if (thread.isMoreAvailable()) {
-          // get the next 20 because the first 20 messages already were fetched with #getChat
-          return thread.get().then((messages) => resolve({ thread, messages }));
-        }
-        // there aren't any older messages
-        messages = [];
-      }
-      resolve({thread, messages});
-    }).catch(reject);
-  });
+exports.seen = function (thread) {
+  const { thread_id } = thread;
+  const { item_id } = thread.items[0];
+  const directThread = igClient.entity.directThread(thread_id);
+  directThread.markItemSeen(item_id);
 };
 
-exports.sendNewChatMessage = function (session, message, recipients) {
-  return new Promise((resolve, reject) => {
-    Client.Thread.configureText(session, recipients, message).then(resolve).catch(reject);
-  });
-};
-
-exports.sendMessage = function (session, message, chatId) {
-  return new Promise((resolve, reject) => {
-    Client.Thread.getById(session, chatId)
-      .then((thread) => {
-        thread.broadcastText(message).then(resolve).catch(reject);
-      }).catch(reject);
-  });
-};
-
-exports.searchUsers = function (session, search) {
-  return new Promise((resolve, reject) => {
-    Client.Account.search(session, search).then(resolve).catch(reject);
-  });
-};
-
-exports.uploadFile = function (session, filePath, recipients) {
-  return new Promise((resolve, reject) => {
-    Client.Upload.photo(session, filePath)
-      .then(function (upload) {
-        Client.Thread.configurePhoto(session, recipients, upload.params.uploadId)
-          .then(resolve).catch(reject);
-      }).catch(reject);
-  });
-};
-
-exports.seen = function (session, thread) {
-  (new Client.Thread(session, thread)).seen();
-};
-
-exports.getUnfollowers = function (session) {
+exports.getUnfollowers = function () {
   return new Promise((resolve, reject) => {
     const followers = [];
     const following = [];
-    const sessionStorage = session._cookiesStore.storage;
-    const accountId = (sessionStorage.idx['instagram.com'] || sessionStorage.idx['i.instagram.com'])['/'].ds_user_id.value;
 
     const compare = () => {
       const hashedFollowers = {};
-      followers.forEach((user) => hashedFollowers[user.id] = true);
+      followers.forEach((user) => hashedFollowers[user.pk] = true);
 
-      const unfollowers = following.filter((user) => !hashedFollowers[user.id]);
+      const unfollowers = following.filter((user) => !hashedFollowers[user.pk]);
       resolve(unfollowers);
     };
 
@@ -172,34 +204,27 @@ exports.getUnfollowers = function (session) {
       if (usersGetter.moreAvailable === false && otherUsersGetter.moreAvailable === false) {
         compare();
       } else if (usersGetter.moreAvailable !== false) {
-        usersGetter.get()
+        usersGetter.items()
           .then((users) => getUsers(users, allUsers, usersGetter, otherUsersGetter))
           .catch(reject);
       }
     };
 
-    const followersGetter = new Client.Feed.AccountFollowers(session, accountId);
-    const followingGetter = new Client.Feed.AccountFollowing(session, accountId);
+
+    const followersGetter = igClient.feed.accountFollowers();
+    const followingGetter = igClient.feed.accountFollowing();
 
     getUsers([], followers, followersGetter, followingGetter);
     getUsers([], following, followingGetter, followersGetter);
   });
 };
 
-exports.unfollow = function (session, userId) {
-  Client.Relationship.destroy(session, userId);
+exports.unfollow = function (userId) {
+  igClient.friendship.destroy(userId);
 };
 
-exports.getLoggedInUser = function (session) {
+exports.getUser = function (userId) {
   return new Promise((resolve, reject) => {
-    session.getAccountId().then((id) => {
-      Client.Account.getById(session, id).then(resolve).catch(reject);
-    });
-  });
-};
-
-exports.getUser = function (session, userId) {
-  return new Promise((resolve, reject) => {
-    Client.Account.getById(session, userId).then(resolve).catch(reject);
+    igClient.user.info(userId).then(resolve).catch(reject);
   });
 };

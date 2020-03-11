@@ -10,10 +10,10 @@ function format (number) {
   return number > 9 ? '' + number: '0' + number;
 }
 
-function formatTime (time) {
+function formatTime (unixTime) {
   const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  let date = new Date(time);
+  let date = new Date(parseInt(unixTime.toString().slice(0, 13)));
   let hours = format(date.getHours());
   let minutes = format(date.getMinutes());
   let day = format(date.getDate());
@@ -32,35 +32,35 @@ function dom (content) {
 }
 
 function getUsernames (chat_, shouldTruncate) {
-  let usernames = chat_.accounts.map((acc) => acc._params.username).join(', ');
+  let usernames = chat_.users.map((acc) => acc.username).join(', ');
   return usernames;
 }
 
 function getChatTitle (chat_) {
-  return chat_._params.threadTitle;
+  return chat_.thread_title;
 }
 
 function isGroupChat (chat_) {
-  if (chat_ && chat_._params && chat_._params.isGroup) {
+  if (chat_ && chat_.is_group) {
     return true;
   }
   return false;
 }
 
 function getChatThumbnail (chat_) {
-  if (chat_.accounts[0] && !isGroupChat(chat_)) {
-    return chat_.accounts[0]._params.picture;
+  if (chat_.users[0] && !isGroupChat(chat_)) {
+    return chat_.users[0].profile_pic_url;
   }
-  return chat_.accounts.map((account) => {
-    return account._params.picture;
+  return chat_.users.map((user) => {
+    return user.profile_pic_url;
   });
 }
 
 function isCurrentChat (chat_) {
   if (window.currentChatId === DUMMY_CHAT_ID) {
-    return !window.chatListHash[chat_.id];
+    return !window.chatListHash[chat_.thread_id];
   } else {
-    return chat_.id === window.currentChatId;
+    return chat_.thread_id === window.currentChatId;
   }
 }
 
@@ -76,7 +76,7 @@ function setActive (el) {
 }
 
 function getMsgDirection (message) {
-  if (message._params.accountId == window.loggedInUserId) return 'outward';
+  if (message.user_id == window.loggedInUserId) return 'outward';
   else return 'inward';
 }
 
@@ -108,22 +108,20 @@ function canRenderOlderMessages (chatId) {
 }
 
 function getMsgPreview (chat_) {
-  let msgPreview = chat_.items[0]._params.text || 'Media message';
+  let msgPreview = chat_.items[0].text || 'Media message';
   return truncate(msgPreview, 25);
 }
 
 function isActive (chat_) {
-  return chat_.id === window.chat.id;
+  return chat_.thread_id === window.chat.thread_id;
 }
 
 function markAsRead (id, li) {
   let chat_ = unreadChats[id];
   if (chat_) {
-    chat_.thread_id = chat_.id;
     if (window.shouldSendSeenFlags) {
       ipcRenderer.send('markAsRead', chat_);      
     }
-
     delete unreadChats[id];
   }
   li.classList.remove('notification');
@@ -140,7 +138,7 @@ function resetMessageTextArea () {
 
 function sendMessage (message, accounts, chatId, trackerKey) { 
   const isNewChat = !chatId;
-  let users = accounts.map((account) => account.id);
+  let users = accounts.map((account) => account.pk);
   ipcRenderer.send('message', { message, isNewChat, users, chatId, trackerKey });
 }
 
@@ -150,10 +148,10 @@ function submitMessage (chat_) {
   const sendingAt = new Date();
   const tackerKey = sendingAt.getTime();
   if (message.trim()) {
-    sendMessage(message, chat_.accounts, chat_.id, tackerKey);
+    sendMessage(message, chat_.users, chat_.thread_id, tackerKey);
     resetMessageTextArea();
     const sendingNow = createSendingMessage(message, 'text', tackerKey);
-    queueInSending(chat_.id, sendingNow);
+    queueInSending(chat_.thread_id, sendingNow);
 
     //Rendering current text
     let div = renderMessage(message, 'outward');
@@ -181,11 +179,11 @@ function removeSubmitHandler () {
 
 function sendAttachment (filePath, chat_) {
   // @todo: pass this as argument instead
-  window.notifiedChatId = chat_.id;
+  window.notifiedChatId = chat_.thread_id;
   notify('Your file is being uploaded', true);
 
-  let recipients = chat_.accounts.map((account) => account.id);
-  ipcRenderer.send('upload', { filePath, recipients, isNewChat: !chat_.id, chatId: chat_.id });
+  let recipients = chat_.users.map((user) => user.pk);
+  ipcRenderer.send('upload', { filePath, recipients, isNewChat: !chat_.thread_id, chatId: chat_.thread_id });
 }
 
 function addAttachmentSender (chat_) {
@@ -200,22 +198,24 @@ function addAttachmentSender (chat_) {
 }
 
 function addNotification (el, chat_) {
-  if (chat_.items[0]._params.accountId == window.loggedInUserId) {
+  if (chat_.items[0].user_id == window.loggedInUserId) {
     return;
   }
 
   const isNew = (
-    (window.chatListHash[chat_.id] &&
-      window.chatListHash[chat_.id].items[0].id !== chat_.items[0].id) ||
-    (chat_._params.lastSeenAt &&
-      chat_._params.lastSeenAt[window.loggedInUserId] &&
-      chat_.items[0].id != chat_._params.lastSeenAt[window.loggedInUserId].item_id
+    (window.chatListHash[chat_.thread_id] &&
+      window.chatListHash[chat_.thread_id].items[0].item_id !== chat_.items[0].item_id) ||
+    (chat_.last_seen_at &&
+      chat_.last_seen_at[window.loggedInUserId] &&
+      chat_.items[0].item_id != chat_.last_seen_at[window.loggedInUserId].item_id
     ));
-  if (isNew) unreadChats[chat_.id] = chat_;
+  if (isNew) {
+    unreadChats[chat_.thread_id] = chat_;
+  }
 
-  if (unreadChats[chat_.id]) {
-    if (chat_.id === window.chat.id && document.hasFocus()) {
-      markAsRead(chat_.id, el);
+  if (unreadChats[chat_.thread_id]) {
+    if (chat_.thread_id === window.chat.thread_id && document.hasFocus()) {
+      markAsRead(chat_.thread_id, el);
     } else {
       el.classList.add('notification');
       // @todo pass this as an argument instead
@@ -241,28 +241,28 @@ function notify (message, noBadgeCountIncrease) {
 }
 
 function registerChatUser (chat_) {
-  if (chat_.accounts.length === 1) {
-    window.chatUsers[chat_.accounts[0].id] = chat_.id;
+  if (chat_.users.length === 1) {
+    window.chatUsers[chat_.users[0].pk] = chat_.thread_id;
   }
 }
 
 function getIsSeenText (chat_) {
   let text = '';
-  if (!chat_.items || !chat_.items.length || chat_.items[0]._params.accountId != window.loggedInUserId) {
+  if (!chat_.items || !chat_.items.length || chat_.items[0].user_id != window.loggedInUserId) {
     return '';
   }
 
-  let seenBy = chat_.accounts.filter((account) => {
+  let seenBy = chat_.users.filter((user) => {
     return (
-      chat_._params.itemsSeenAt[account.id] &&
-      chat_._params.itemsSeenAt[account.id].itemId === chat_.items[0].id
+      chat_.last_seen_at[user.pk] &&
+      chat_.last_seen_at[user.pk].item_id === chat_.items[0].item_id
     );
   });
 
-  if (seenBy.length === chat_.accounts.length) {
+  if (seenBy.length === chat_.users.length) {
     text = 'seen';
   } else if (seenBy.length) {
-    text = `👁 ${getUsernames({accounts: seenBy})}`;
+    text = `👁 ${getUsernames({users: seenBy})}`;
   }
   return text;
 }
@@ -283,7 +283,7 @@ function quoteText (text) {
 }
 
 function setProfilePic () {
-  const url = window.loggedInUser._params.profilePicUrl;
+  const url = window.loggedInUser.profile_pic_url;
   const settingsButton = document.querySelector('.settings');
   settingsButton.style.backgroundImage = `url(${url})`;
 }
@@ -310,12 +310,12 @@ function downloadFile (urlOfFile) {
 
 function getHTMLElement (media) {
   let mediaContent;
-  if (media.videos) {
-    mediaContent = `<video width="${media.videos[0].width}" controls>
-      <source src="${media.videos[0].url}" type="video/mp4">
+  if (media.video_versions) {
+    mediaContent = `<video width="${media.video_versions[0].width}" controls>
+      <source src="${media.video_versions[0].url}" type="video/mp4">
     </video>`;
   } else {
-    mediaContent = `<img src="${media.images[0].url}">`;
+    mediaContent = `<img src="${media.image_versions2[0].url}">`;
   }
   return mediaContent;
 }
@@ -335,9 +335,25 @@ function removeChatFromChats (chatId) {
   if (window.currentChatId === chatId || window.currentChatId === DUMMY_CHAT_ID) {
     resetChatScreen();
   }
+  
+  let chatUsers = Object.getOwnPropertyNames(window.chatUsers);
+  chatUsers.forEach((userPk) => {
+    if (window.chatUsers[userPk] === chatId) {
+      delete window.chatUsers[userPk];
+    }
+  });
+
+  delete window.chatListHash[chatId];
 
   window.chats = window.chats.filter((chat) => {
-    if (chat.id !== chatId) {
+    if (chat.thread_id !== chatId) {
+      return true;
+    }
+    return false;
+  });
+
+  window.chats = window.chats.filter((chat) => {
+    if (chat.thread_id !== chatId) {
       return true;
     }
     return false;
@@ -364,7 +380,7 @@ function queueInSending (chatId, message) {
 function dequeueFromSending (sentObj) {
   const { chatId, trackerKey } = sentObj;
   if (!window.messageInQueue[chatId]) {
-    window.messageInQueue[chatId] = window.messageInQueue['new-chat'];
+    window.messageInQueue[chatId] = window.messageInQueue['new-chat'].slice();
     delete window.messageInQueue['new-chat'];
   }
   let queue = window.messageInQueue[chatId];
@@ -373,13 +389,11 @@ function dequeueFromSending (sentObj) {
 }
 
 function createSendingMessage (message, type, trackerKey) {
-  return { _params: 
-    { 
-      text: message,
-      type: type, 
-      accountId: window.loggedInUserId, 
-      created: undefined 
-    },
-  trackerKey
+  return { 
+    text: message,
+    item_type: type, 
+    user_id: window.loggedInUserId, 
+    timestamp: undefined,
+    trackerKey
   };
 }

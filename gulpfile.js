@@ -26,7 +26,7 @@ gulp.task('default', function () {
     // Start browser process
     electron.start();
     // Restart browser process
-    gulp.watch('./main/main.js', electron.restart);
+    gulp.watch('./main/*', electron.restart);
     gulp.watch('./browser/js/**/*.js', electron.restart);
     gulp.watch('./browser/css/**/*.css', electron.restart);
     gulp.watch('./browser/views/**/*.pug', electron.restart);

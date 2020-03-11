@@ -1,5 +1,4 @@
 const fs = require('fs');
-const Client = require('instagram-private-api').V1;
 const app = require('electron').app;
 const path = require('path');
 
@@ -32,7 +31,7 @@ const guessUsername = () => {
   return username;
 };
 
-const getCookieStorage = (filePath) => {
+const getStoredCookie = (filePath) => {
   let storage;
   let username;
 
@@ -40,12 +39,8 @@ const getCookieStorage = (filePath) => {
     if (!filePath && (username = guessUsername())) {
       filePath = `${username}.json`;
     }
-
-    if (filePath) storage = new Client.CookieFileStorage(`${buildAndGetStoragePath()}/${filePath}`);
-  } else {
-    storage = new Client.CookieMemoryStorage();
-  }
-
+    if (filePath) storage = fs.readFileSync(`${buildAndGetStoragePath()}/${filePath}`, 'utf8');
+  } 
   return storage;
 };
 
@@ -58,14 +53,16 @@ const clearCookieFiles = () => {
   }
 };
 
-const getDevice = (username) => {
-  let device;
-  username = username || guessUsername();
-  if (username) device = new Client.Device(username);
-  return device;
+
+const storeCookies = (username, cookies) => {
+  if (canUseFileStorage()) {
+    const storagePath = buildAndGetStoragePath();
+    const filePath = `${username}.json`;
+    fs.writeFileSync(`${storagePath}/${filePath}`, JSON.stringify(cookies));
+  }
 };
 
 module.exports = {
   canUseFileStorage, guessUsername,
-  getCookieStorage, clearCookieFiles, getDevice
+  getStoredCookie, clearCookieFiles, storeCookies
 };
