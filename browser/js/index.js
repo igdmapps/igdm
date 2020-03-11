@@ -165,9 +165,18 @@ document.addEventListener('DOMContentLoaded', () => {
     window.isWindowFocused = true;
   };
 
+  let textBoxHeight;
   function OnInput () {
+    const maxHeight = window.innerHeight - 180 ; // Removing headers height
+    const occupiedHeight = ((this.scrollHeight-30)/(maxHeight))*100;
     this.style.height = 'auto';
-    this.style.height = (this.scrollHeight - 30) + 'px';
+    if (occupiedHeight < 80) {
+      textBoxHeight = (this.scrollHeight - 30) + 'px';
+      this.style.overflow = 'hidden';
+    } else {
+      this.style.overflow = 'visible';
+    }
+    this.style.height =  textBoxHeight;
   }
   
   const tx = document.getElementById('messageText');
