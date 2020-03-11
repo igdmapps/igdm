@@ -17,15 +17,15 @@ const Store = function (storeProps) {
   const userDataPath = (electron.app || electron.remote.app).getPath('userData');
   this.path = path.join(userDataPath, storeProps.configName + '.json');
   this.data = parseDataFile(this.path, storeProps.defaults);
+};
 
-  this.get = function (key) {
-    return this.data[key];
-  };
+Store.prototype.get = function (key) {
+  return this.data[key];
+};
 
-  this.set = function (key, value) {
-    this.data[key] = value;
-    fs.writeFileSync(this.path, JSON.stringify(this.data));
-  };
+Store.prototype.set = function (key, value) {
+  this.data[key] = value;
+  fs.writeFileSync(this.path, JSON.stringify(this.data));
 };
 
 module.exports = Store;
