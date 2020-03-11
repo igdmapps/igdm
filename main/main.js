@@ -1,6 +1,7 @@
 const electron = require('electron');
 const { app, Menu, BrowserWindow, dialog } = electron;
-const menuTemplate = require('./menutemplate');
+const Menu = electron.Menu;
+const createMenuTemplate = require('./menutemplate');
 const path = require('path');
 const url = require('url');
 const instagram = require('./instagram');
@@ -176,8 +177,10 @@ app.on('ready', () => {
   // only set the menu template when in production mode/
   // this also leaves the dev console enabled when in dev mode.
   if (!process.defaultApp) {
-    const menu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(menu);
+    createMenuTemplate().then((template) => {
+      const menu = Menu.buildFromTemplate(template);
+      Menu.setApplicationMenu(menu);
+    });
   }
   autoUpdater.init();
 });
