@@ -110,7 +110,7 @@ if (process.platform === 'darwin') {
 const createMenuTemplate = () => {
   return new Promise((resolve) => {
     autoLaunch.autoLaunchStatus().then((autoLaunchStatus) => {
-      template.push(
+      template.splice(-2, 0,
         {
           label: 'Configurations',
           submenu: [
