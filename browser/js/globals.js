@@ -14,6 +14,7 @@ window.unreadChats = {};
 window.chat = {};
 window.chatUsers = {};
 window.currentChatId = null;
+window.messageInQueue = {};
 window.notifiedChatId = null;
 window.loggedInUserId = null;
 window.loggedInUser = null;
