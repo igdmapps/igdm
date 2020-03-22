@@ -150,7 +150,10 @@ function renderMessageAsRavenImage (container, message) {
 }
 
 function renderMessageAsLike (container) {
-  renderMessageAsImage(container, 'img/love.png');
+  let heart = dom('<img class="heart" src="img/heart.svg" style="height:80px;">');
+  heart.onload = conditionedScrollToBottom();
+  container.appendChild(heart);
+  container.classList.add('ig-media');
 }
 
 function renderMessageAsText (container, message, noContext) {
