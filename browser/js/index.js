@@ -19,6 +19,7 @@ function getChatList () {
 }
 
 function getUnfollowers () {
+  renderUnfollowers('loading');
   ipcRenderer.send('getUnfollowers');
 }
 

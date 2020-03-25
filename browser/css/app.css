@@ -339,6 +339,7 @@ button, button:focus {
   position: fixed;
   top: 5px;
   right: 10px;
+  z-index: 10;
 }
 
 .viewer .post-caption {

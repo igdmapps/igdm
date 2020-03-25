@@ -390,13 +390,19 @@ function renderMessageSeenText (container, chat_) {
 }
 
 function renderUnfollowers (users) {
+  let div = dom('<div id="unfollowers-view"></div>');
+  if (typeof users === 'string' && users === 'loading') {  
+    div.appendChild(getLoadingGif());
+    showInViewer(div);
+    return;
+  } 
   let ul = dom('<ul class="unfollowers"></ul>');
   users.forEach((user) => {
     let li = dom(
       `<li class="col-12 col-md-4 col-lg-3">
-        <img class="thumb" src="${user._params.picture}">
-        <div class="">${user._params.username}</div>
-      </li>`
+          <img class="thumb" src="${user._params.picture}">
+          <div class="">${user._params.username}</div>
+        </li>`
     );
     let unfollowButton = dom('<button class="unfollow-button">Unfollow</button>');
     unfollowButton.onclick = () => {
@@ -406,8 +412,11 @@ function renderUnfollowers (users) {
     li.appendChild(unfollowButton);
     ul.appendChild(li);
   });
-
-  showInViewer(ul);
+  const unfollowers = document.querySelector('div#unfollowers-view');
+  if (unfollowers) {
+    unfollowers.innerHTML = '';
+    unfollowers.appendChild(ul);
+  }
 }
 
 function renderEmptyChat () {
