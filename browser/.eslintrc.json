@@ -61,6 +61,13 @@
         ],
         "no-var":[
             "error"
+        ],
+        "arrow-spacing":[
+            "error", 
+            { 
+              "before": true,
+              "after": true 
+            }
         ]
     }
 }
