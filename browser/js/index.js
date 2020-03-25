@@ -49,21 +49,21 @@ document.addEventListener('drop', function (event) {
 // This code runs once the DOM is loaded (just in case you missed it).
 document.addEventListener('DOMContentLoaded', () => {
   ipcRenderer.on('loggedInUser', (evt, user) => {
-    window.loggedInUserId = user.id;
+    window.loggedInUserId = user.pk;
     window.loggedInUser = user;
     setProfilePic();
   });
 
   ipcRenderer.on('chatList', (evt, chats_) => {
     const lengthMismatch = window.chats.length !== chats_.length;
-    if (!window.chats.length || lengthMismatch || window.chats[0].items[0].id !== chats_[0].items[0].id) {
+    if (!window.chats.length || lengthMismatch || window.chats[0].items[0].item_id !== chats_[0].items[0].item_id) {
       window.chats = chats_;
       renderChatList(window.chats);
     }
   });
 
   ipcRenderer.on('deletedChat', (evt, chatId) => {
-    animateChatDelete(chatId).then((delChatId)=>{
+    animateChatDelete(chatId).then((delChatId) => {
       removeChatFromChats(delChatId);
       getChatList();
     });
@@ -72,16 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
   ipcRenderer.on('chat', (evt, chat_) => {
     let isNewMessage = (
       !window.chat.items || !window.chat.items.length ||
-      !chat_.items.length || window.chat.items[0].id != chat_.items[0].id ||
+      !chat_.items.length || window.chat.items[0].item_id != chat_.items[0].item_id ||
       window.chat.items.length != chat_.items.length ||
       getIsSeenText(chat_) != getIsSeenText(window.chat) ||
-      chat_.items[0].id != chat_._params.lastSeenAt[window.loggedInUserId].item_id
+      chat_.items[0].item_id != chat_.last_seen_at[window.loggedInUserId].item_id
     );
-
     if (isNewMessage && isCurrentChat(chat_) && !window.gettingOlderMessages) renderChat(chat_);
   });
 
-  ipcRenderer.on('olderMessages', (_, {chatId, messages}) => {
+  ipcRenderer.on('olderMessages', (_, { chatId, messages }) => {
     const previous = window.olderMessages[chatId] || [];
     window.olderMessages[chatId] = previous.concat(messages);
     if (canRenderOlderMessages(chatId)) {
@@ -124,10 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let searchForm = document.querySelector('.header input[name=search]');
   searchForm.onkeyup = (e) => {
     const value = searchForm.value;
-    const trimmedValue = value.trim(); 
+    const trimmedValue = value.trim();
 
     if (trimmedValue.length > 3) {
-      ipcRenderer.send('searchUsers', searchForm.value);      
+      ipcRenderer.send('searchUsers', searchForm.value);
     } else if (trimmedValue.length === 0) {
       renderChatList(window.chats);
     }
@@ -178,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     this.style.height =  textBoxHeight;
   }
-  
+
   const tx = document.getElementById('messageText');
   const scrHeight = tx.scrollHeight - 6;
   tx.setAttribute('style', 'height:' + (scrHeight).toString() + 'px;overflow-y:hidden;');
