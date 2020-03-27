@@ -58,6 +58,21 @@ button, button:focus {
   border-radius: 50%;
 }
 
+.group{
+  margin-left: -2.6rem;
+  transition: margin-left 1s;
+}
+
+.group:hover{
+  margin-left: -1.0rem;
+}
+
+@media (max-width: 768px) {
+  .group{
+    display:none;
+  }
+}
+
 .chat-list, .chat {
   display: inline-block;
 }

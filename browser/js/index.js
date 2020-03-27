@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   ipcRenderer.on('deletedChat', (evt, chatId) => {
-    animateChatDelete(chatId).then((delChatId)=>{
+    animateChatDelete(chatId).then((delChatId) => {
       removeChatFromChats(delChatId);
       getChatList();
     });

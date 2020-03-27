@@ -40,8 +40,20 @@ function getChatTitle (chat_) {
   return chat_._params.threadTitle;
 }
 
+function isGroupChat (chat_) {
+  if (chat_ && chat_._params && chat_._params.isGroup) {
+    return true;
+  }
+  return false;
+}
+
 function getChatThumbnail (chat_) {
-  return chat_.accounts[0]._params.picture;
+  if (chat_.accounts[0] && !isGroupChat(chat_)) {
+    return chat_.accounts[0]._params.picture;
+  }
+  return chat_.accounts.map((account) => {
+    return account._params.picture;
+  });
 }
 
 function isCurrentChat (chat_) {
@@ -307,7 +319,7 @@ function animateChatDelete (chatId) {
   return new Promise((resolve) => {
     const element = document.getElementById(`chatlist-${chatId}`);
     element.classList.add('delete-chat');
-    setTimeout(()=>{
+    setTimeout(() => {
       element.style.display = 'none';
       resolve(chatId);
     }, 600);
@@ -319,7 +331,7 @@ function removeChatFromChats (chatId) {
     resetChatScreen();
   }
 
-  window.chats = window.chats.filter((chat)=>{
+  window.chats = window.chats.filter((chat) => {
     if (chat.id !== chatId) {
       return true;
     }

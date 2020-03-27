@@ -250,13 +250,28 @@ function renderChatContextMenu (chatId, li) {
   menu.popup({});
 }
 
+function createThumbnailDom (imageUrls) {
+  if (typeof imageUrls === 'string') {
+    return dom(`<div><img class="thumb" src="${imageUrls}"></div>`); 
+  }
+  let html = '<div>';
+  imageUrls.forEach((imageUrl, index) => {
+    if (index < 5) {
+      html += `<img class="thumb ${ index === 0 ? '' : 'group'}" src="${imageUrl}"></img>`;
+    }  
+  });
+  html += '</div>';
+  return dom(html);
+}
+
 function renderChatListItem (chatTitle, msgPreview, thumbnail, id, direction) {
   let li = document.createElement('li');
   li.classList.add('col-12', 'p-3');
 
   const msgPreviewClass = (direction == 'outward') ? 'outward' : 'inward';
 
-  li.appendChild(dom(`<div><img class="thumb" src="${thumbnail}"></div>`));
+  li.appendChild(createThumbnailDom(thumbnail));
+
   li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${chatTitle}</b><br><span class="${msgPreviewClass}">${msgPreview}</span></div>`));
   if (id) li.setAttribute('id', `chatlist-${id}`);
 
@@ -288,10 +303,8 @@ function renderChatList (chatList) {
     let msgPreview = getMsgPreview(chat_);
     let chatTitle = getChatTitle(chat_);
     const direction = getMsgDirection(chat_.items[0]);
-    let thumbnail = '';
-    if (chat_.accounts[0]) {
-      thumbnail = chat_.accounts[0]._params.picture;
-    }
+    let thumbnail = getChatThumbnail(chat_);
+
     let li = renderChatListItem(chatTitle, msgPreview, thumbnail, chat_.id, direction);
 
     registerChatUser(chat_);
@@ -321,7 +334,7 @@ function renderChatList (chatList) {
 function renderChatHeader (chat_) {
   let chatTitle = (chat_.id ? getChatTitle(chat_) : getUsernames(chat_)); // if chat_.id is not defined, it is a new contact
   let b = dom(`<b class="ml-2 mt-2">${chatTitle}</b>`);
-  const thumbnail = dom(`<span><img class="thumb" src="${getChatThumbnail(chat_)}"></span>`);
+  const thumbnail = createThumbnailDom(getChatThumbnail(chat_));
 
   if (chat_.accounts.length === 1) {
     // open user profile in browser
