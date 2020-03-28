@@ -78,8 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
       getIsSeenText(chat_) != getIsSeenText(window.chat) ||
       chat_.items[0].id != chat_._params.lastSeenAt[window.loggedInUserId].item_id
     );
-
-    if (isNewMessage && isCurrentChat(chat_) && !window.gettingOlderMessages) renderChat(chat_);
+    let currentChat = isCurrentChat(chat_);
+    if (currentChat) {
+      // reassign currentChatId, for cases of new chats/dummy chats.
+      window.currentChatId = chat_.id;
+    }
+    if (isNewMessage && currentChat && !window.gettingOlderMessages) {
+      renderChat(chat_);
+    }
   });
 
   ipcRenderer.on('olderMessages', (_, {chatId, messages}) => {
@@ -107,6 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ipcRenderer.on('getDisplayPictureUrl', (evt, displayPicture) => {
     renderDisplayPicture(displayPicture);
+  });
+
+  ipcRenderer.on('messageSent', (evt, messageToDequeue) => {
+    dequeueFromSending(messageToDequeue);
   });
 
   document.querySelector('button.open-emoji').onclick = () => {

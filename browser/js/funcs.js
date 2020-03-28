@@ -138,21 +138,26 @@ function resetMessageTextArea () {
   input.dispatchEvent(event);
 }
 
-function sendMessage (message, accounts, chatId) {
+function sendMessage (message, accounts, chatId, trackerKey) { 
   const isNewChat = !chatId;
   let users = accounts.map((account) => account.id);
-  ipcRenderer.send('message', { message, isNewChat, users, chatId });
+  ipcRenderer.send('message', { message, isNewChat, users, chatId, trackerKey });
 }
 
 function submitMessage (chat_) {
   let input = document.querySelector(MSG_INPUT_SELECTOR);
   let message = input.value;
+  const sendingAt = new Date();
+  const tackerKey = sendingAt.getTime();
   if (message.trim()) {
-    sendMessage(message, chat_.accounts, chat_.id);
+    sendMessage(message, chat_.accounts, chat_.id, tackerKey);
     resetMessageTextArea();
+    const sendingNow = createSendingMessage(message, 'text', tackerKey);
+    queueInSending(chat_.id, sendingNow);
+
+    //Rendering current text
     let div = renderMessage(message, 'outward');
     let msgContainer = document.querySelector('.chat .messages');
-
     msgContainer.appendChild(div);
     scrollToChatBottom();
   }
@@ -344,4 +349,37 @@ function resetChatScreen () {
   removeSubmitHandler();
   window.currentChatId = null;
   window.chat = {};
+}
+
+function queueInSending (chatId, message) {
+  if (!chatId) {
+    chatId = 'new-chat';
+  }
+  if (!window.messageInQueue[chatId]) {
+    window.messageInQueue[chatId] = [];
+  }
+  window.messageInQueue[chatId].push(message);
+}
+
+function dequeueFromSending (sentObj) {
+  const { chatId, trackerKey } = sentObj;
+  if (!window.messageInQueue[chatId]) {
+    window.messageInQueue[chatId] = window.messageInQueue['new-chat'];
+    delete window.messageInQueue['new-chat'];
+  }
+  let queue = window.messageInQueue[chatId];
+  queue = queue.filter((messageQueued) => messageQueued.trackerKey !== trackerKey);
+  window.messageInQueue[chatId] = queue;
+}
+
+function createSendingMessage (message, type, trackerKey) {
+  return { _params: 
+    { 
+      text: message,
+      type: type, 
+      accountId: window.loggedInUserId, 
+      created: undefined 
+    },
+  trackerKey
+  };
 }

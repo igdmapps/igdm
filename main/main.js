@@ -269,14 +269,21 @@ electron.ipcMain.on('getOlderMessages', (_, id) => {
     });
 });
 
+function messageSent (chatId, trackerKey) {
+  mainWindow.webContents.send('messageSent', {chatId, trackerKey});
+}
+
 electron.ipcMain.on('message', (_, data) => {
+  const messageTracker = data.trackerKey;
   if (data.isNewChat) {
     instagram.sendNewChatMessage(session, data.message, data.users).then((chat) => {
+      messageSent(chat[0].id, messageTracker);
       getChat(null, chat[0].id);
       getChatList();
     });
   } else {
     instagram.sendMessage(session, data.message, data.chatId).then(() => {
+      messageSent(data.chatId, messageTracker);
       getChat(null, data.chatId);
       getChatList();
     });

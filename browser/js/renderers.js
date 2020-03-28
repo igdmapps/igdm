@@ -362,6 +362,7 @@ function renderChat (chat_, loadingMore) {
   let messages = chat_.items.slice().reverse();
   // load older messages if they exist too
   messages = (window.olderMessages[chat_.id] || []).slice().reverse().concat(messages);
+  messages = window.messageInQueue[chat_.id] ? messages.concat(window.messageInQueue[chat_.id]): messages;
   messages.forEach((message) => {
     let div = renderMessage(message, getMsgDirection(message),
       message._params.created, message._params.type
