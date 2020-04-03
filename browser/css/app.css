@@ -238,6 +238,10 @@ button, button:focus {
   border-radius: 50%;
 }
 
+.chat .chat-image{
+  max-height: 400px;
+}
+
 .message.outward .content {
   background: linear-gradient(to top right, #0371e7, #1888ff);
   color: #efefef;
@@ -299,6 +303,10 @@ button, button:focus {
   color: #aaa;
   font-size: 0.75rem;
   font-style: normal;
+}
+
+.heart{
+  height: 80px;
 }
 
 .new-message {

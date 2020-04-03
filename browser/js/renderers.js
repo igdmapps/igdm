@@ -1,6 +1,6 @@
 function renderMessage (message, direction, time, type) {
   let renderers = {
-    mediaShare: renderMessageAsPost,
+    media_share: renderMessageAsPost,
     text: renderMessageAsText,
     like: renderMessageAsLike,
     media: renderMessageAsImage,
@@ -8,7 +8,7 @@ function renderMessage (message, direction, time, type) {
     reel_share: renderMessageAsUserStory, // replying to a user's story
     link: renderMessageAsLink,
     animated_media: renderMessageAsAnimatedMedia,
-    actionLog: renderMessageAsActionLog,
+    action_log: renderMessageAsActionLog,
     voice_media: renderMessageAsVoiceMedia,
     placeholder: renderPlaceholderAsText,
   };
@@ -17,9 +17,13 @@ function renderMessage (message, direction, time, type) {
   let divContent = dom('<div class="content"></div>');
 
   if (direction === 'inward') {
-    let senderUsername = window.chat.accounts.find((account) => {
-      return account.id == message._params.accountId;
-    })._params.username;
+    let user = window.chat.users.find((user) => {
+      return user.pk == message.user_id;
+    });
+    let senderUsername = '';
+    if (user) {
+      senderUsername = user.username;
+    } 
     divContent.appendChild(dom(`<p class="message-sender">${senderUsername}</p>`));
   }
 
@@ -32,14 +36,14 @@ function renderMessage (message, direction, time, type) {
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
   );
 
-  if (message._params) renderMessageReactions(divContent, message._params.reactions);
+  if (message) renderMessageReactions(divContent, message.reactions);
   div.appendChild(divContent);
 
   return div;
 }
 
 function renderMessageAsActionLog (container, message) {
-  renderMessageAsText(container, message._params.actionLog.description);
+  renderMessageAsText(container, message.action_log.description);
 }
 
 function renderMessageReactions (container, reactions) {
@@ -60,17 +64,18 @@ function renderDisplayPicture (displayPicture) {
 }
 
 function renderMessageAsPost (container, message) {
-  let post = message.mediaShare._params;
-
-  if (post.images) {
-    // carousels have nested arrays before getting to image url
-    let img = dom(`<img src="${post.images[0].url || post.images[0][0].url}">`);
-    img.onload = conditionedScrollToBottom();
-    container.appendChild(img);
+  let post = message.media_share;
+  let img = '';
+  if (post.image_versions2) {
+    img = dom(`<img class="chat-image" src="${post.image_versions2.candidates[0].url}">`);
+  } else if (post.carousel_media) {
+    img = dom(`<img class="chat-image" src="${post.carousel_media[0].image_versions2.candidates[0].url}">`); 
   }
+  img.onload = conditionedScrollToBottom();
+  container.appendChild(img);
 
   if (post.caption) {
-    container.appendChild(dom(`<p class="post-caption">${truncate(post.caption, 30)}</p>`));
+    container.appendChild(dom(`<p class="post-caption">${truncate(post.caption.text, 30)}</p>`));
   }
   container.classList.add('ig-media');
   container.onclick = () => renderPost(post);
@@ -78,17 +83,17 @@ function renderMessageAsPost (container, message) {
 
 function renderPost (post) {
   const postDom = dom('<div class="center"></div>');
-  if (post.videos) {
-    postDom.appendChild(dom(`<video width="${post.videos[0].width}" controls>
-                                <source src="${post.videos[0].url}" type="video/mp4">
+  if (post.video_versions) {
+    postDom.appendChild(dom(`<video width="${post.video_versions[0].width}" controls>
+                                <source src="${post.video_versions[0].url}" type="video/mp4">
                               </video>`));
-  } else if (post.carouselMedia && post.carouselMedia.length) {
-    window.carouselInit(postDom, post.carouselMedia.map((el) => el._params));
+  } else if (post.carousel_media && post.carousel_media.length) {
+    window.carouselInit(postDom, post.carousel_media);
   } else {
-    postDom.appendChild(dom(`<img src="${post.images[0].url}"/>`));
+    postDom.appendChild(dom(`<img src="${post.image_versions2.candidates[0].url}"/>`));
   }
   if (post.caption) {
-    postDom.appendChild(dom(`<p class="post-caption">${post.caption}</p>`));
+    postDom.appendChild(dom(`<p class="post-caption">${post.caption.text}</p>`));
   }
   const browserLink = dom('<button class="view-on-ig">View on Instagram</button>');
   browserLink.onclick = () => openInBrowser(post.webLink);
@@ -98,15 +103,15 @@ function renderPost (post) {
 
 function renderMessageAsUserStory (container, message) {
   container.classList.add('ig-media');
-  if (message._params.reelShare.media.image_versions2) {
-    let url = message._params.reelShare.media.image_versions2.candidates[0].url;
-    let img = dom(`<img src="${url}">`);
+  if (message.reel_share.media.image_versions2) {
+    let url = message.reel_share.media.image_versions2.candidates[0].url;
+    let img = dom(`<img class="chat-image" src="${url}">`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
 
     container.addEventListener('click', () => {
-      if (message._params.reelShare.media.video_versions) {
-        const videoUrl = message._params.reelShare.media.video_versions[0].url;
+      if (message.reel_share.media.video_versions) {
+        const videoUrl = message.reel_share.media.video_versions[0].url;
         showInViewer(dom(`<video controls src="${videoUrl}">`));
       } else {
         showInViewer(dom(`<img src="${url}">`));
@@ -114,14 +119,14 @@ function renderMessageAsUserStory (container, message) {
     });
   }
 
-  if (message._params.reelShare.text) {
-    container.appendChild(dom(`<p class="post-caption">${message._params.reelShare.text}</p>`));
+  if (message.reel_share.text) {
+    container.appendChild(dom(`<p class="post-caption">${message.reel_share.text}</p>`));
   }
 }
 
 function renderMessageAsImage (container, message) {
-  let url = typeof message === 'string' ? message : message._params.media[0].url;
-  let img = dom(`<img src="${url}">`);
+  let url = typeof message === 'string' ? message : message.media.image_versions2.candidates[0].url;
+  let img = dom(`<img class="chat-image" src="${url}">`);
   img.onload = conditionedScrollToBottom();
   container.appendChild(img);
   container.classList.add('ig-media');
@@ -133,9 +138,9 @@ function renderMessageAsImage (container, message) {
 }
 
 function renderMessageAsRavenImage (container, message) {
-  if (message._params.visualMedia && message._params.visualMedia.media.image_versions2) {
+  if (message.visualMedia && message.visualMedia.media.image_versions2) {
     container.classList.add('ig-media');
-    let url = message._params.visualMedia.media.image_versions2.candidates[0].url;
+    let url = message.visualMedia.media.image_versions2.candidates[0].url;
     let img = dom(`<img src="${url}">`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
@@ -150,14 +155,14 @@ function renderMessageAsRavenImage (container, message) {
 }
 
 function renderMessageAsLike (container) {
-  let heart = dom('<img class="heart" src="img/heart.svg" style="height:80px;">');
+  let heart = dom('<img class="heart" src="img/heart.svg" >');
   heart.onload = conditionedScrollToBottom();
   container.appendChild(heart);
   container.classList.add('ig-media');
 }
 
 function renderMessageAsText (container, message, noContext) {
-  let text = typeof message === 'string' ? message : message._params.text;
+  let text = typeof message === 'string' ? message : message.text;
   container.appendChild(document.createTextNode(text));
   if (!noContext) container.oncontextmenu = () => renderContextMenu(text);
 }
@@ -168,10 +173,10 @@ function linkUsernames (text) {
 
 function renderPlaceholderAsText (container, message) {
   let html = '';
-  if (!message.placeholder._params.is_linked) {
-    html = message.placeholder._params.message;
+  if (!message.placeholder.is_linked) {
+    html = message.placeholder.message;
   } else {
-    html = linkUsernames(message.placeholder._params.message);
+    html = linkUsernames(message.placeholder.message);
   }
   let placeholderDom = dom('<p>' + html + '</p>');
   placeholderDom.classList.add('placeholder');
@@ -180,31 +185,31 @@ function renderPlaceholderAsText (container, message) {
 }
 
 function renderMessageAsLink (container, message) {
-  const { link } = message.link._params;
-  const text = message.link._params.text;
+  const { link_context } = message.link;
+  const text = message.link.text;
   container.innerHTML += text;
-  if (link.image && link.image.url) {
-    let img = dom(`<img src="${link.image.url}" />`);
+  if (link_context.link_image_url) {
+    let img = dom(`<img src="${link_context.link_image_url}" />`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
   }
   // Check if this is a YouTube link.
-  if (link.image && link.image.url && link.title && link.summary) {
-    container.innerHTML += `<a class="link-in-message" src="${link.url}">${link.title}</a><p class="link-in-message-summary">${link.summary}</p>`;
+  if (link_context.link_image_url && link_context.link_title && link_context.link_summary) {
+    container.innerHTML += `<a class="link-in-message" src="${link_context.link_url}">${link_context.link_title}</a><p class="link-in-message-summary">${link_context.link_summary}</p>`;
   } else {
     // replace all contained links with anchor tags
-    container.innerHTML += `<a class="link-in-message" src="${link.url}">${link.url}</a>`;
+    container.innerHTML += `<a class="link-in-message" src="${link_context.link_url}">${link_context.link_url}</a>`;
   }
   container.classList.add('ig-media');
   container.onclick = () => {
     // for links that don't have protocol included
-    const url = /^(http|https):\/\//.test(link.url) ? link.url : `http://${link.url}`;
+    const url = /^(http|https):\/\//.test(link_context.link_url) ? link_context.link_url : `http://${link_context.link_url}`;
     openInBrowser(url);
   };
 }
 
 function renderMessageAsAnimatedMedia (container, message) {
-  let { url } = message._params.animatedMedia.images.fixed_height;
+  let { url } = message.animated_media.images.fixed_height;
   let img = dom(`<img src="${url}">`);
   img.onload = conditionedScrollToBottom();
   container.appendChild(img);
@@ -282,14 +287,14 @@ function renderSearchResult (users) {
   let ul = document.querySelector('.chat-list ul');
   ul.innerHTML = '';
   users.forEach((user) => {
-    let li = renderChatListItem(user._params.username, 'Send a message', user._params.picture);
+    let li = renderChatListItem(user.username, 'Send a message', user.profile_pic_url);
     li.onclick = () => {
       setActive(li);
-      if (window.chatUsers[user.id]) {
-        getChat(window.chatUsers[user.id]);
+      if (window.chatUsers[user.pk]) {
+        getChat(window.chatUsers[user.pk]);
       } else {
         window.currentChatId = DUMMY_CHAT_ID;
-        renderChat({items: [], accounts: [user]});
+        renderChat({items: [], users: [user]});
       }
     };
     ul.appendChild(li);
@@ -304,39 +309,38 @@ function renderChatList (chatList) {
     let chatTitle = getChatTitle(chat_);
     const direction = getMsgDirection(chat_.items[0]);
     let thumbnail = getChatThumbnail(chat_);
-
-    let li = renderChatListItem(chatTitle, msgPreview, thumbnail, chat_.id, direction);
+    let li = renderChatListItem(chatTitle, msgPreview, thumbnail, chat_.thread_id, direction);
 
     registerChatUser(chat_);
     if (isActive(chat_)) setActive(li);
     // don't move this down!
     addNotification(li, chat_);
-    window.chatListHash[chat_.id] = chat_;
+    window.chatListHash[chat_.thread_id] = chat_;
 
     li.onclick = () => {
-      markAsRead(chat_.id, li);
+      markAsRead(chat_.thread_id, li);
       setActive(li);
       // render the cached chat before fetching latest
       // to avoid visible latency
-      if (window.chatCache[chat_.id]) {
-        renderChat(window.chatCache[chat_.id]);
+      if (window.chatCache[chat_.thread_id]) {
+        renderChat(window.chatCache[chat_.thread_id]);
       } else {
-        window.currentChatId = chat_.id;
+        window.currentChatId = chat_.thread_id;
         renderChat(chat_, true);
       }
-      getChat(chat_.id);
+      getChat(chat_.thread_id);
     };
-    li.oncontextmenu = () => renderChatContextMenu(chat_.id, li);
+    li.oncontextmenu = () => renderChatContextMenu(chat_.thread_id, li);
     ul.appendChild(li);
   });
 }
 
 function renderChatHeader (chat_) {
-  let chatTitle = (chat_.id ? getChatTitle(chat_) : getUsernames(chat_)); // if chat_.id is not defined, it is a new contact
+  let chatTitle = (chat_.thread_id ? getChatTitle(chat_) : getUsernames(chat_)); // if chat_.thread_id is not defined, it is a new contact
   let b = dom(`<b class="ml-2 mt-2">${chatTitle}</b>`);
   const thumbnail = createThumbnailDom(getChatThumbnail(chat_));
 
-  if (chat_.accounts.length === 1) {
+  if (chat_.users.length === 1) {
     // open user profile in browser
     b.onclick = () =>
       openInBrowser(
@@ -349,32 +353,26 @@ function renderChatHeader (chat_) {
   chatTitleContainer.appendChild(b);
 }
 
-function renderChat (chat_, loadingMore) {
+function renderChat (chat_) {
   window.chat = chat_;
-  window.chatCache[chat_.id] = chat_;
+  window.chatCache[chat_.thread_id] = chat_;
 
   let msgContainer = document.querySelector(CHAT_WINDOW_SELECTOR);
   msgContainer.innerHTML = '';
-  if (loadingMore) {
-    msgContainer.appendChild(getLoadingGif());
-  }
   renderChatHeader(chat_);
   let messages = chat_.items.slice().reverse();
   // load older messages if they exist too
-  messages = (window.olderMessages[chat_.id] || []).slice().reverse().concat(messages);
-  messages = window.messageInQueue[chat_.id] ? messages.concat(window.messageInQueue[chat_.id]): messages;
+  messages = (window.olderMessages[chat_.thread_id] || []).slice().reverse().concat(messages);
+  messages = window.messageInQueue[chat_.thread_id] ? messages.concat(window.messageInQueue[chat_.thread_id]): messages;
   messages.forEach((message) => {
     let div = renderMessage(message, getMsgDirection(message),
-      message._params.created, message._params.type
+      message.timestamp, message.item_type
     );
     msgContainer.appendChild(div);
   });
   renderMessageSeenText(msgContainer, chat_);
   scrollToChatBottom();
-  if (!loadingMore) {
-    loadOlderMsgsOnScrollTop(chat_.id);
-  }
-
+  loadOlderMsgsOnScrollTop(chat_.thread_id);
   addSubmitHandler(chat_);
   addAttachmentSender(chat_);
   document.querySelector(MSG_INPUT_SELECTOR).focus();
@@ -385,16 +383,16 @@ function renderOlderMessages (messages) {
   const domPostion = msgContainer.firstChild;
   messages.forEach((message) => {
     let div = renderMessage(message, getMsgDirection(message),
-      message._params.created, message._params.type
+      message.timestamp, message.item_type
     );
     msgContainer.prepend(div);
   });
   // scroll back to dom position before the older messages were rendered
-  domPostion.scrollIntoView();
+  if (messages.length > 0) domPostion.scrollIntoView();
 }
 
 function renderMessageAsVoiceMedia (container, message) {
-  let src = message._params.voiceMedia.media.audio.audio_src;
+  let src = message.voice_media.media.audio.audio_src;
   let audio = dom(`<audio controls src="${src}"/>`);
   container.appendChild(audio);
 }
@@ -414,13 +412,13 @@ function renderUnfollowers (users) {
   users.forEach((user) => {
     let li = dom(
       `<li class="col-12 col-md-4 col-lg-3">
-          <img class="thumb" src="${user._params.picture}">
-          <div class="">${user._params.username}</div>
-        </li>`
+        <img class="thumb" src="${user.profile_pic_url}">
+        <div class="">${user.username}</div>
+      </li>`
     );
     let unfollowButton = dom('<button class="unfollow-button">Unfollow</button>');
     unfollowButton.onclick = () => {
-      unfollow(user.id);
+      unfollow(user.pk);
       li.remove();
     };
     li.appendChild(unfollowButton);
