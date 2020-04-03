@@ -138,9 +138,9 @@ function renderMessageAsImage (container, message) {
 }
 
 function renderMessageAsRavenImage (container, message) {
-  if (message.visualMedia && message.visualMedia.media.image_versions2) {
+  if (message.visual_media && message.visual_media.media.image_versions2) {
     container.classList.add('ig-media');
-    let url = message.visualMedia.media.image_versions2.candidates[0].url;
+    let url = message.visual_media.media.image_versions2.candidates[0].url;
     let img = dom(`<img src="${url}">`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
