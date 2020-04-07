@@ -303,6 +303,7 @@ button, button:focus {
   color: #aaa;
   font-size: 0.75rem;
   font-style: normal;
+  margin-left: auto;
 }
 
 .heart{
