@@ -301,6 +301,10 @@ function renderVideoContextMenu (thumbUrl, videoUrl) {
     label: 'Copy video URL to clipboard',
     click: () => copyToCliboard(videoUrl)
   }));
+  menu.append(new MenuItem({
+    label: 'Save video as...',
+    click: () => downloadFile(videoUrl)
+  }));
   menu.popup({});
 }
 
