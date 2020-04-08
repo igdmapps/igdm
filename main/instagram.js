@@ -228,3 +228,9 @@ exports.getUser = function (userId) {
     igClient.user.info(userId).then(resolve).catch(reject);
   });
 };
+
+exports.getPresence = function() {
+  return new Promise((resolve, reject) => {
+    igClient.direct.getPresence().then(resolve).catch(reject);
+  })
+}
