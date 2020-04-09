@@ -153,7 +153,7 @@ function renderImageOrVideo (container, media) {
     container.classList.add('ig-media');
 
     container.addEventListener('click', () => {
-      showInViewer(dom(`<video controls autoplay src="${url}">`));
+      showInViewer(dom(`<video controls src="${url}">`));
     });
     container.oncontextmenu = () => renderVideoContextMenu(thumbUrl, url);
   } else if (media && media.image_versions2) {
