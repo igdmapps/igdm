@@ -71,11 +71,20 @@ let chatListTimeoutObj;
 
 function getChatList () {
   instagram.getChatList().then((chats) => {
-    mainWindow.webContents.send('chatList', chats);
-
     if (chatListTimeoutObj) {
       clearTimeout(chatListTimeoutObj);
     }
+
+    instagram.getPresence().then((presenceInfo) => {
+      for(let chat in chats){
+        if(chats[chat].users.length === 1 && Object.prototype.hasOwnProperty.call(presenceInfo.user_presence, chats[chat].users[0].pk)){
+          chats[chat].presence = presenceInfo.user_presence[chats[chat].users[0].pk];
+        }
+      }
+
+      mainWindow.webContents.send('chatList', chats);
+    }).catch(() => mainWindow.webContents.send('chatList', chats));
+
     chatListTimeoutObj = setTimeout(getChatList, pollingInterval);
   }).catch(() => setTimeout(getChatList, RATE_LIMIT_DELAY));
 }
