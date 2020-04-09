@@ -338,8 +338,8 @@ function renderChatList (chatList) {
 function renderChatHeader (chat_) {
   let chatTitle = (chat_.thread_id ? getChatTitle(chat_) : getUsernames(chat_)); // if chat_.thread_id is not defined, it is a new contact
   
-  if (Object.prototype.hasOwnProperty.call(chat_, "presence")) {
-    let timeFormat = chat_.presence? `Last seen ${formatTime(chat_.presence)}` : 'Active now';
+  if (Object.prototype.hasOwnProperty.call(chat_, 'presence')) {
+    let timeFormat = chat_.presence.is_active? 'Active now' : `Last seen ${formatTime(chat_.presence.last_activity_at_ms)}`;
 
     b = document.createElement('div');
     b.appendChild(dom(`<b class="ml-2">${chatTitle}</b>`));
