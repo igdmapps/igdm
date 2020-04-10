@@ -3,7 +3,7 @@ function renderMessage (message, direction, time, type) {
     media_share: renderMessageAsPost,
     text: renderMessageAsText,
     like: renderMessageAsLike,
-    media: renderMessageAsImage,
+    media: renderMessageAsMedia,
     raven_media: renderMessageAsRavenImage,
     reel_share: renderMessageAsUserStory, // replying to a user's story
     link: renderMessageAsLink,
@@ -30,7 +30,7 @@ function renderMessage (message, direction, time, type) {
   if (!type && typeof message === 'string') type = 'text';
 
   if (renderers[type]) renderers[type](divContent, message);
-  else renderMessageAsText(divContent, `<unsupported message format: ${type}>`, true);
+  else renderUnsupportedMessage(divContent, message, type, direction, time);
 
   divContent.appendChild(dom(
     `<p class="message-time">${time ? formatTime(time) : 'Sending...'}</p>`)
@@ -124,33 +124,51 @@ function renderMessageAsUserStory (container, message) {
   }
 }
 
-function renderMessageAsImage (container, message) {
-  let url = typeof message === 'string' ? message : message.media.image_versions2.candidates[0].url;
-  let img = dom(`<img class="chat-image" src="${url}">`);
-  img.onload = conditionedScrollToBottom();
-  container.appendChild(img);
-  container.classList.add('ig-media');
-
-  container.addEventListener('click', () => {
-    showInViewer(dom(`<img src="${url}">`));
-  });
-  container.oncontextmenu = () => renderImageContextMenu(url);
+function renderMessageAsMedia (container, message) {
+  let media = message.media;
+  try {
+    renderImageOrVideo(container, media);
+  } catch (err) {
+    renderUnsupportedMessage(container, message, 'media');
+  }
 }
 
 function renderMessageAsRavenImage (container, message) {
-  if (message.visual_media && message.visual_media.media.image_versions2) {
+  let media = message.visual_media.media;
+  try {
+    renderImageOrVideo(container, media);
+  } catch (err) {
+    renderUnsupportedMessage(container, message, 'raven_media');
+  }
+}
+
+function renderImageOrVideo (container, media) {
+  if (media && media.video_versions) {
+    let bestMedia = media.video_versions.reduce((prev, curr) => (prev.height > curr.height) ? prev : curr);
+    let url = bestMedia.url;
+    let thumbUrl = media.image_versions2.candidates[0].url;
+    let thumbImg = dom(`<div class="container-thumb-with-vid"><img class="chat-image" src="${thumbUrl}"></div>`);
+    thumbImg.onload = conditionedScrollToBottom();
+    container.appendChild(thumbImg);
     container.classList.add('ig-media');
-    let url = message.visual_media.media.image_versions2.candidates[0].url;
-    let img = dom(`<img src="${url}">`);
+
+    container.addEventListener('click', () => {
+      showInViewer(dom(`<video controls src="${url}">`));
+    });
+    container.oncontextmenu = () => renderVideoContextMenu(url);
+  } else if (media && media.image_versions2) {
+    let url = media.image_versions2.candidates[0].url;
+    let img = dom(`<img class="chat-image" src="${url}">`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
+    container.classList.add('ig-media');
 
     container.addEventListener('click', () => {
       showInViewer(dom(`<img src="${url}">`));
     });
     container.oncontextmenu = () => renderImageContextMenu(url);
   } else {
-    renderMessageAsText(container, '<unsupported message format>', true);
+    throw 'not supported';
   }
 }
 
@@ -220,6 +238,10 @@ function renderMessageAsAnimatedMedia (container, message) {
   });
 }
 
+function renderUnsupportedMessage (container, message, type=null, direction=null, time=null) {
+  renderMessageAsText(container, `<unsupported message format: ${type}>`, true);
+}
+
 function renderContextMenu (text) {
   const menu = new Menu();
   const menuItem = new MenuItem({
@@ -267,6 +289,15 @@ function createThumbnailDom (imageUrls) {
   });
   html += '</div>';
   return dom(html);
+}
+
+function renderVideoContextMenu (videoUrl) {
+  const menu = new Menu();
+  menu.append(new MenuItem({
+    label: 'Save video as...',
+    click: () => downloadFile(videoUrl)
+  }));
+  menu.popup({});
 }
 
 function renderChatListItem (chatTitle, msgPreview, thumbnail, id, direction) {
