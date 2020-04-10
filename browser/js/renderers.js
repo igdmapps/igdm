@@ -155,7 +155,7 @@ function renderImageOrVideo (container, media) {
     container.addEventListener('click', () => {
       showInViewer(dom(`<video controls src="${url}">`));
     });
-    container.oncontextmenu = () => renderVideoContextMenu(thumbUrl, url);
+    container.oncontextmenu = () => renderVideoContextMenu(url);
   } else if (media && media.image_versions2) {
     let url = media.image_versions2.candidates[0].url;
     let img = dom(`<img class="chat-image" src="${url}">`);
@@ -291,16 +291,8 @@ function createThumbnailDom (imageUrls) {
   return dom(html);
 }
 
-function renderVideoContextMenu (thumbUrl, videoUrl) {
+function renderVideoContextMenu (videoUrl) {
   const menu = new Menu();
-  menu.append(new MenuItem({
-    label: 'Copy thumbnail URL to clipboard',
-    click: () => copyToCliboard(thumbUrl)
-  }));
-  menu.append(new MenuItem({
-    label: 'Copy video URL to clipboard',
-    click: () => copyToCliboard(videoUrl)
-  }));
   menu.append(new MenuItem({
     label: 'Save video as...',
     click: () => downloadFile(videoUrl)
