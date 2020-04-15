@@ -102,21 +102,16 @@ function renderPost (post) {
 }
 
 function renderMessageAsUserStory (container, message) {
-  container.classList.add('ig-media');
-  if (message.reel_share.media.image_versions2) {
-    let url = message.reel_share.media.image_versions2.candidates[0].url;
-    let img = dom(`<img class="chat-image" src="${url}">`);
-    img.onload = conditionedScrollToBottom();
-    container.appendChild(img);
-
-    container.addEventListener('click', () => {
-      if (message.reel_share.media.video_versions) {
-        const videoUrl = message.reel_share.media.video_versions[0].url;
-        showInViewer(dom(`<video controls src="${videoUrl}">`));
-      } else {
-        showInViewer(dom(`<img src="${url}">`));
-      }
-    });
+  // only displays pic if story hasn't expired
+  if (message.reel_share.media.image_versions2 || message.reel_share.media.video_versions) {
+    let media = message.reel_share.media;
+    try {
+      renderImageOrVideo(container, media);
+    } catch (err) {
+      renderUnsupportedMessage(container, message, 'user_story');
+    }
+  } else {
+    container.appendChild(dom('<p class="post-caption"><i>(expired story)</i></p>'));
   }
 
   if (message.reel_share.text) {
@@ -143,33 +138,37 @@ function renderMessageAsRavenImage (container, message) {
 }
 
 function renderImageOrVideo (container, media) {
-  if (media && media.video_versions) {
-    let bestMedia = media.video_versions.reduce((prev, curr) => (prev.height > curr.height) ? prev : curr);
-    let url = bestMedia.url;
-    let thumbUrl = media.image_versions2.candidates[0].url;
-    let thumbImg = dom(`<div class="container-thumb-with-vid"><img class="chat-image" src="${thumbUrl}"></div>`);
-    thumbImg.onload = conditionedScrollToBottom();
-    container.appendChild(thumbImg);
-    container.classList.add('ig-media');
+  let hasPicture = (media && media.image_versions2);
+  let hasVideo = (media && media.video_versions);
 
-    container.addEventListener('click', () => {
-      showInViewer(dom(`<video controls src="${url}">`));
-    });
-    container.oncontextmenu = () => renderVideoContextMenu(url);
-  } else if (media && media.image_versions2) {
-    let url = media.image_versions2.candidates[0].url;
-    let img = dom(`<img class="chat-image" src="${url}">`);
-    img.onload = conditionedScrollToBottom();
-    container.appendChild(img);
-    container.classList.add('ig-media');
-
-    container.addEventListener('click', () => {
-      showInViewer(dom(`<img src="${url}">`));
-    });
-    container.oncontextmenu = () => renderImageContextMenu(url);
-  } else {
-    throw 'not supported';
+  if (!hasPicture && !hasVideo) {
+    throw 'media type not supported';
   }
+
+  let bestImg = media.image_versions2.candidates.reduce((prev, curr) => (prev.height > curr.height) ? prev : curr);
+  let bestImgDom = dom(`<img class="chat-image" src="${bestImg.url}">`);
+  bestImgDom.onload = conditionedScrollToBottom();
+
+  if (hasVideo) {
+    let videoThumbWrapper = dom('<div class="container-thumb-with-vid"/>');
+    videoThumbWrapper.appendChild(bestImgDom);
+    container.appendChild(videoThumbWrapper);
+
+    let bestVideo = media.video_versions.reduce((prev, curr) => (prev.height > curr.height) ? prev : curr);
+
+    container.addEventListener('click', () => {
+      showInViewer(dom(`<video controls src="${bestVideo.url}">`));
+    });
+    container.oncontextmenu = () => renderVideoContextMenu(bestVideo.url);
+  } else {
+    container.appendChild(bestImgDom);
+
+    container.addEventListener('click', () => {
+      showInViewer(dom(`<img src="${bestImg.url}">`));
+    });
+    container.oncontextmenu = () => renderImageContextMenu(bestImg.url);
+  }
+  container.classList.add('ig-media');
 }
 
 function renderMessageAsLike (container) {
