@@ -22,7 +22,7 @@ gulp.task('website-html', function () {
     }));
 });
 
-gulp.task('default', function () {
+gulp.task('watch-electron', function () {
     // Start browser process
     electron.start();
     // Restart browser process
@@ -36,3 +36,5 @@ gulp.task('default', function () {
 });
 
 gulp.task('build', gulp.series('html'));
+
+gulp.task('default', gulp.series('html', 'watch-electron'))
