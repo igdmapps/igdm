@@ -142,6 +142,12 @@ button, button:focus {
   flex: 1 1;
 }
 
+.chat-list li .username .date {
+  float: right;
+  font-style: italic;
+  opacity: 0.5;
+}
+
 .chat-list li.notification:after {
   content: ' ';
   position: absolute;

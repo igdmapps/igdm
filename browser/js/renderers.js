@@ -299,7 +299,7 @@ function renderVideoContextMenu (videoUrl) {
   menu.popup({});
 }
 
-function renderChatListItem (chatTitle, msgPreview, thumbnail, id, direction) {
+function renderChatListItem (chatTitle, msgPreview, msgTime, thumbnail, id, direction) {
   let li = document.createElement('li');
   li.classList.add('col-12', 'p-3');
 
@@ -307,7 +307,7 @@ function renderChatListItem (chatTitle, msgPreview, thumbnail, id, direction) {
 
   li.appendChild(createThumbnailDom(thumbnail));
 
-  li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${chatTitle}</b><br><span class="${msgPreviewClass}">${msgPreview}</span></div>`));
+  li.appendChild(dom(`<div class="username ml-3 d-none d-sm-inline-block"><b>${chatTitle}</b><br><span class="${msgPreviewClass}">${msgPreview}</span><span class="date">${msgTime}</span></div>`));
   if (id) li.setAttribute('id', `chatlist-${id}`);
 
   return li;
@@ -336,10 +336,11 @@ function renderChatList (chatList) {
   ul.innerHTML = '';
   chatList.forEach((chat_) => {
     let msgPreview = getMsgPreview(chat_);
+    let msgTimeSince = getMsgTimeSince(chat_.items[0]);
     let chatTitle = getChatTitle(chat_);
     const direction = getMsgDirection(chat_.items[0]);
     let thumbnail = getChatThumbnail(chat_);
-    let li = renderChatListItem(chatTitle, msgPreview, thumbnail, chat_.thread_id, direction);
+    let li = renderChatListItem(chatTitle, msgPreview, msgTimeSince, thumbnail, chat_.thread_id, direction);
 
     registerChatUser(chat_);
     if (isActive(chat_)) setActive(li);
