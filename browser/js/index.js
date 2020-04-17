@@ -36,6 +36,16 @@ function closeModalViewer () {
   document.querySelectorAll('.viewer .content')[0].innerHTML = '';
 }
 
+function updateDates () {
+  let elements = document.querySelectorAll('time[data-time]');
+  if (!elements) return;
+  Array.prototype.forEach.call(elements, function (entry) {
+    let igTime = entry.dataset.time;
+    if (!igTime) return;
+    entry.textContent = getMsgTimeSince(igTime);
+  });
+}
+
 //Disable Drag and Drop on Electrum
 document.addEventListener('dragover', function (event) {
   event.preventDefault();
@@ -61,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.chats = chats_;
       renderChatList(window.chats);
     }
+    updateDates();
   });
 
   ipcRenderer.on('deletedChat', (evt, chatId) => {
