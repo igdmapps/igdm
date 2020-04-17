@@ -335,9 +335,10 @@ function renderChatList (chatList) {
   let ul = document.querySelector('.chat-list ul');
   ul.innerHTML = '';
   chatList.forEach((chat_) => {
-    let msgPreview = getMsgPreview(chat_);
+    let lastValidItem = getLastDisplayableItem(chat_.items);
+    let msgPreview = getMsgPreview(lastValidItem);
     let chatTitle = getChatTitle(chat_);
-    const direction = getMsgDirection(chat_.items[0]);
+    const direction = getMsgDirection(lastValidItem);
     let thumbnail = getChatThumbnail(chat_);
     let li = renderChatListItem(chatTitle, msgPreview, thumbnail, chat_.thread_id, direction);
 
