@@ -76,8 +76,8 @@ function getChatList () {
     }
 
     instagram.getPresence().then((presenceInfo) => {
-      for(let chat in chats){
-        if(chats[chat].users.length === 1 && Object.prototype.hasOwnProperty.call(presenceInfo.user_presence, chats[chat].users[0].pk)){
+      for (const chat in chats) {
+        if (chats[chat].users.length === 1 && Object.prototype.hasOwnProperty.call(presenceInfo.user_presence, chats[chat].users[0].pk)) {
           chats[chat].presence = presenceInfo.user_presence[chats[chat].users[0].pk];
         }
       }
