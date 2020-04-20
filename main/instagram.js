@@ -46,6 +46,7 @@ exports.hasActiveSession = function () {
 
 exports.login = function (username, password) {
   return new Promise((resolve, reject) => {
+    utils.clearCookieFiles();
     igClient.state.generateDevice(username);
     igClient.simulate.preLoginFlow().then(() => {
       igClient.account.login(username, password).then((userData) => {
