@@ -230,8 +230,8 @@ exports.getUser = function (userId) {
   });
 };
 
-exports.getPresence = function() {
+exports.getPresence = function () {
   return new Promise((resolve, reject) => {
     igClient.direct.getPresence().then(resolve).catch(reject);
-  })
-}
+  });
+};
