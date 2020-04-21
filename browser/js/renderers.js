@@ -157,14 +157,14 @@ function renderImageOrVideo (container, media) {
     let bestVideo = media.video_versions.reduce((prev, curr) => (prev.height > curr.height) ? prev : curr);
 
     container.addEventListener('click', () => {
-      showInViewer(dom(`<video controls src="${bestVideo.url}">`));
+      showInViewer(dom(`<video class="full-screen" controls src="${bestVideo.url}">`));
     });
     container.oncontextmenu = () => renderVideoContextMenu(bestVideo.url);
   } else {
     container.appendChild(bestImgDom);
 
     container.addEventListener('click', () => {
-      showInViewer(dom(`<img src="${bestImg.url}">`));
+      showInViewer(dom(`<img class="full-screen" src="${bestImg.url}">`));
     });
     container.oncontextmenu = () => renderImageContextMenu(bestImg.url);
   }
