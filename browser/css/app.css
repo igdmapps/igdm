@@ -181,6 +181,17 @@ button, button:focus {
   border-bottom: 1px #EFEFEF solid;
 }
 
+.chat-subtitle {
+  color: #666;
+  text-transform: capitalize;
+  font-size: 12px;
+  margin: 0;
+}
+
+.chat-subtitle > .active {
+  color: green;
+}
+
 .chat-title b:hover {
   cursor: pointer;
   text-decoration: underline;
