@@ -366,8 +366,11 @@ button, button:focus {
 .viewer .content img, .viewer .content video {
   display: block;
   margin: 0 auto;
-  height: 100vh;
   max-width: 100vw;
+}
+
+.viewer .content .full-screen{
+  height: 100vh;
 }
 
 .viewer button.close {
