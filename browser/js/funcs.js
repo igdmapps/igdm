@@ -180,24 +180,43 @@ function removeSubmitHandler () {
   input.onkeypress = () => {};
 }
 
-function sendAttachment (filePath, chat_) {
+function sendAttachment (filePath, type, chat_) {
   // @todo: pass this as argument instead
   window.notifiedChatId = chat_.thread_id;
   notify('Your file is being uploaded', true);
 
   let recipients = chat_.users.map((user) => user.pk);
-  ipcRenderer.send('upload', { filePath, recipients, isNewChat: !chat_.thread_id, chatId: chat_.thread_id });
+  ipcRenderer.send('upload', { filePath, recipients, type, isNewChat: !chat_.thread_id, chatId: chat_.thread_id });
+}
+
+function getValidFileType (type) {
+  if (type === 'image') {
+    return 'image/jpeg, image/jpg';
+  }
+  if (type === 'video') {
+    return 'video/mp4';
+  }
+  if (type === 'audio') {
+    return 'audio/x-m4a';
+  }
 }
 
 function addAttachmentSender (chat_) {
-  document.querySelector('.send-attachment').onclick = () => {
-    const fileInput = document.querySelector('.file-input');
-    fileInput.click();
-    fileInput.onchange = () => {
-      sendAttachment(fileInput.files[0].path, chat_);
-      fileInput.value = '';
+  const elements = document.querySelectorAll('.attachment-item');
+  const upload = document.querySelector('.upload');
+  elements.forEach((button) => {
+    button.onclick = (e) => {
+      const type = e.currentTarget.name;
+      const fileInput = document.querySelector('.file-input');
+      fileInput.setAttribute('accept', getValidFileType(type));
+      upload.classList.add('hide');
+      fileInput.click();
+      fileInput.onchange = () => {
+        sendAttachment(fileInput.files[0].path, type, chat_);
+        fileInput.value = '';
+      };
     };
-  };
+  });
 }
 
 function addNotification (el, chat_) {

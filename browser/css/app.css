@@ -439,22 +439,6 @@ button, button:focus {
   opacity: 0.8;
 }
 
-.open-emoji, .open-emoji:focus, .send-attachment, .send-attachment:focus {
-  background: none;
-  position: absolute;
-  font-size: 24px;
-  opacity: 0.5;
-}
-
-.send-attachment {
-  right: 4rem;
-  bottom: 1rem;
-  width: 3rem;
-  height: 3rem;
-  box-sizing: border-box;
-  padding-top: 0;
-}
-
 .app {
   position: fixed;
   top: 0;
@@ -641,6 +625,54 @@ EMOJIS
   height: 2rem;
   overflow-y: hidden;
   cursor: pointer;
+}
+
+.open-emoji, .open-emoji:focus, .send-attachment, .send-attachment:focus {
+  background: none;
+  position: absolute;
+  font-size: 24px;
+  opacity: 0.5;
+}
+
+/**********************************
+FILE-UPLOAD
+***********************************/
+
+.upload{
+  width: 50px;
+  height: 140px;
+  position: fixed;
+  bottom: 4rem;
+  right: 4.3rem;
+  background: #fff;
+  border: 1px #efefef solid;
+  border-radius: 40px;
+  text-align: center;
+}
+
+.upload.hide{
+  display: none;
+}
+
+.send-attachment {
+  right: 4rem;
+  bottom: 1rem;
+  width: 3rem;
+  height: 3rem;
+  box-sizing: border-box;
+  padding-top: 0;
+}
+
+.upload:not(.hide) {
+  animation-name: slideIn;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+}
+
+.attachment-item{
+  padding: 2px 0;
+  background: inherit;
+  margin: 6px 0;
 }
 
 /******************************

@@ -107,9 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderUnfollowers(users);
   });
 
-  ipcRenderer.on('upload-error', (_, chatId) => {
+  ipcRenderer.on('upload-error', (_, {chatId, type}) => {
     window.notifiedChatId = chatId;
-    notify('Image upload failed. :( Please ensure your image is in .jpg format.', true);
+    notify(`Failed to upload ${type} file. :( Please ensure your ${type} is in ${getValidFileType(type)} format.`, true);
   });
 
   ipcRenderer.on('getDisplayPictureUrl', (evt, displayPicture) => {
