@@ -168,7 +168,7 @@ exports.searchUsers = function (search) {
   });
 };
 
-exports.uploadFile = function (filePath, recipients) {
+function uploadImage (filePath, recipients) {
   return new Promise((resolve, reject) => {
     const directThread = igClient.entity.directThread(recipients);
     readFileAsync(filePath).then((buffer) => {
@@ -177,6 +177,40 @@ exports.uploadFile = function (filePath, recipients) {
       }).then(resolve).catch(reject);
     }).catch(reject);
   });
+}
+
+function uploadVideo (filePath, recipients) {
+  return new Promise((resolve, reject) => {
+    const directThread = igClient.entity.directThread(recipients);
+    readFileAsync(filePath).then((buffer) => {
+      directThread.broadcastVideo({
+        video: buffer,
+      }).then(resolve).catch(reject);
+    }).catch(reject);
+  });
+}
+
+function uploadAudio (filePath, recipients) {
+  return new Promise((resolve, reject) => {
+    const directThread = igClient.entity.directThread(recipients);
+    readFileAsync(filePath).then((buffer) => {
+      directThread.broadcastVoice({
+        file: buffer,
+      }).then(resolve).catch(reject);
+    }).catch(reject);
+  });
+}
+
+exports.uploadFile = function (filePath, fileType, recipients) {
+  if (fileType === 'image') {
+    return uploadImage(filePath, recipients);
+  }
+  if (fileType === 'video') {
+    return uploadVideo(filePath, recipients);
+  }
+  if (fileType === 'audio') {
+    return uploadAudio(filePath, recipients);
+  }
 };
 
 exports.seen = function (thread) {
@@ -210,7 +244,6 @@ exports.getUnfollowers = function () {
           .catch(reject);
       }
     };
-
 
     const followersGetter = igClient.feed.accountFollowers();
     const followingGetter = igClient.feed.accountFollowing();

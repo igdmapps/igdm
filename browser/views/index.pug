@@ -31,14 +31,22 @@ block body
             .new-message
               form
                 textarea(placeholder='Start a message' maxlength="1000" id="messageText")
-            button.send-attachment
-              img(src='img/attachment.png', width='20px')
-            input.file-input.hide(type='file', accept='image/jpeg,image/jpg')
+            button.send-attachment(no-js='', on-click-toggle-class='.upload hide')
+              img(src='img/clip.png', width='25px')
+            input.file-input.hide(type='file')
             button.open-emoji(no-js='', on-click-toggle-class='.emojis hide')
               img(src='img/smiley.png', width='20px')
             .emojis.hide
               .emojis-header
               .emojis-body
+            .upload.hide 
+              button.attachment-item(name='image' title=".jpeg/.jpg")
+                img(src='img/attachment.png', width='30px' )
+              button.attachment-item(name='video' title=".mp4")
+                img(src='img/video.png', width='30px')
+              button.attachment-item(name='audio' title=".m4a")
+                img(src='img/voice.png', width='30px')
+              
       .viewer
         button.close(no-js='', onclick='closeModalViewer()')
           img(width='25px', src='img/close.png', alt='close icon')

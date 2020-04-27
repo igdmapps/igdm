@@ -291,9 +291,10 @@ electron.ipcMain.on('message', (_, data) => {
 
 electron.ipcMain.on('upload', (_, data) => {
   const sendTo = data.isNewChat ? data.recipients : data.chatId;
-  instagram.uploadFile(data.filePath, sendTo)
+  const { type } = data;
+  instagram.uploadFile(data.filePath, type, sendTo)
     .then((chat) => getChat(null, chat.thread_id))
-    .catch(() => mainWindow.webContents.send('upload-error', data.chatId));
+    .catch(() => mainWindow.webContents.send('upload-error', { chatId: data.chatId, type}));
 });
 
 electron.ipcMain.on('searchUsers', (_, search) => {
