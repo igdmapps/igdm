@@ -1,3 +1,23 @@
+### 3.0.0 / 2020-04-29 ###
+
+* Add maxlength attribute to message input
+* Add option to save image
+* Reset message input height after it grows tall
+* When viewing media messages, make close button always clickable
+* Play video in carousel
+* Stop playing video once it is closed
+* Add option to auto launch IGdm on start up
+* Add option to delete conversation
+* Make auto-update optional
+* Show cascading avatars in group chats
+* Better handling of sending messages
+* Indicate when users are "active" or "last seen"
+* Render video messages
+* Fix 2FA
+* Fix image upload
+* Upload audio, and video
+
+
 ### 2.8.1 / 2019-11-05 ###
 
 * Show user thumbnail in chat header
