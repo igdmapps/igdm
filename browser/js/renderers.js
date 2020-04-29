@@ -204,19 +204,16 @@ function renderPlaceholderAsText (container, message) {
 function renderMessageAsLink (container, message) {
   const { link_context } = message.link;
   const text = message.link.text;
-  container.innerHTML += text;
   if (link_context.link_image_url) {
     let img = dom(`<img src="${link_context.link_image_url}" />`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
   }
-  // Check if this is a YouTube link.
-  if (link_context.link_image_url && link_context.link_title && link_context.link_summary) {
-    container.innerHTML += `<a class="link-in-message" src="${link_context.link_url}">${link_context.link_title}</a><p class="link-in-message-summary">${link_context.link_summary}</p>`;
-  } else {
-    // replace all contained links with anchor tags
-    container.innerHTML += `<a class="link-in-message" src="${link_context.link_url}">${link_context.link_url}</a>`;
-  }
+  // replace all contained links with anchor tags
+  container.innerHTML += text.replace(URL_REGEX, (url) => {
+    return `<a class="link-in-message">${url}</a>`;
+  });
+
   container.classList.add('ig-media');
   container.onclick = () => {
     // for links that don't have protocol included
@@ -376,7 +373,7 @@ function renderChatHeader (chat_) {
   let chatTitle = (chat_.thread_id ? getChatTitle(chat_) : getUsernames(chat_)); // if chat_.thread_id is not defined, it is a new contact
 
   if (Object.prototype.hasOwnProperty.call(chat_, 'presence')) {
-    let timeFormat = chat_.presence.isActive? '<span class="active"> &#9679;</span> Active now' : `${getLastSeenText(formatTime(chat_.presence.last_activity_at_ms))}`;
+    let timeFormat = chat_.presence.is_active ? '<span class="active"> &#9679;</span> Active now' : `${getLastSeenText(formatTime(chat_.presence.last_activity_at_ms))}`;
     b = document.createElement('div');
     b.appendChild(dom(`<b class="ml-2">${chatTitle}</b>`));
     b.appendChild(dom(`<p class="ml-2 chat-subtitle">${timeFormat}</b>`));

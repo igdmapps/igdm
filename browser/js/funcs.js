@@ -330,18 +330,6 @@ function downloadFile (urlOfFile) {
   document.body.removeChild(element);
 }
 
-function getHTMLElement (media) {
-  let mediaContent;
-  if (media.video_versions) {
-    mediaContent = `<video width="${media.video_versions[0].width}" controls>
-      <source src="${media.video_versions[0].url}" type="video/mp4">
-    </video>`;
-  } else {
-    mediaContent = `<img src="${media.image_versions2[0].url}">`;
-  }
-  return mediaContent;
-}
-
 function animateChatDelete (chatId) {
   return new Promise((resolve) => {
     const element = document.getElementById(`chatlist-${chatId}`);

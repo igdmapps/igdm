@@ -264,7 +264,7 @@ button, button:focus {
   border-left: 20px solid #fff;
   margin-top: -18px;
   margin-left: -7px;
-  -webkit-filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.25));
+  filter: drop-shadow(0px 0px 2px rgba(0,0,0,0.25));
 
 }
 
@@ -290,7 +290,10 @@ button, button:focus {
 }
 
 .message.inward .content.ig-media, .message.outward .content.ig-media {
-  max-width: 75%;
+  background: #fff;
+  color: #666;
+  max-width: 320px;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -308,6 +311,10 @@ button, button:focus {
   color: #aaa;
   font-style: italic;
   padding: 0.5rem 0.75rem;
+}
+
+.ig-media .message-time {
+  display: none;
 }
 
 .message-time {
@@ -378,10 +385,7 @@ button, button:focus {
   display: block;
   margin: 0 auto;
   max-width: 100vw;
-}
-
-.viewer .content .full-screen{
-  height: 100vh;
+  max-height: 100vh;
 }
 
 .viewer button.close {
@@ -541,7 +545,7 @@ button, button:focus {
 
 
 .chat .message .content .post-caption, .chat .message .content .link-in-message {
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.75rem;
   margin-bottom: 0.25rem;
   display: block;
 }
