@@ -66,9 +66,10 @@ exports.twoFactorLogin = function (username, code, twoFactorIdentifier, trustThi
       twoFactorIdentifier: twoFactorIdentifier,
       verificationMethod,
       trustThisDevice,
-    }).then((userData) => {
+    }).then((twoFactorResponse) => {
       storeLoggedInSession(username).then(() => {
-        resolve(userData);
+        const userId = twoFactorResponse.logged_in_user.pk;
+        igClient.user.info(userId).then(resolve).catch(reject);
       });
     }).catch(reject);
   });
