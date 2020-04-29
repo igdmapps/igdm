@@ -253,7 +253,7 @@ function notify (message, noBadgeCountIncrease) {
   if (!noBadgeCountIncrease) {
     ipcRenderer.send('increase-badge-count');
   }
-  const notification = new Notification('IG:dm Desktop', {
+  const notification = new Notification('IGdm Desktop', {
     body: message
   });
 

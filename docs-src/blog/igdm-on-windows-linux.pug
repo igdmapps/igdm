@@ -1,17 +1,17 @@
 extends _blog
 
 prepend titleDeterminer
-  - var pageDesc = 'There are some known issues to get IG:dm up and running on Windows, learn how to get it up and running.'
-  - var pageTitle = 'Getting IG:dm running on Windows and Linux'
+  - var pageDesc = 'There are some known issues to get IGdm up and running on Windows, learn how to get it up and running.'
+  - var pageTitle = 'Getting IGdm running on Windows and Linux'
 
 block blogContent
   :markdown-it()
-    # Getting IG:dm running on Windows and Linux
+    # Getting IGdm running on Windows and Linux
 
-    [IG:dm](http://igdm.me/) (Instagram Desktop Messenger) is a desktop application used for continuing 
+    [IGdm](http://igdm.me/) (Instagram Desktop Messenger) is a desktop application used for continuing 
     your Instagram chats from your mobile devices to your computer—just like WhatsApp.
     
-    While IG:dm is built to support all platforms (macOS, Linux, and Windows), there are some known issues you might encounter when trying
+    While IGdm is built to support all platforms (macOS, Linux, and Windows), there are some known issues you might encounter when trying
     to get it running on your Windows or Linux machines. Here’s a list of them, and possible workarounds.
     
     ### Cannot Install on Windows 10 and Windows 8
@@ -23,7 +23,7 @@ block blogContent
     #### There are 2 known solutions to solve this problem:
     
     - **Run it as Administrator in Windows 7 compatibility mode.** To do this:
-      - Right click on setup file (i.e the IG:dm installer)
+      - Right click on setup file (i.e the IGdm installer)
       - Go to "Properties"
       - Go to the "Compatibility" tab
       - Click on "Run this program in compatibility mode for:"
@@ -40,7 +40,7 @@ block blogContent
     ### How to run it on Linux
     
     As of [version 2.3.1](https://github.com/ifedapoolarewaju/igdm/releases/download/v2.3.1/IGdm-2.3.1-x86_64.AppImage),
-    the Linux version of IG:dm comes as an [AppImage](https://appimage.org/) which is a format for packaging applications
+    the Linux version of IGdm comes as an [AppImage](https://appimage.org/) which is a format for packaging applications
     in a way that allows them to run on common Linux-based operating systems, such as RHEL, CentOS, Ubuntu, Fedora, Debian, and derivatives.
     
     However, in some cases, you might get the following error when you try to run it on a Linux machine:
@@ -55,20 +55,20 @@ block blogContent
 
     Although this issue is not specific to any particular platform, it is a common issue.
     
-    As of version 2.3.1, IG:dm does not have support for 
+    As of version 2.3.1, IGdm does not have support for 
     [Instagram's two-factor authentication](https://help.instagram.com/566810106808145)
-    so if you are a user with a 2-factor authentication on, you might find yourself unable to login to IG:dm
+    so if you are a user with a 2-factor authentication on, you might find yourself unable to login to IGdm
     
     #### How to fix this
     
     If possible, install the version that supports 2-Factor, i.e [v2.8.0](https://github.com/igdmapps/igdm/releases/tag/v2.8.0) or higher.
 
     Other workarounds for this would be to:
-    - Disable two-step authentication on Instagram and then login to IG:dm
-    - After logging in to IG:dm, re-enable two-step authentication.
+    - Disable two-step authentication on Instagram and then login to IGdm
+    - After logging in to IGdm, re-enable two-step authentication.
     
-    After doing this, Instagram would recognize your IG:dm device from that point on, and you would not be required to enter the 2-step
-    verification code even if you log out and then log back in with IG:dm.
+    After doing this, Instagram would recognize your IGdm device from that point on, and you would not be required to enter the 2-step
+    verification code even if you log out and then log back in with IGdm.
     
     **Disclaimer:** If you do not feel comfortable with temporarily disabling two-step authentication 
     on your account, please don't go through with it.

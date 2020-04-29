@@ -15,7 +15,7 @@ exports.init = () => {
       maxHeight: 200
     });
 
-    win.setTitle('IG:dm software update');
+    win.setTitle('IGdm software update');
     win.loadURL(url.format({
       pathname: path.join(__dirname, '../browser/autoupdate.html'),
       protocol: 'file:',

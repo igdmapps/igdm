@@ -1,7 +1,7 @@
 const AutoLaunch = require('auto-launch');
 
 const igdmAutoLauncher = new AutoLaunch({
-  name: 'IG:dm'
+  name: 'IGdm'
 });
 
 const enableAutoLaunch = () => {

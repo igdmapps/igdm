@@ -32,7 +32,7 @@ function createWindow () {
       minHeight: 400
     });
   }
-  mainWindow.setTitle('IG:dm - Instagram Desktop Messenger');
+  mainWindow.setTitle('IGdm - Instagram Desktop Messenger');
 
   instagram.hasActiveSession().then((result) => {
     const view = result.isLoggedIn ? '../browser/index.html' : '../browser/login.html';
@@ -58,7 +58,7 @@ function createOtpWindow (type) {
     resizable: false,
     icon: `${__dirname}/../browser/img/icon.png`,
   });
-  otpWindow.setTitle('IG:dm - Instagram verification code');
+  otpWindow.setTitle('IGdm - Instagram verification code');
   otpWindow.loadURL(url.format({
     pathname: path.join(__dirname, `../browser/${type}.html`),
     protocol: 'file:',

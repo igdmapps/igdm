@@ -1,10 +1,10 @@
 block titleDeterminer
   if pageTitle
-    - var title = 'IG:dm - ' + pageTitle
+    - var title = 'IGdm - ' + pageTitle
   else if fullPageTitle
     - var title = fullPageTitle
   else
-    - var title = 'IG:dm - Instagram Direct Messages on Desktop'
+    - var title = 'IGdm - Instagram Direct Messages on Desktop'
   if pageDesc
     - var description = pageDesc
   else 
@@ -26,12 +26,12 @@ html(lang='en')
       meta(property='og:description', content=description)
       meta(property='og:locale', content='en_US')
       meta(property='og:site_name', content=title)
-      meta(name='author', content='IG:dm Contributors')
+      meta(name='author', content='IGdm Contributors')
 
       meta(name='viewport',           content='width=device-width, initial-scale=1, user-scalable=no')
       meta(name='description',        content=description)
       meta(name='theme-color',        content='#EFEFEF')
-      meta(name='application-name',   content='IG:dm')
+      meta(name='application-name',   content='IGdm')
       link(rel='icon',                href='/img/icon.png')
       link(rel='icon',                href='/img/icon.png' type='image/x-icon')
       link(rel='icon',                href='/img/icon.png' type='shortcut icon')
@@ -84,7 +84,7 @@ html(lang='en')
         .footerBackground
         .footerWrapper.container.text-center
           p.col-md-8.mx-auto Please note that this is an open source project and is not affiliated with Instagram.
-          p.mb-0 Copyright © #{new Date().getFullYear()} IG:dm contributors.
+          p.mb-0 Copyright © #{new Date().getFullYear()} IGdm contributors.
       script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js')
       script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
       script.
