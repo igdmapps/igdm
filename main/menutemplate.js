@@ -1,7 +1,7 @@
 const app = require('electron').app;
 const { openExternal } = require('electron').shell;
 const autoLaunch = require('./autolaunch');
-const { autoUpdatePreference } = require('./userpreferences');
+const { autoUpdatePreference, timeFormatPreference } = require('./userpreferences');
 
 const template = [
   {
@@ -126,6 +126,12 @@ const createMenuTemplate = (baseTemplate) => {
               type: 'checkbox',
               checked: autoUpdatePreference.autoUpdateStatus,
               click () { autoUpdatePreference.toggleAutoUpdate(); }
+            },
+            {
+              label: '24h format',
+              type: 'checkbox',
+              checked: timeFormatPreference.timeFormat24h,
+              click () { timeFormatPreference.toggleTimeFormat(); }
             }
           ]
         }
