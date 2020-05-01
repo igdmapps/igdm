@@ -178,12 +178,11 @@ app.on('ready', () => {
   createWindow();
   // only set the menu template when in production mode/
   // this also leaves the dev console enabled when in dev mode.
-  if (!process.defaultApp) {
-    createMenuTemplate().then((template) => {
-      const menu = Menu.buildFromTemplate(template);
-      Menu.setApplicationMenu(menu);
-    });
-  }
+  const baseMenu = (process.defaultApp ? Menu.getApplicationMenu().items : null);
+  createMenuTemplate(baseMenu).then((template) => {
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
+  });
   if (autoUpdatePreference.autoUpdateStatus) {
     autoUpdater.init();
   }

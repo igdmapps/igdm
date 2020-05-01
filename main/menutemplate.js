@@ -107,10 +107,11 @@ if (process.platform === 'darwin') {
   ];
 }
 
-const createMenuTemplate = () => {
+const createMenuTemplate = (baseTemplate) => {
+  const _template = baseTemplate || template;
   return new Promise((resolve) => {
     autoLaunch.autoLaunchStatus().then((autoLaunchStatus) => {
-      template.splice(-2, 0,
+      _template.splice(-2, 0,
         {
           label: 'Configurations',
           submenu: [
@@ -129,7 +130,7 @@ const createMenuTemplate = () => {
           ]
         }
       );
-      resolve(template);
+      resolve(_template);
     });
   });
 };
