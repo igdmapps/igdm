@@ -1,3 +1,9 @@
+### 3.0.1 / 2020-05-02 ###
+
+* Fix missing app menu
+* Better message notifications
+
+
 ### 3.0.0 / 2020-04-29 ###
 
 * Add maxlength attribute to message input
