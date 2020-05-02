@@ -13,10 +13,10 @@ const disableAutoLaunch = () => {
 };
 
 const autoLaunchStatus = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     igdmAutoLauncher.isEnabled()
       .then(resolve)
-      .catch(reject);
+      .catch(() => resolve(false));
   });
 };
 

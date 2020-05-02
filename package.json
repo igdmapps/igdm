@@ -1,6 +1,6 @@
 {
   "name": "IGdm",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Desktop application for Instagram DMs",
   "main": "main/main.js",
   "husky": {
