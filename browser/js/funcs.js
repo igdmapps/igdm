@@ -1,3 +1,26 @@
+const moment = require('moment');
+
+moment.defineLocale('igdm', {
+  parentLocale: null,
+  relativeTime : {
+    future: 'in %s',
+    past:   '%s ago',
+    s  : '1s',
+    ss : '%ds',
+    m:  '1m',
+    mm: '%dm',
+    h:  '1h',
+    hh: '%dh',
+    d:  '1d',
+    dd: '%dd',
+    w:  '1w',
+    ww: '%dw'
+  }
+});
+moment.relativeTimeThreshold('ss', 1); // by default, "few seconds ago" would last for 45s
+moment.relativeTimeThreshold('d', 13); // turns into weeks after 13 days
+moment.relativeTimeThreshold('w', Number.MAX_SAFE_INTEGER);  // turns weeks the biggest unit
+  
 function openInBrowser (url) {
   electron.shell.openExternal(url);
 }
@@ -113,6 +136,20 @@ function canRenderOlderMessages (chatId) {
 function getMsgPreview (item) {
   let msgPreview = item.text || item.like || 'Media message';
   return truncate(msgPreview, 25);
+}
+
+function getMsgTimeSince (igTimestamp) {
+  let timestamp = timestampToDate(igTimestamp);
+  return moment(timestamp).fromNow(true);
+}
+
+function timestampToDate (timestamp) {
+  try {
+    // timestamp is usually micro-seconds with 16 digits
+    return new Date(parseInt(timestamp.toString().slice(0, 13)));
+  } catch (error) {
+    return null;
+  }
 }
 
 function isActive (chat_) {
