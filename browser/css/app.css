@@ -329,10 +329,6 @@ button, button:focus {
   padding: 0.5rem 0.75rem;
 }
 
-.ig-media .message-time {
-  display: none;
-}
-
 .message-time {
   font-size: 0.65rem;
   text-align: right;
@@ -541,7 +537,8 @@ button, button:focus {
   cursor: pointer;
 }
 
-.ig-media .message-sender {
+.ig-media .message-sender,
+.ig-media .message-time {
   padding: 0.5rem;
 }
 
