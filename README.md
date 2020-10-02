@@ -1,4 +1,4 @@
-# IGdm Messenger
+# IGdm Messenger - Intro
 Multi-platform Desktop application for INSTAGRAM DMs, built with electron
 ![Build Status!](https://travis-ci.org/ifedapoolarewaju/igdm.svg?branch=master)
 
@@ -6,7 +6,7 @@ Multi-platform Desktop application for INSTAGRAM DMs, built with electron
 [here](http://ifedapoolarewaju.github.io/igdm/)
 
 
-### Preview
+### Previews
 
 ![Start a chat](docs/img/startchat.gif)
 
@@ -14,7 +14,7 @@ Multi-platform Desktop application for INSTAGRAM DMs, built with electron
 
 ![View unfollowers](docs/img/unfollowers.gif)
 
-### Local Development
+### Local Development setup
 
 To setup this project locally for development purposes please follow the following steps:
 
