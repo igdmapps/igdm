@@ -43,7 +43,7 @@
     "nojs": "^0.1.3"
   },
   "devDependencies": {
-    "electron": "^3.0.16",
+    "electron": "^9.4.0",
     "electron-builder": "^20.44.4",
     "electron-builder-lib": "20.23.1",
     "electron-builder-squirrel-windows": "20.29.0",
