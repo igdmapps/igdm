@@ -29,7 +29,12 @@ function createWindow () {
       height: 800,
       icon: `${__dirname}/../browser/img/icon.png`,
       minWidth: 500,
-      minHeight: 400
+      minHeight: 400,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+        enableRemoteModule: true,
+      }
     });
   }
   mainWindow.setTitle('IGdm - Instagram Desktop Messenger');
@@ -57,6 +62,11 @@ function createOtpWindow (type) {
     height: 300,
     resizable: false,
     icon: `${__dirname}/../browser/img/icon.png`,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    }
   });
   otpWindow.setTitle('IGdm - Instagram verification code');
   otpWindow.loadURL(url.format({
@@ -171,6 +181,11 @@ function handleTwoFactor (error) {
   });
 }
 
+function displayError (error) {
+  const msg = `${error.message}\n${error.stack}`;
+  electron.dialog.showErrorBox('IGdm Pro - Error', msg);
+}
+
 // fixes this issue https://github.com/electron/electron/issues/10864
 app.setAppUserModelId('com.ifedapoolarewaju.desktop.igdm');
 
@@ -264,7 +279,7 @@ electron.ipcMain.on('getOlderMessages', (_, id) => {
     .then((data) => {
       messagesThread = data.thread;
       mainWindow.webContents.send('olderMessages', {chatId: id, messages: data.messages});
-    });
+    }).catch(displayError);
 });
 
 function messageSent (chatId, trackerKey) {
@@ -278,13 +293,13 @@ electron.ipcMain.on('message', (_, data) => {
       getChat(null, chat.thread_id);
       getChatList();
       messageSent(chat.thread_id, messageTracker);
-    });
+    }).catch(displayError);
   } else {
     instagram.sendMessage(data.message, data.chatId).then(() => {
       getChat(null, data.chatId);
       getChatList();
       messageSent(data.chatId, messageTracker);
-    });
+    }).catch(displayError);
   }
 });
 
@@ -299,7 +314,7 @@ electron.ipcMain.on('upload', (_, data) => {
 electron.ipcMain.on('searchUsers', (_, search) => {
   instagram.searchUsers(search).then((users) => {
     mainWindow.webContents.send('searchResult', users.users);
-  });
+  }).catch(displayError);
 });
 
 electron.ipcMain.on('markAsRead', (_, thread) => {
@@ -313,7 +328,7 @@ electron.ipcMain.on('increase-badge-count', () => {
 electron.ipcMain.on('getUnfollowers', () => {
   instagram.getUnfollowers().then((users) => {
     mainWindow.webContents.send('unfollowers', users);
-  });
+  }).catch(displayError);
 });
 
 electron.ipcMain.on('unfollow', (_, userId) => {
@@ -323,5 +338,5 @@ electron.ipcMain.on('unfollow', (_, userId) => {
 electron.ipcMain.on('getDisplayPictureUrl', (_, userId) => {
   instagram.getUser(userId).then((user) => {
     mainWindow.webContents.send('getDisplayPictureUrl', { userId: userId, url: user.profile_pic_url });
-  });
+  }).catch(displayError);
 });

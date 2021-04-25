@@ -12,7 +12,12 @@ exports.init = () => {
       height: 200,
       icon: `${__dirname}/../browser/img/icon.png`,
       maxWidth: 400,
-      maxHeight: 200
+      maxHeight: 200,
+      webPreferences: {
+        nodeIntegration: true,
+        contextIsolation: false,
+        enableRemoteModule: true,
+      }
     });
 
     win.setTitle('IGdm software update');
