@@ -142,6 +142,22 @@ button, button:focus {
   flex: 1 1;
 }
 
+.chat-list li .username > b {
+  float: left;
+}
+
+.chat-list li .username > span.outward,
+.chat-list li .username > span.inward {
+  float: left;
+  clear: left;
+}
+
+.chat-list li .username .date {
+  float: right;
+  font-style: italic;
+  opacity: 0.5;
+}
+
 .chat-list li.notification:after {
   content: ' ';
   position: absolute;
@@ -311,10 +327,6 @@ button, button:focus {
   color: #aaa;
   font-style: italic;
   padding: 0.5rem 0.75rem;
-}
-
-.ig-media .message-time {
-  display: none;
 }
 
 .message-time {
@@ -525,7 +537,8 @@ button, button:focus {
   cursor: pointer;
 }
 
-.ig-media .message-sender {
+.ig-media .message-sender,
+.ig-media .message-time {
   padding: 0.5rem;
 }
 
