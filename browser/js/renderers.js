@@ -275,12 +275,12 @@ function renderChatContextMenu (chatId, li) {
 
 function createThumbnailDom (imageUrls) {
   if (typeof imageUrls === 'string') {
-    return dom(`<div><img class="thumb" src="${imageUrls}"></div>`); 
+    return dom(`<div><img crossOrigin="Anonymous" class="thumb" src="${imageUrls}"></div>`); 
   }
   let html = '<div>';
   imageUrls.forEach((imageUrl, index) => {
     if (index < 5) {
-      html += `<img class="thumb ${ index === 0 ? '' : 'group'}" src="${imageUrl}"></img>`;
+      html += `<img class="thumb crossOrigin="Anonymous" ${ index === 0 ? '' : 'group'}" src="${imageUrl}"></img>`;
     }  
   });
   html += '</div>';
@@ -463,7 +463,7 @@ function renderUnfollowers (users) {
   users.forEach((user) => {
     let li = dom(
       `<li class="col-12 col-md-4 col-lg-3">
-        <img class="thumb" src="${user.profile_pic_url}">
+        <img class="thumb" crossOrigin="Anonymous" src="${user.profile_pic_url}">
         <div class="">${user.username}</div>
       </li>`
     );
