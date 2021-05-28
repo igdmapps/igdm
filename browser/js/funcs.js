@@ -346,7 +346,13 @@ function quoteText (text) {
 function setProfilePic () {
   const url = window.loggedInUser.profile_pic_url;
   const settingsButton = document.querySelector('.settings');
-  settingsButton.style.backgroundImage = `url(${url})`;
+
+  img = new Image;
+  img.crossOrigin = 'Anonymous';
+  img.src = url;
+  img.classList.add('thumb');
+  img.style.margin = '-1px 0 0 -15px';
+  settingsButton.appendChild(img);
 }
 
 function getLoadingGif () {
