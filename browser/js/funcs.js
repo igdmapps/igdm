@@ -353,7 +353,6 @@ function setProfilePic () {
   img.classList.add('thumb');
   img.style.margin = '-1px 0 0 -15px';
   settingsButton.appendChild(img);
-  // settingsButton.style.backgroundImage = `url(${url})`;
 }
 
 function getLoadingGif () {
