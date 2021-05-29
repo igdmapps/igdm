@@ -347,7 +347,7 @@ function setProfilePic () {
   const url = window.loggedInUser.profile_pic_url;
   const settingsButton = document.querySelector('.settings');
 
-  img = new Image;
+  img = new Image();
   img.crossOrigin = 'Anonymous';
   img.src = url;
   img.classList.add('thumb');
