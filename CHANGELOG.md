@@ -1,3 +1,15 @@
+### 3.0.3 / 2021-05-29 ###
+
+* Fix broken images (thank you @7urkm3n)
+
+### 3.0.2 / 2021-04-25 ###
+
+* show unexpected errors in UI
+* upgrade instagram API module
+* adding time display to media content
+* added indication of last message date to chat list
+
+
 ### 3.0.1 / 2020-05-02 ###
 
 * Fix missing app menu
