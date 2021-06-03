@@ -91,7 +91,7 @@ function renderPost (post) {
   } else if (post.carousel_media && post.carousel_media.length) {
     window.carouselInit(postDom, post.carousel_media);
   } else {
-    postDom.appendChild(dom(`crossOrigin="Anonymous" src="${post.image_versions2.candidates[0].url}"/>`));
+    postDom.appendChild(dom(`<img crossOrigin="Anonymous" src="${post.image_versions2.candidates[0].url}"/>`));
   }
   if (post.caption) {
     postDom.appendChild(dom(`<p class="post-caption">${post.caption.text}</p>`));
