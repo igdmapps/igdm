@@ -59,6 +59,7 @@ function renderMessageReactions (container, reactions) {
 
 function renderDisplayPicture (displayPicture) {
   document.querySelectorAll(`img[data-user-id="${displayPicture.userId}"]`).forEach((img) => {
+    img.crossOrigin = 'Anonymous';
     img.src = displayPicture.url;
   });
 }
@@ -67,9 +68,9 @@ function renderMessageAsPost (container, message) {
   let post = message.media_share;
   let img = '';
   if (post.image_versions2) {
-    img = dom(`<img class="chat-image" src="${post.image_versions2.candidates[0].url}">`);
+    img = dom(`<img crossOrigin="Anonymous" class="chat-image" src="${post.image_versions2.candidates[0].url}">`);
   } else if (post.carousel_media) {
-    img = dom(`<img class="chat-image" src="${post.carousel_media[0].image_versions2.candidates[0].url}">`); 
+    img = dom(`<img crossOrigin="Anonymous" class="chat-image" src="${post.carousel_media[0].image_versions2.candidates[0].url}">`); 
   }
   img.onload = conditionedScrollToBottom();
   container.appendChild(img);
@@ -90,7 +91,7 @@ function renderPost (post) {
   } else if (post.carousel_media && post.carousel_media.length) {
     window.carouselInit(postDom, post.carousel_media);
   } else {
-    postDom.appendChild(dom(`<img src="${post.image_versions2.candidates[0].url}"/>`));
+    postDom.appendChild(dom(`<img crossOrigin="Anonymous" src="${post.image_versions2.candidates[0].url}"/>`));
   }
   if (post.caption) {
     postDom.appendChild(dom(`<p class="post-caption">${post.caption.text}</p>`));
@@ -146,7 +147,7 @@ function renderImageOrVideo (container, media) {
   }
 
   let bestImg = media.image_versions2.candidates.reduce((prev, curr) => (prev.height > curr.height) ? prev : curr);
-  let bestImgDom = dom(`<img class="chat-image" src="${bestImg.url}">`);
+  let bestImgDom = dom(`<img crossOrigin="Anonymous" class="chat-image" src="${bestImg.url}">`);
   bestImgDom.onload = conditionedScrollToBottom();
 
   if (hasVideo) {
@@ -157,14 +158,14 @@ function renderImageOrVideo (container, media) {
     let bestVideo = media.video_versions.reduce((prev, curr) => (prev.height > curr.height) ? prev : curr);
 
     container.addEventListener('click', () => {
-      showInViewer(dom(`<video class="full-screen" controls src="${bestVideo.url}">`));
+      showInViewer(dom(`<video crossOrigin="Anonymous" class="full-screen" controls src="${bestVideo.url}">`));
     });
     container.oncontextmenu = () => renderVideoContextMenu(bestVideo.url);
   } else {
     container.appendChild(bestImgDom);
 
     container.addEventListener('click', () => {
-      showInViewer(dom(`<img class="full-screen" src="${bestImg.url}">`));
+      showInViewer(dom(`<img crossOrigin="Anonymous" class="full-screen" src="${bestImg.url}">`));
     });
     container.oncontextmenu = () => renderImageContextMenu(bestImg.url);
   }
@@ -205,7 +206,7 @@ function renderMessageAsLink (container, message) {
   const { link_context } = message.link;
   const text = message.link.text;
   if (link_context.link_image_url) {
-    let img = dom(`<img src="${link_context.link_image_url}" />`);
+    let img = dom(`<img crossOrigin="Anonymous" src="${link_context.link_image_url}" />`);
     img.onload = conditionedScrollToBottom();
     container.appendChild(img);
   }
@@ -224,13 +225,13 @@ function renderMessageAsLink (container, message) {
 
 function renderMessageAsAnimatedMedia (container, message) {
   let { url } = message.animated_media.images.fixed_height;
-  let img = dom(`<img src="${url}">`);
+  let img = dom(`<img crossOrigin="Anonymous" src="${url}">`);
   img.onload = conditionedScrollToBottom();
   container.appendChild(img);
   container.classList.add('ig-media');
 
   container.addEventListener('click', () => {
-    showInViewer(dom(`<img src="${url}">`));
+    showInViewer(dom(`<img crossOrigin="Anonymous" src="${url}">`));
   });
 }
 
@@ -444,7 +445,7 @@ function renderOlderMessages (messages) {
 
 function renderMessageAsVoiceMedia (container, message) {
   let src = message.voice_media.media.audio.audio_src;
-  let audio = dom(`<audio controls src="${src}"/>`);
+  let audio = dom(`<audio crossOrigin="Anonymous" controls src="${src}"/>`);
   container.appendChild(audio);
 }
 
