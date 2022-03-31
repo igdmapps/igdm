@@ -50,10 +50,8 @@ exports.login = function (username, password) {
     igClient.state.generateDevice(username);
     igClient.simulate.preLoginFlow().then(() => {
       igClient.account.login(username, password).then((userData) => {
-        igClient.simulate.postLoginFlow().then(() => {
-          storeLoggedInSession(username).then(() => {
-            resolve(userData);
-          }).catch(reject);
+        storeLoggedInSession(username).then(() => {
+          resolve(userData);
         }).catch(reject);
       }).catch(reject);
     }).catch(reject);
