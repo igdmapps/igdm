@@ -47,6 +47,7 @@
     "electron-builder": "^22.10.5",
     "electron-builder-lib": "20.23.1",
     "electron-builder-squirrel-windows": "20.29.0",
+    "electron-rebuild": "^2.3.5",
     "eslint": "^6.8.0",
     "gulp": "^4.0.2",
     "gulp-htmlmin": "^4.0.0",
