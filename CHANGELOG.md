@@ -1,3 +1,8 @@
+### 3.0.4 / 2022-04-18 ###
+
+* Fix login flow from return 404 errors (thank you @jeancaffou)
+* Fix broken media messages (thank you @7urkm3n)
+
 ### 3.0.3 / 2021-05-29 ###
 
 * Fix broken images (thank you @7urkm3n)
