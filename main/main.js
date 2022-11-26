@@ -246,6 +246,7 @@ electron.ipcMain.on('login', (evt, data) => {
           })
           .catch((tferror) => mainWindow.webContents.send('loginError', getErrorMsg(tferror)));
       } else {
+        console.log(error);
         mainWindow.webContents.send('loginError', getErrorMsg(error));
       }
     });
