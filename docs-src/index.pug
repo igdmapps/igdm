@@ -15,19 +15,19 @@ append navigation
     h1.text-center.display-1.col-md-auto IGdm
     h3.text-center.col-12.col-md-8.m-auto Continue your Instagram direct messages from your phone to your desktop.
     .download.col-md-auto.mt-5
-      h5
-        | Download the latest 
-        span v3.0.0
+      h5(style="max-width: 500px; margin: 22px auto;")
+        | IGdm is currently undergoing a rewrite and will be available again in a few months. In the mean time you can try IGdm Pro
+        //- span v3.0.0
       div.mt-2(class="btn-group" role="group" aria-label="Download buttons")
-        a.btn.btn-outline-light(role="button" href='https://github.com/igdmapps/igdm/releases/download/v3.0.4/IGdm-Setup-3.0.4.exe')
-          i.mdi.mdi-windows
-          span.ml-2 Windows
-        a.btn.btn-outline-light(role="button" href='https://github.com/igdmapps/igdm/releases/download/v3.0.4/IGdm-3.0.4.dmg')
-          i.mdi.mdi-apple 
-          span.ml-2 macOS
-        a.btn.btn-outline-light(role="button" href='https://github.com/igdmapps/igdm/releases/download/v3.0.4/IGdm-3.0.4.AppImage')
-          i.mdi.mdi-linux
-          span.ml-2 Linux
+        a.btn.btn-outline-light(role="button" href='https://pro.igdm.me' target='_blank')
+          //- i.mdi.mdi-windows
+          span.ml-2 TRY IGdm PRO NOW
+        //- a.btn.btn-outline-light(role="button" href='https://github.com/igdmapps/igdm/releases/download/v3.0.4/IGdm-3.0.4.dmg')
+        //-   i.mdi.mdi-apple 
+        //-   span.ml-2 macOS
+        //- a.btn.btn-outline-light(role="button" href='https://github.com/igdmapps/igdm/releases/download/v3.0.4/IGdm-3.0.4.AppImage')
+        //-   i.mdi.mdi-linux
+        //-   span.ml-2 Linux
     a.downloadCount.mt-3.d-block(href='https://twitter.com/igdmApps/status/1137337076167401472', target='_blank') Over 5,000,000+ Downloads!
 
 block content
@@ -81,38 +81,38 @@ block content
         b IGdm Pro
 
   section.row.mt-5.justify-content-center
-    .col-md-5
+    .col-md-11.text-center
       h4 Issues running IGdm on your computer?
       span
         | Please see 
         a(href='http://igdm.me/blog/igdm-on-windows-linux', target='_blank') common issues and fixes 
         | for running IGdm on your desktop.
-    .col-md-1
-    .col-md-5
-      h4 Donations
-      | IGdm
-      | is an open source project that can be used for free by anyone, donations
-      | and incentives are wholeheartedly welcome.
-      a.btn.btn-link.btn-outline-light(role="button" href='http://paypal.me/SolomonOmojola' target="_blank") Donate via PayPal
-      p You can also donate via BITCOIN to the following Bitcoin address.
-      div
-        code 3NM9EubVwdvNm9qiTgLC8DHsRtTHvoyaD6
+    //- .col-md-1
+    //- .col-md-5
+    //-   h4 Donations
+    //-   | IGdm
+    //-   | is an open source project that can be used for free by anyone, donations
+    //-   | and incentives are wholeheartedly welcome.
+    //-   a.btn.btn-link.btn-outline-light(role="button" href='http://paypal.me/SolomonOmojola' target="_blank") Donate via PayPal
+    //-   p You can also donate via BITCOIN to the following Bitcoin address.
+    //-   div
+    //-     code 3NM9EubVwdvNm9qiTgLC8DHsRtTHvoyaD6
 
 append footer
   script.
-    document.querySelectorAll('.download a').forEach(function (el){
-      el.addEventListener('click', function(event) {
-        event.preventDefault()
-        ga('send', 'event', {
-          eventCategory: 'Outbound Link',
-          eventAction: 'click',
-          eventLabel: el.href,
-          transport: 'beacon'
-        });
+    //- document.querySelectorAll('.download a').forEach(function (el){
+    //-   el.addEventListener('click', function(event) {
+    //-     event.preventDefault()
+    //-     ga('send', 'event', {
+    //-       eventCategory: 'Outbound Link',
+    //-       eventAction: 'click',
+    //-       eventLabel: el.href,
+    //-       transport: 'beacon'
+    //-     });
 
-        window.location = el.href;
-      })
-    })
+    //-     window.location = el.href;
+    //-   })
+    //- })
     document.querySelectorAll('.psa.home a').forEach(function (el){
       el.addEventListener('click', function(event) {
         event.preventDefault()

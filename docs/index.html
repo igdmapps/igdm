@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/css/index.css">
   </head>
   <body>
-    <div class="psa lykdat"><span>Boost your eCommerce store with the best &nbsp;</span><a href="https://solutions.lykdat.com" target="_blank"><b>Product Recommendation Engine</b></a></div><a class="forkus" href="https://github.com/igdmapps/igdm" target="_blank"><img src="/img/github-fork-us.svg" alt="Fork us on GitHub"></a>
+    <div class="psa lykdat"><span>Check out this document conveter app to &nbsp;</span><a href="https://docconverter.app/" target="_blank"><b>Convert PDF to Word (docx)</b></a></div><a class="forkus" href="https://github.com/igdmapps/igdm" target="_blank"><img src="/img/github-fork-us.svg" alt="Fork us on GitHub"></a>
     <div class="promoBanner active">
       <div class="backgroundSkew"></div>
       <nav class="navbar navbar-expand-md container transparent navbar-dark"><a class="navbar-brand" href="/"><img class="d-inline-block align-top" src="/img/icon.png" width="32" height="32" alt="PrismarineJS"></a>
@@ -48,8 +48,8 @@
         <h1 class="text-center display-1 col-md-auto">IGdm</h1>
         <h3 class="text-center col-12 col-md-8 m-auto">Continue your Instagram direct messages from your phone to your desktop.</h3>
         <div class="download col-md-auto mt-5">
-          <h5>Download the latest <span>v3.0.0</span></h5>
-          <div class="mt-2 btn-group" role="group" aria-label="Download buttons"><a class="btn btn-outline-light" role="button" href="https://github.com/igdmapps/igdm/releases/download/v3.0.4/IGdm-Setup-3.0.4.exe"><i class="mdi mdi-windows"></i><span class="ml-2">Windows</span></a><a class="btn btn-outline-light" role="button" href="https://github.com/igdmapps/igdm/releases/download/v3.0.4/IGdm-3.0.4.dmg"><i class="mdi mdi-apple"> </i><span class="ml-2">macOS</span></a><a class="btn btn-outline-light" role="button" href="https://github.com/igdmapps/igdm/releases/download/v3.0.4/IGdm-3.0.4.AppImage"><i class="mdi mdi-linux"></i><span class="ml-2">Linux</span></a></div>
+          <h5 style="max-width: 500px; margin: 22px auto;">IGdm is currently undergoing a rewrite and will be available again in a few months. In the mean time you can try IGdm Pro</h5>
+          <div class="mt-2 btn-group" role="group" aria-label="Download buttons"><a class="btn btn-outline-light" role="button" href="https://pro.igdm.me" target="_blank"><span class="ml-2">TRY IGdm PRO NOW</span></a></div>
         </div><a class="downloadCount mt-3 d-block" href="https://twitter.com/igdmApps/status/1137337076167401472" target="_blank">Over 5,000,000+ Downloads!</a>
       </div>
     </div>
@@ -100,16 +100,8 @@
         <h4><a class="btn btn-primary prominent2" href="https://pro.igdm.me" target="_blank">Try &nbsp;<b>IGdm Pro</b></a></h4>
       </section>
       <section class="row mt-5 justify-content-center">
-        <div class="col-md-5">
+        <div class="col-md-11 text-center">
           <h4>Issues running IGdm on your computer?</h4><span>Please see <a href="http://igdm.me/blog/igdm-on-windows-linux" target="_blank">common issues and fixes </a>for running IGdm on your desktop.</span>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-          <h4>Donations</h4>IGdm
-          is an open source project that can be used for free by anyone, donations
-          and incentives are wholeheartedly welcome.<a class="btn btn-link btn-outline-light" role="button" href="http://paypal.me/SolomonOmojola" target="_blank">Donate via PayPal</a>
-          <p>You can also donate via BITCOIN to the following Bitcoin address.</p>
-          <div><code>3NM9EubVwdvNm9qiTgLC8DHsRtTHvoyaD6</code></div>
         </div>
       </section>
     </div>
@@ -144,19 +136,19 @@
       })
     </script>
     <script>
-      document.querySelectorAll('.download a').forEach(function (el){
-        el.addEventListener('click', function(event) {
-          event.preventDefault()
-          ga('send', 'event', {
-            eventCategory: 'Outbound Link',
-            eventAction: 'click',
-            eventLabel: el.href,
-            transport: 'beacon'
-          });
+      //- document.querySelectorAll('.download a').forEach(function (el){
+      //-   el.addEventListener('click', function(event) {
+      //-     event.preventDefault()
+      //-     ga('send', 'event', {
+      //-       eventCategory: 'Outbound Link',
+      //-       eventAction: 'click',
+      //-       eventLabel: el.href,
+      //-       transport: 'beacon'
+      //-     });
       
-          window.location = el.href;
-        })
-      })
+      //-     window.location = el.href;
+      //-   })
+      //- })
       document.querySelectorAll('.psa.home a').forEach(function (el){
         el.addEventListener('click', function(event) {
           event.preventDefault()
