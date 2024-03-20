@@ -4,6 +4,7 @@ const userPreferences = new Store({
   configName: 'user-preferences',
   defaults: {
     AUTO_UPDATE : true,
+    TIME_FORMAT_24H: true
   },
 });
 
@@ -15,6 +16,15 @@ const autoUpdatePreference = {
   }
 };
 
+const timeFormatPreference = {
+  timeFormat24h: userPreferences.get('TIME_FORMAT_24H'),
+  toggleTimeFormat: function () {
+    const status = userPreferences.get('TIME_FORMAT_24H');
+    userPreferences.set('TIME_FORMAT_24H', !status);
+  }
+};
+
 module.exports = {
   autoUpdatePreference,
+  timeFormatPreference
 };
