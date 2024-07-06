@@ -1,4 +1,5 @@
 extends ../_layout
+include _mixins
 
 prepend header
   - var navtype = 'navbar-dark'
@@ -13,5 +14,6 @@ append head
     enable_page_level_ads: true
     });
 block content
-  .mt-5.col-md-8
+  .mt-5.col-md-8.offset-md-2
     block blogContent
+    block readOthers
