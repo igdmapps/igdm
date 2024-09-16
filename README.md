@@ -28,7 +28,7 @@ To setup this project locally for development purposes please follow the followi
 
 5. Start the application locally by running `npm start`
 
-That's it! :) Now you can have those pull requests rolling in! :D
+That's it! :) Now you can have those pull requests rolling in! :D Armanveer Singh
 
 
 ## License
