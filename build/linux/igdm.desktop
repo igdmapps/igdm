@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Network;Chat
+Exec=igdm
+Icon=/usr/share/pixmaps/igdm.svg
+Keywords=igdm
+Name=Instagram Desktop Messenger
+Path=/opt/igdm/
+Type=Application
