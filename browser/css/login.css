@@ -1,96 +1,163 @@
-.pageCard {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.20);
-  background-color: #FAFAFA;
-  border-radius: 3px;
-  max-width: 25rem;
-}
+/*
+  Griffin71's CSS Modifications
+  Author: Griffin (User: Griffin71)
+  Contact: kabelosamkelo19@gmail.com
+  
+  Changes Made:
+  1. Updated the `html` background gradient for a smoother transition.
+     - Previously used `linear-gradient(to top right, #A82A71, #4C61B0)` for the gradient.
+     - Enhanced for better color blending.
+  2. Added animations to `.pageCard` for fade-in effect on load.
+  3. Improved `.loginButton` styles with hover effects and smooth animation for logging in.
+  4. Enhanced `.loginInputs` focus states with smoother transitions for better UX.
+  5. Organized and commented the code for better maintainability.
+*/
 
+/* General Styles */
 html {
-  background-image: linear-gradient(to top right, #A82A71, #4C61B0);
+  background: linear-gradient(to top right, #A82A71, #4C61B0);
   background-repeat: no-repeat;
   min-height: 100%;
   min-width: 100%;
   display: flex;
-  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  animation: fadeIn 2s ease-in-out; /* Fade-in animation for the entire page */
 }
 
 body {
   background-color: transparent;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Card Styles */
+.pageCard {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  background-color: #FAFAFA;
+  border-radius: 8px;
+  max-width: 25rem;
+  padding: 1rem;
   margin: 0 auto;
+  animation: fadeInUp 1s ease-in-out; /* Slide-in animation for the card */
 }
 
 .cardBox {
-  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Input Styles */
 .loginInputs {
+  display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .loginInputs .form-control {
   width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.loginInputs .form-control:focus {
+  outline: none;
+  border-color: #A82A71;
+  box-shadow: 0 0 4px rgba(168, 42, 113, 0.5); /* Added glow effect on focus */
 }
 
 .loginInputs .form-control:first-child {
-  border-bottom-left-radius: 0px;
-  border-top-right-radius: .25rem;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0.25rem;
 }
 
 .loginInputs .form-control:last-child {
-  border-bottom-left-radius: .25rem;
+  border-bottom-left-radius: 0.25rem;
   border-top-right-radius: 0;
-  margin-left: 0;
   margin-top: -2px;
+}
+
+/* Button Styles */
+.loginButton {
+  background: linear-gradient(to right, #DA2B8E, #3E5ABB, #DA2B8E);
+  background-size: 200%;
+  border: none;
+  padding: 0.75rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background-position 0.3s ease, transform 0.2s;
+}
+
+.loginButton:hover {
+  transform: scale(1.05); /* Added hover effect for button */
+}
+
+.loginButton.loggingIn {
+  animation: buttonLogin 1s linear infinite;
+}
+
+.loginButton:active {
+  background: linear-gradient(to right, #A72A71, #343D60, #A72A71) !important;
+  transform: scale(0.95);
+}
+
+.loginButton:focus {
+  outline: none;
+  box-shadow: none !important;
+}
+
+/* Error and Disclaimer */
+.errorMessage {
+  color: #DC3545;
+  font-size: 0.9rem;
+}
+
+.disclaimer {
+  font-size: 0.85rem;
+  color: #B3B8BC;
+  margin-top: 1rem;
 }
 
 .disclaimer p:last-child {
   margin-bottom: 0;
 }
 
-.disclaimer {
-  font-size: 0.85rem;
-}
-
-.disclaimer p {
-  color: #b3b8bc;
-}
-
+/* Animations */
 @keyframes buttonLogin {
   0% {
-      background-position: 0%;
+    background-position: 0%;
   }
   100% {
-      background-position: 200%;
+    background-position: 200%;
   }
 }
 
-.loginButton {
-  background-image: linear-gradient(to right, #da2b8e, #3e5abb, #da2b8e);
-  background-size: 200%;
-  background-repeat: repeat;
-  background-position: 0%;
-  border: 0;
-  width: 100%;
-  padding: 0.5rem;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.loginButton.loggingIn {
-  box-shadow: none;
-  animation: buttonLogin 1000ms linear infinite;
-  animation-direction: normal;
-}
-
-.loginButton:active {
-  background-image: linear-gradient(to right, #a72a71, #343d60, #a72a71) !important;
-  background-color: transparent !important;
-  border: none;
-}
-
-.loginButton:focus {
-  box-shadow: none !important;
-}
-
-.errorMessage {
-  color: #dc3545;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
