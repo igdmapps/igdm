@@ -38,7 +38,7 @@
     "electron-updater": "4.2.4",
     "fb": "^2.0.0",
     "instagram-private-api": "^1.45.3",
-    "moment": "^2.25.1",
+    "moment": "^2.29.4",
     "node-notifier": "^5.4.3",
     "nojs": "^0.1.3"
   },
