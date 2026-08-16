@@ -10,3 +10,5 @@ build/
 .flutter-plugins-dependencies
 .flutter-configuration
 pubspec.lock
+# Widget Preview related
+.widget_preview/

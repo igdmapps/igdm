@@ -124,7 +124,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
     try {
       final response = await _apiService.getChatList();
       setState(() {
-        _chats = (response as List<dynamic>)
+        _chats = (response)
             .map((data) => ChatThread.fromJson(data as Map<String, dynamic>))
             .toList();
         _loading = false;
