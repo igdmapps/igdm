@@ -28,8 +28,48 @@ To setup this project locally for development purposes please follow the followi
 
 5. Start the application locally by running `npm start`
 
-That's it! :) Now you can have those pull requests rolling in! :D
+### New integration server
 
+The repository now includes an Express API server for React, Flutter, and Laravel clients.
+
+- Run `npm install` from the repo root.
+- Start the API server with `npm run api:start`.
+- The API listens on `http://localhost:4000`.
+
+### React integration
+
+Located in `react/`.
+
+- `cd react`
+- `npm install`
+- `npm run dev`
+
+This React app uses the API server at `http://localhost:4000`.
+
+### Flutter integration
+
+Located in `flutter/`.
+
+- `cd flutter`
+- `flutter pub get`
+- If this is the first time running the sample, execute `flutter create .`
+- `flutter run`
+
+This Flutter client also targets `http://localhost:4000`.
+
+### Laravel integration
+
+A Laravel sample integration is included in `laravel/`.
+
+- Copy `laravel/routes.php` into your Laravel app's route file.
+- Copy `laravel/resources/views/igdm` into `resources/views/igdm`.
+- Ensure `API_BASE_URL` points to `http://localhost:4000`.
+
+### Notes
+
+- The existing Electron app remains intact.
+- The Express API reuses Instagram session and chat logic from the Electron backend.
+- For production, apply secure session handling and HTTPS.
 
 ## License
 
